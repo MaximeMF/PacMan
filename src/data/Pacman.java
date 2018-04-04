@@ -1,17 +1,27 @@
 package data;
 
 public class Pacman implements IPacman {
-
-	@Override
-	public int getLives() {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	private int lives;
+	
+	public Pacman() {
+		this.lives = 3;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
+	@Override
+	public int getLives() {
+		return this.lives;
+	}
+
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

@@ -1,29 +1,43 @@
 package data;
 
 public class Ghost implements IGhost {
+	
+	private int id = 3, points, state;
+	
+	public Ghost() {
+		// TO DO
+	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.points;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getState() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.state;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public void setState(int state) {
-		// TODO Auto-generated method stub
-		
+		this.state = state;
 	}
 
 }

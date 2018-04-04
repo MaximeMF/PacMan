@@ -6,6 +6,14 @@ package data;
  */
 public interface IPlateau {
 	
+	public final int MUR = 0;
+	public final int VIDE = 1;
+	public final int GOMME = 2;
+	public final int FRUIT = 3;
+	public final int TELEPORT = 4;
+	public final int PACMAN = 5;
+	public final int GHOST = 6;
+	
 	/**
 	 * Gets the score.
 	 * @return an integer representing the score
@@ -16,7 +24,7 @@ public interface IPlateau {
 	 * Increases the score.
 	 * @param score an integer representing the value to add to the score
 	 */
-	public void increaseScore(int score);
+	public void increasesScore(int score);
 	
 	/**
 	 * Gets the level.
