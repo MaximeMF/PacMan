@@ -1,5 +1,37 @@
-Le plateau a une taille fixe !
+LES FRUITS ET LES SUPER-GOMMES SONT 2 CHOSES DIFFERENTES !
+Les super-gommes active le super-pouvoir.
+Les fruits donnent juste des points en plus.
 
-On remplace les ids des fantômes par une énumération GhostType.
-Il y a toujours 4 fantômes, ni plus ni moins.
-Chaque fantôme a un comportement différent. (Utile de faire une sous-classe par fantôme ?)
+Il y a 240 gommes classiques au total, et 4 super-gommes.
+Il y a 2 fruits par niveau, qui apparaissent autour de la maison des fantômes après 70 et 170 gommes mangées, et reste une dizaine de secondes.
+
+Un niveau est terminé quand toutes les gommes sont mangées.
+
+Il y a 4 fantômes.
+(Chaque fantôme a un comportement différent).
+(Ils alternent entre différents modes).
+
+Les fantômes commencent le jeu dans leur maison.
+Ils peuvent y revenir seulement s'ils sont mangés ou si les positions sont réinitialisées.
+Autrement, la maison est inaccessible pour Pac-Man et les fantômes après en être sorti.
+(Le rouge est déjà devant la maison quand le jeu commence, le rose en sort dès le début, le bleu après 30 gommes mangés, le orange après 90).
+
+On peut se contenter de faire juste quelque niveaux (il y en a 256 en réalité), et chacun est identique.
+Seules la vitesse de jeu (Pac-Man ET les fantômes) augmente, et la durée d'effet des fruits diminue à chaque niveau.
+
+Si Pac-Man est touché par un fantôme, il perd une vie et leur position est réinitialisée.
+Perdre toute ses vies = game over.
+
+(Pac-Man gagne une vie bonus tous les 10000 points en réalité).
+
+Pac-Man ET les fantômes peuvent emprunter le tunnel à droite et à gauche de l'écran.
+
+Manger une super-gomme active le super-pouvoir, ce qui rend tous les fantômes bleus durant une certaine période de temps.
+Un fantôme bleu va en sens inverse, est ralenti, et peut être mangé par Pac-Man.
+
+Gomme : 10 points
+Super-Gomme : 50 points
+Fruit : variable (entre 100 et 5000 selon le niveau en réalité)
+Fantôme : 200 points (et double successivement si plusieurs mangés à la suite).
+
+Pour les images (sprites) : https://www.google.fr/search?q=pacman+sprites&newwindow=1&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiqs82s-KDaAhVFLVAKHVXmCVQQ_AUICigB&biw=1535&bih=774
