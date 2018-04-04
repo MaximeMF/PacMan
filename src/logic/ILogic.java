@@ -1,14 +1,14 @@
 package logic;
 
-import data.Ghost;
-import data.Pacman;
-import data.Plateau;
+import data.*;
 
 /**
  * Interface of Logic class to use in View package.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
 public interface ILogic {
+	
+	public final int DIR_LEFT = 1, DIR_RIGHT = 2, DIR_UP = 0, DIR_DOWN = 3;
 	
 	/**
 	 * Moves Pacman or a Ghost
@@ -22,18 +22,18 @@ public interface ILogic {
 	 * Gets Plateau.
 	 * @return Plateau
 	 */
-	public Plateau getPlateau();
+	public IPlateau getPlateau();
 	
 	/**
 	 * Gets Pacman.
 	 * @return Pacman
 	 */
-	public Pacman getPlayer();
+	public IPacman getPlayer();
 	
 	/**
 	 * Gets a Ghost.
 	 * @param id an integer representing the id of the ghost
 	 * @return a Ghost
 	 */
-	public Ghost getGhost(int id);
+	public IGhost getGhost(int id);
 }
