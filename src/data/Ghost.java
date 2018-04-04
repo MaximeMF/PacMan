@@ -9,12 +9,6 @@ public class Ghost implements IGhost {
 	}
 
 	@Override
-	public void setPoints() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public int getId() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -27,9 +21,9 @@ public class Ghost implements IGhost {
 	}
 
 	@Override
-	public void setState() {
+	public void setState(int state) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

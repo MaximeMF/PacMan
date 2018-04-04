@@ -25,7 +25,7 @@ public class Logic implements ILogic {
 	}
 
 	@Override
-	public Ghost getGhost() {
+	public Ghost getGhost(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

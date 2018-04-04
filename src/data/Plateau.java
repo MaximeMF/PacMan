@@ -9,21 +9,9 @@ public class Plateau implements IPlateau {
 	}
 
 	@Override
-	public void setScore(int score) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public int getLevel() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public void setLevel(int level) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -48,6 +36,24 @@ public class Plateau implements IPlateau {
 	public Ghost getGhost(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void increaseScore(int score) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void incrementsLevel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeCell(int x, int y, int value) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
