@@ -1,0 +1,15 @@
+Data
+
+vie, score, plateau, gomme, fantome ?, pacman ?, vitesse de jeu
+
+
+
+Logic
+
+regles_deplacement, update_score, collision_fantome
+
+
+
+View
+
+Affichage général, déplacement joueur, déplacement fantôme
