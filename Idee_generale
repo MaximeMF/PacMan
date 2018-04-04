@@ -1,7 +1,15 @@
 Data
 
-vie, score, plateau, gomme, fantome ?, pacman ?, vitesse de jeu
+score, plateau, Gomme, Fantome, Pacman, vitesse de jeu, niveau
 
+Gomme - points
+	  - Fruit - pouvoir
+	  
+Fantome - points
+	    - etat
+	    
+Pacman - vie
+	  
 
 
 Logic
