@@ -33,4 +33,6 @@ public interface ILogic {
 	 * @see IPlateau#getGhost(int)
 	 */
 	public IGhost getGhost(int id);
+	
+	public boolean hasWon();
 }

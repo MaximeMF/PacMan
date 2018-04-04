@@ -67,8 +67,12 @@ public class Logic implements ILogic {
 		return this.grid.getGhost(id);
 	}
 	
-	private void test_win() {
-		this.grid = new Plateau();
+	public boolean hasWon() {
+		if(this.grid.getNbGommes() == 0) {
+			this.grid = new Plateau();
+			return true;
+		}
+		return false;
 	}
 
 }
