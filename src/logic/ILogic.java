@@ -25,15 +25,12 @@ public interface ILogic {
 	public IPlateau getPlateau();
 	
 	/**
-	 * Gets Pacman.
-	 * @return Pacman
+	 * @see IPlateau#getPlayer()
 	 */
 	public IPacman getPlayer();
 	
 	/**
-	 * Gets a Ghost.
-	 * @param id an integer representing the id of the ghost
-	 * @return a Ghost
+	 * @see IPlateau#getGhost(int)
 	 */
 	public IGhost getGhost(int id);
 }
