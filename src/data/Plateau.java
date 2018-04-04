@@ -11,7 +11,7 @@ public class Plateau implements IPlateau {
 	private int score, level, speed;
 	private Pacman player;
 	private int[][] board;
-	
+		
 	
 	
 	public Plateau() {
@@ -26,18 +26,9 @@ public class Plateau implements IPlateau {
 	
 	private void initPlateau() {	
 		try (Scanner sc = new Scanner(new File("data/board"))) {
-			int xmax = 0, ymax = 0;
-			if(sc.hasNextInt()) 
-				xmax = sc.nextInt(); 
-			else 
-				throw new IOException();
-			if(sc.hasNextInt()) 
-				ymax = sc.nextInt();
-			else 
-				throw new IOException();
-			board = new int[ymax][xmax];
-			for(int j=0; j<ymax; j++) {
-				for (int i=0; i<xmax; i++) {
+			board = new int[WIDTH][HEIGHT];
+			for(int j=0; j<HEIGHT; j++) {
+				for (int i=0; i<WIDTH; i++) {
 					if(sc.hasNextInt()) 
 						board[j][i] = sc.nextInt();
 					else
@@ -94,8 +85,8 @@ public class Plateau implements IPlateau {
 	
 	
 	private Ghost findGhost(int id) {
+		return null;
 		// TODO
-		return new Ghost();
 	}
 
 	
@@ -117,22 +108,6 @@ public class Plateau implements IPlateau {
 	@Override
 	public void changeCell(int x, int y, int value) {
 		// TODO
-	}
-
-
-
-	@Override
-	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
-	@Override
-	public int getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 
@@ -162,9 +137,10 @@ public class Plateau implements IPlateau {
 
 
 	@Override
-	public int getNbGommes() {
+	public int nbGommes() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

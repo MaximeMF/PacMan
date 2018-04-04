@@ -16,22 +16,9 @@ public interface IPlateau {
 	public final int PACMAN = 5;
 	public final int GHOST = 6;
 	
-	
-	
-	/**
-	 * Gets the height.
-	 * @return an integer representing the height
-	 */
-	public int getHeight();
-	
-	
-	
-	/**
-	 * Gets the width.
-	 * @return an integer representing the width
-	 */
-	public int getWidth();
-	
+	public final int HEIGHT = 31;
+	public final int WIDTH = 28;
+		
 	
 	
 	/**
@@ -119,7 +106,7 @@ public interface IPlateau {
 	
 	
 	/**
-	 * Gets the previous value of a cell
+	 * Gets the previous value of a cell.
 	 * @param x the abscissa of the cell
 	 * @param y the ordinate of the cell
 	 * @return the previous value of the cell
@@ -129,7 +116,7 @@ public interface IPlateau {
 	
 	
 	/**
-	 * Gets the position of a specific element
+	 * Gets the position of a specific element.
 	 * @param id the id of the element
 	 * @return an integer array representing the abscissa and the ordinate of the element
 	 */
@@ -138,10 +125,10 @@ public interface IPlateau {
 	
 	
 	/**
-	 * Gets the number of Gomme
+	 * Gets the number of Gomme.
 	 * @return an integer representing the number of Gomme
 	 */
-	public int getNbGommes();
-	
+	public int nbGommes();
+
 
 }

@@ -1,0 +1,5 @@
+Le plateau a une taille fixe !
+
+On remplace les ids des fantômes par une énumération GhostType.
+Il y a toujours 4 fantômes, ni plus ni moins.
+Chaque fantôme a un comportement différent. (Utile de faire une sous-classe par fantôme ?)

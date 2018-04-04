@@ -16,7 +16,7 @@ public interface IGhost {
 	 * Gets the id.
 	 * @return an integer representing the id
 	 */
-	public int getId();
+	public GhostType getType();
 	
 	/**
 	 * Gets the state.

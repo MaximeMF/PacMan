@@ -2,10 +2,11 @@ package data;
 
 public class Ghost implements IGhost {
 	
-	private int id, points, state;
+	private int points, state;
+	private GhostType type;
 	
-	public Ghost() {
-		// TO DO
+	public Ghost(GhostType type) {
+		// TODO
 	}
 
     /**
@@ -20,8 +21,8 @@ public class Ghost implements IGhost {
      * {@inheritDoc }
      */
 	@Override
-	public int getId() {
-		return this.id;
+	public GhostType getType() {
+		return this.type;
 	}
 
     /**
