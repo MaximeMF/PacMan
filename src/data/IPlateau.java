@@ -6,6 +6,8 @@ package data;
  */
 public interface IPlateau {
 	
+	
+	
 	public final int MUR = 0;
 	public final int VIDE = 1;
 	public final int GOMME = 2;
@@ -14,11 +16,31 @@ public interface IPlateau {
 	public final int PACMAN = 5;
 	public final int GHOST = 6;
 	
+	
+	
+	/**
+	 * Gets the height.
+	 * @return an integer representing the height
+	 */
+	public int getHeight();
+	
+	
+	
+	/**
+	 * Gets the width.
+	 * @return an integer representing the width
+	 */
+	public int getWidth();
+	
+	
+	
 	/**
 	 * Gets the score.
 	 * @return an integer representing the score
 	 */
 	public int getScore();
+	
+	
 	
 	/**
 	 * Increases the score.
@@ -26,16 +48,22 @@ public interface IPlateau {
 	 */
 	public void increasesScore(int score);
 	
+	
+	
 	/**
 	 * Gets the level.
 	 * @return an integer representing the level
 	 */
 	public int getLevel();
 	
+	
+	
 	/**
 	 * Increments the level.
 	 */
 	public void incrementsLevel();
+	
+	
 	
 	/**
 	 * Gets the speed.
@@ -43,17 +71,23 @@ public interface IPlateau {
 	 */
 	public int getSpeed();
 	
+	
+	
 	/**
 	 * Sets the speed.
 	 * @param speed an integer representing the new speed
 	 */
 	public void setSpeed(int speed);
 	
+	
+	
 	/**
 	 * Gets PacMan.
 	 * @return PacMan
 	 */
 	public Pacman getPlayer();
+	
+	
 	
 	/**
 	 * Gets a Ghost.
@@ -62,6 +96,18 @@ public interface IPlateau {
 	 */
 	public Ghost getGhost(int id);
 	
+	
+	
+	/**
+	 * Gets a cell.
+	 * @param x the abscissa of the cell
+	 * @param y the ordinate of the cell
+	 * @return the value of the cell
+	 */
+	public int getCell(int x, int y);
+	
+	
+	
 	/**
 	 * Changes a cell value.
 	 * @param x the abscissa of the cell
@@ -69,5 +115,33 @@ public interface IPlateau {
 	 * @param value the new value of the cell
 	 */
 	public void changeCell(int x, int y, int value);
+	
+	
+	
+	/**
+	 * Gets the previous value of a cell
+	 * @param x the abscissa of the cell
+	 * @param y the ordinate of the cell
+	 * @return the previous value of the cell
+	 */
+	public int previous(int x, int y);
+	
+	
+	
+	/**
+	 * Gets the position of a specific element
+	 * @param id the id of the element
+	 * @return an integer array representing the abscissa and the ordinate of the element
+	 */
+	public int[] getPos(int id);
+	
+	
+	
+	/**
+	 * Gets the number of Gomme
+	 * @return an integer representing the number of Gomme
+	 */
+	public int getNbGommes();
+	
 
 }

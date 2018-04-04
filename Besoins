@@ -1,7 +1,0 @@
-Dans IPlateau:
-	int getHeight()
-	int getWidth()
-	int getCase()
-	int previous(int x, int y) renvoie la valeur précédente de la case
-	int[] getPos(int id) renvoie {int x, int y} la position de l'élément id
-	int getNbGommes()
