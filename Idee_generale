@@ -22,3 +22,13 @@ regles_deplacement, update_score, collision_fantome
 View
 
 Affichage général, déplacement joueur, déplacement fantôme
+
+
+direction de déplacement
+	 0
+	 ^
+	 
+1<		 >2
+
+	 V
+	 3
