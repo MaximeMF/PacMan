@@ -2,7 +2,7 @@ package data;
 
 public class Ghost implements IGhost {
 	
-	private int id = 3, points, state;
+	private int id, points, state;
 	
 	public Ghost() {
 		// TO DO

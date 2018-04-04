@@ -1,7 +1,10 @@
 package data;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Plateau implements IPlateau {
 
@@ -17,20 +20,29 @@ public class Plateau implements IPlateau {
 		this.initPlateau();
 	}
 	
-	private void initPlateau() {
-		this.board = new int[28][31];
-		
-		String s = "";
-		try (FileReader fr = new FileReader("data/board")) {
-			boolean b = fr.ready();
-			while(b) {
-				if(fr.ready()) s += (char)fr.read();
-				else b = false;
+	private void initPlateau() {	
+		try (Scanner sc = new Scanner(new File("data/board"))) {
+			int xmax = 0, ymax = 0;
+			if(sc.hasNextInt()) 
+				xmax = sc.nextInt(); 
+			else 
+				throw new IOException();
+			if(sc.hasNextInt()) 
+				ymax = sc.nextInt();
+			else 
+				throw new IOException();
+			board = new int[ymax][xmax];
+			for(int j=0; j<ymax; j++) {
+				for (int i=0; i<xmax; i++) {
+					if(sc.hasNextInt()) 
+						board[j][i] = sc.nextInt();
+					else
+						throw new IOException();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(s);
 	}
 	
 	@Override
@@ -80,7 +92,7 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public void changeCell(int x, int y, int value) {
-		
+		// TO DO
 	}
 
 }
