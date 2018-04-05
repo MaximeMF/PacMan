@@ -3,19 +3,42 @@ package data;
 import java.util.EnumMap;
 
 public class Data implements IData {
+	
+	
+	
+	public Data() {
+		this.initialise();
+	}
+	
+	
+	
+	public void initialise() {
+		
+	}
+	
+	
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getBoardHeight() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getBoardWidth() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int[][] getBoard() {
 		// TODO Auto-generated method stub
@@ -38,48 +61,72 @@ public class Data implements IData {
 		}
 	}*/
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int[] getPacmanPosition() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public EnumMap<GhostType, Integer[]> getGhostsPosition() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public EnumMap<Entity, Integer> getEntityPoints() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getBestScore() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getLevels() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getGommes() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getLives() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int getSpeed() {
 		// TODO Auto-generated method stub
