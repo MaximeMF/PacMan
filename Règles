@@ -1,9 +1,9 @@
 LES FRUITS ET LES SUPER-GOMMES SONT 2 CHOSES DIFFERENTES !
-Les super-gommes active le super-pouvoir.
+Les super-gommes activent le super-pouvoir.
 Les fruits donnent juste des points en plus.
 
-Il y a 240 gommes classiques au total, et 4 super-gommes.
-Il y a 2 fruits par niveau, qui apparaissent autour de la maison des fantômes après 70 et 170 gommes mangées, et reste une dizaine de secondes.
+Il y a 244 gommes, 240 classiques et 4 super-gommes.
+Il y a 2 fruits par niveau, qui apparaissent autour de la maison des fantômes après 70 et 170 gommes mangées, et restent une dizaine de secondes.
 
 Un niveau est terminé quand toutes les gommes sont mangées.
 
@@ -22,7 +22,7 @@ Seules la vitesse de jeu (Pac-Man ET les fantômes) augmente, et la durée d'effet
 Si Pac-Man est touché par un fantôme, il perd une vie et leur position est réinitialisée.
 Perdre toute ses vies = game over.
 
-(Pac-Man gagne une vie bonus tous les 10000 points en réalité).
+(Pac-Man gagne une vie bonus tous les 10000 points).
 
 Pac-Man ET les fantômes peuvent emprunter le tunnel à droite et à gauche de l'écran.
 
@@ -31,7 +31,7 @@ Un fantôme bleu va en sens inverse, est ralenti, et peut être mangé par Pac-Man.
 
 Gomme : 10 points
 Super-Gomme : 50 points
-Fruit : variable (entre 100 et 5000 selon le niveau en réalité)
+Fruit : variable (entre 100 et 5000 selon le niveau)
 Fantôme : 200 points (et double successivement si plusieurs mangés à la suite).
 
 Pour les images (sprites) : https://www.google.fr/search?q=pacman+sprites&newwindow=1&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiqs82s-KDaAhVFLVAKHVXmCVQQ_AUICigB&biw=1535&bih=774

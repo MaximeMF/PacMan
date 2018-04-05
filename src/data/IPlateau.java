@@ -12,7 +12,7 @@ public interface IPlateau {
 	public final int VIDE = 1;
 	public final int GOMME = 2;
 	public final int FRUIT = 3;
-	public final int TELEPORT = 4;
+	public final int TUNNEL = 4;
 	public final int PACMAN = 5;
 	public final int GHOST = 6;
 	
@@ -128,7 +128,7 @@ public interface IPlateau {
 	 * Gets the number of Gomme.
 	 * @return an integer representing the number of Gomme
 	 */
-	public int nbGommes();
+	public int GetNbGommes();
 
 
 }

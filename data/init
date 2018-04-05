@@ -1,0 +1,17 @@
+{
+	"boardFile":"data/board",
+	"bestScoreFile":"data/best_score",
+	"boardHeight":31,
+	"boardWidth":28,
+	"nbGommes":244,
+	"nbVies":3,
+	"speed":1,
+	"posPacman":[14,23],
+	"posFirstGhost":[14,12],
+	"points":{
+				"gomme":10,
+				"supergomme":50,
+				"fruit":100,
+				"ghost":200
+			}
+}

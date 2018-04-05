@@ -137,7 +137,7 @@ public class Plateau implements IPlateau {
 
 
 	@Override
-	public int nbGommes() {
+	public int GetNbGommes() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
