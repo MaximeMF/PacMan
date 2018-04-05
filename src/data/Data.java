@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.EnumMap;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -32,12 +33,12 @@ public class Data implements IData {
 	
 	
 	/**
-	 * Gets 
+	 * Gets the json config file.
 	 */
 	private void initialise() {
 		JSONParser parser = new JSONParser();
 		try {
-			Object obj = parser.parse(new FileReader("data/"+CONFIG+".json"));
+			Object obj = parser.parse(new FileReader("config/"+CONFIG+".json"));
 			this.json = (JSONObject) obj;			
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
@@ -46,6 +47,11 @@ public class Data implements IData {
 	
 	
 	
+	/**
+	 * Parse the json object.
+	 * @param key the element's name whose value is sought.
+	 * @return the int value associated to the key
+	 */
 	private int parseInt(String key) {
 		long value = (long) this.json.get(key);
 		return Math.toIntExact(value);
@@ -67,8 +73,8 @@ public class Data implements IData {
      */
 	@Override
 	public int getBoardWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		int boardWidth = parseInt("boardWidth");
+		return boardWidth;
 	}
 
     /**
@@ -76,33 +82,30 @@ public class Data implements IData {
      */
 	@Override
 	public int[][] getBoard() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/*private void initPlateau() {	
-		try (Scanner sc = new Scanner(new File("data/board"))) {
-			board = new int[WIDTH][HEIGHT];
-			for(int j=0; j<HEIGHT; j++) {
-				for (int i=0; i<WIDTH; i++) {
-					if(sc.hasNextInt()) 
-						board[j][i] = sc.nextInt();
-					else
-						throw new IOException();
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
+		int boardHeight = getBoardHeight();
+		int boardWidth = getBoardWidth();
+		JSONArray board = (JSONArray) json.get("board");
+		int[][] boardMatrix = new int[boardHeight][boardWidth];
+		for(int i=0; i<boardHeight; i++) {
+			JSONArray row = (JSONArray) board.get(i);
+	       	for(int j=0; j<boardWidth; j++) {
+	       		boardMatrix[i][j] = Math.toIntExact((long)row.get(j));
+	       	}
+	    }
+		return boardMatrix;
+	}	
 
     /**
      * {@inheritDoc }
      */
 	@Override
 	public int[] getPacmanPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONArray position = (JSONArray) json.get("posPacman");
+		int[] posArray = new int[position.size()];
+        for(int i=0; i<position.size(); i++) {
+        	posArray[i] = Math.toIntExact((long)position.get(i));
+        }
+        return posArray;
 	}
 
     /**
@@ -128,8 +131,8 @@ public class Data implements IData {
      */
 	@Override
 	public int getBestScore() {
-		// TODO Auto-generated method stub
-		return 0;
+		int bestScore = parseInt("bestScore");
+		return bestScore;
 	}
 
     /**
@@ -137,8 +140,8 @@ public class Data implements IData {
      */
 	@Override
 	public int getLevels() {
-		// TODO Auto-generated method stub
-		return 0;
+		int nbLevels = parseInt("nbLevels");
+		return nbLevels;
 	}
 
     /**
@@ -146,8 +149,8 @@ public class Data implements IData {
      */
 	@Override
 	public int getGommes() {
-		// TODO Auto-generated method stub
-		return 0;
+		int nbGommes = parseInt("nbGommes");
+		return nbGommes;
 	}
 
     /**
@@ -155,8 +158,8 @@ public class Data implements IData {
      */
 	@Override
 	public int getLives() {
-		// TODO Auto-generated method stub
-		return 0;
+		int nbLives = parseInt("nbLives");
+		return nbLives;
 	}
 
     /**
@@ -164,19 +167,17 @@ public class Data implements IData {
      */
 	@Override
 	public int getSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+		int speed = parseInt("speed");
+		return speed;
 	}
-
-
 
     /**
      * {@inheritDoc }
      */
 	@Override
 	public int getPowerTime() {
-		// TODO Auto-generated method stub
-		return 0;
+		int powerTime = parseInt("powerTime");
+		return powerTime;
 	}
 
 }
