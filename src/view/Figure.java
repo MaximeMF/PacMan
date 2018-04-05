@@ -109,13 +109,13 @@ public abstract class Figure
      *
      * @return true if the figure is inside the canvas
      */
-    public boolean isInside()
+    /*public boolean isInside()
     {
         Canvas canvas = Canvas.getCanvas();
         return this.x >= 0 && this.x + this.width < canvas.getWidth()
                 && this.y >= 0 && this.y + this.height < canvas.getHeight();
     }
-
+	*/
     /**
      * Check whether the current and the given figures have a non null
      * intersection
