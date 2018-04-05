@@ -26,7 +26,7 @@ public class Canvas {
     // Static part
     //-------------------------------------------------------------------------
     public static final int WIDTH = 500, HEIGHT = 500;
-    public static final Color BACKGROUND = Color.WHITE;
+    public static final Color BACKGROUND = Color.BLACK;
 
     private static Canvas instance;
 
@@ -120,10 +120,13 @@ public class Canvas {
     /**
      * Redraw all shapes currently on the Canvas.
      */
-    public void redraw() {
-        SwingUtilities.invokeLater(new Runnable() {
+    public void redraw()
+    {
+        SwingUtilities.invokeLater(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 canvas.repaint();
             }
         });
@@ -256,7 +259,7 @@ public class Canvas {
                 graphic.drawString(text, x, y);
             } else if (image != null)
             {
-            	graphic.drawImage(image, 0, y, width, height, null);
+            	graphic.drawImage(image, x, y, width, height, null);
             }
         }
     }

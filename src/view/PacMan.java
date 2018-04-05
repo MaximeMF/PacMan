@@ -3,7 +3,6 @@ package view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -29,7 +28,8 @@ public class PacMan extends Figure {
 	
 	
 	@Override
-	public void draw() {
+	public void draw() 
+	{
 		// TODO Auto-generated method stub
 		
 		try {
@@ -43,15 +43,11 @@ public class PacMan extends Figure {
 	   
 	}
 	
-	 public void animate()
-	    {
-	        Canvas canvas = Canvas.getCanvas();
-	        while (true) {
-	            move();
-	            canvas.wait(50);
-	            canvas.redraw();
-	        }
-	    }
+	public void move()
+    {
+        move(this.x, this.y++);
+        invariant();
+    }
 	
 	public int getX() {
 		return x;

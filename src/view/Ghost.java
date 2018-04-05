@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class Ghost extends Figure{
 
 	private int x,y,width,height;
-	private final static String dir =  "rsc/pacman.gif" ;
+	private final static String dir =  "rsc/ghost.png" ;
 	private  BufferedImage img;
 	
 	public Ghost(int x, int y, int width, int height) {
@@ -42,15 +42,11 @@ public class Ghost extends Figure{
 	   
 	}
 	
-	 public void animate()
-	    {
-	        Canvas canvas = Canvas.getCanvas();
-	        while (true) {
-	            move();
-	            canvas.wait(50);
-	            canvas.redraw();
-	        }
-	    }
+	public void move()
+    {
+        move(this.x, this.y++);
+        invariant();
+    }
 	
 	public int getX() {
 		return x;
