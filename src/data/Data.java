@@ -1,19 +1,54 @@
 package data;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.EnumMap;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+/**
+ * Class loading game data from a json config file.
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ */
 public class Data implements IData {
 	
 	
 	
+	private final String CONFIG = "main";
+	
+	private JSONObject json;
+	
+	
+	
+	/**
+	 * Constructs an instance of Data.
+	 */
 	public Data() {
 		this.initialise();
 	}
 	
 	
 	
-	public void initialise() {
-		
+	/**
+	 * Gets 
+	 */
+	private void initialise() {
+		JSONParser parser = new JSONParser();
+		try {
+			Object obj = parser.parse(new FileReader("data/"+CONFIG+".json"));
+			this.json = (JSONObject) obj;			
+		} catch (IOException | ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	private int parseInt(String key) {
+		long value = (long) this.json.get(key);
+		return Math.toIntExact(value);
 	}
 	
 	
@@ -23,8 +58,8 @@ public class Data implements IData {
      */
 	@Override
 	public int getBoardHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		int boardHeight = parseInt("boardHeight");
+		return boardHeight;
 	}
 
     /**
@@ -129,6 +164,17 @@ public class Data implements IData {
      */
 	@Override
 	public int getSpeed() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+    /**
+     * {@inheritDoc }
+     */
+	@Override
+	public int getPowerTime() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

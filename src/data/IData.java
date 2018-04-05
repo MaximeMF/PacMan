@@ -73,5 +73,11 @@ public interface IData {
 	 * @return the speed
 	 */
 	public int getSpeed();
+	
+	/**
+	 * Gets the power time.
+	 * @return the power time
+	 */
+	public int getPowerTime();
 
 }

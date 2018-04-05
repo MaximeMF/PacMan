@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Test {
-	
-	private static int[][] board;
 
 	public static void main(String[] args) {
 
-		
+		Data data = new Data();
+		int h = data.getBoardHeight();
+		System.out.println(h);
 
 	}
 
