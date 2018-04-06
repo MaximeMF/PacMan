@@ -1,4 +1,4 @@
-package data;
+package logic;
 
 /**
  * Enumeration representing the directions.

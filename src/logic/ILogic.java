@@ -7,9 +7,6 @@ import data.*;
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
 public interface ILogic {
-	
-	public final int DIR_LEFT = 1, DIR_RIGHT = 2, DIR_UP = 0, DIR_DOWN = 3;
-	
 	/**
 	 * Moves Pacman or a Ghost
 	 * @param id an integer representing the id of the object to move
@@ -22,17 +19,23 @@ public interface ILogic {
 	 * Gets Plateau.
 	 * @return Plateau
 	 */
-	public IPlateau getPlateau();
+	public int[][] getPlateau();
 	
 	/**
-	 * @see IPlateau#getPlayer()
+	 * Gets PacMan
+	 * @return PacMan
 	 */
-	public IPacman getPlayer();
+	public PacMan getPlayer();
 	
 	/**
-	 * @see IPlateau#getGhost(int)
+	 * Gets Ghost
+	 * @return Ghost
 	 */
-	public IGhost getGhost(int id);
+	public Ghost getGhost(GhostType type);
 	
+	/**
+	 * Has PacMan won the level
+	 * @return true if PacMan ate all the dots, false otherwise
+	 */
 	public boolean hasWon();
 }
