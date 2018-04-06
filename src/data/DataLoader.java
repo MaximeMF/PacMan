@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
  * Class loading game data from a json config file.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
-public class Data implements IData {
+public class DataLoader implements IDataLoader {
 	
 	
 	
@@ -24,9 +24,9 @@ public class Data implements IData {
 	
 	
 	/**
-	 * Constructs an instance of Data.
+	 * Constructs an instance of DataLoader.
 	 */
-	public Data() {
+	public DataLoader() {
 		this.initialise();
 	}
 	
@@ -84,7 +84,7 @@ public class Data implements IData {
 	public int[][] getBoard() {
 		int boardHeight = getBoardHeight();
 		int boardWidth = getBoardWidth();
-		JSONArray board = (JSONArray) json.get("board");
+		JSONArray board = (JSONArray) this.json.get("board");
 		int[][] boardMatrix = new int[boardHeight][boardWidth];
 		for(int i=0; i<boardHeight; i++) {
 			JSONArray row = (JSONArray) board.get(i);
@@ -100,7 +100,7 @@ public class Data implements IData {
      */
 	@Override
 	public int[] getPacmanPosition() {
-		JSONArray position = (JSONArray) json.get("posPacman");
+		JSONArray position = (JSONArray) this.json.get("posPacman");
 		int[] posArray = new int[position.size()];
         for(int i=0; i<position.size(); i++) {
         	posArray[i] = Math.toIntExact((long)position.get(i));
@@ -112,9 +112,18 @@ public class Data implements IData {
      * {@inheritDoc }
      */
 	@Override
-	public EnumMap<GhostType, Integer[]> getGhostsPosition() {
-		// TODO Auto-generated method stub
-		return null;
+	public EnumMap<GhostType, int[]> getGhostsPosition() {
+		EnumMap<GhostType, int[]> posMap = new EnumMap<>(GhostType.class);
+		JSONObject posGhosts = (JSONObject) this.json.get("posGhosts");
+		for(GhostType type : GhostType.values()) {
+			JSONArray pos = (JSONArray) posGhosts.get(type.name().toLowerCase());
+			int[] posArray = new int[pos.size()];
+	        for(int i=0; i<pos.size(); i++) {
+	        	posArray[i] = Math.toIntExact((long)pos.get(i));
+	        }
+			posMap.put(type, posArray);
+		}
+		return posMap;
 	}
 
     /**
@@ -122,8 +131,15 @@ public class Data implements IData {
      */
 	@Override
 	public EnumMap<Entity, Integer> getEntityPoints() {
-		// TODO Auto-generated method stub
-		return null;
+		EnumMap<Entity, Integer> pointsMap = new EnumMap<>(Entity.class);
+		JSONObject pointsEntities = (JSONObject) this.json.get("points");
+		for(Entity type : Entity.values()) {
+			if(type.isGivingPoints()) {
+				int points = Math.toIntExact((long)pointsEntities.get(type.name().toLowerCase()));
+		        pointsMap.put(type, points);
+			}
+		}
+		return pointsMap;
 	}
 
     /**

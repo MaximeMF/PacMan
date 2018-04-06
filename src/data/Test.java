@@ -4,24 +4,27 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.Scanner;
 
 public class Test {
 
 	public static void main(String[] args) {
 
-		Data data = new Data();
+		DataLoader dataLoader = new DataLoader();
 		
-		int boardHeight = data.getBoardHeight();
-		int boardWidth = data.getBoardWidth();
-		int bestScore = data.getBestScore();
-		int gommes = data.getGommes();
-		int levels = data.getLevels();
-		int lives = data.getLives();
-		int powerTime = data.getPowerTime();
-		int speed = data.getSpeed();
-		int[] pacmanPosition = data.getPacmanPosition();
-		int[][] board = data.getBoard();
+		int boardHeight = dataLoader.getBoardHeight();
+		int boardWidth = dataLoader.getBoardWidth();
+		int bestScore = dataLoader.getBestScore();
+		int gommes = dataLoader.getGommes();
+		int levels = dataLoader.getLevels();
+		int lives = dataLoader.getLives();
+		int powerTime = dataLoader.getPowerTime();
+		int speed = dataLoader.getSpeed();
+		int[] pacmanPosition = dataLoader.getPacmanPosition();
+		int[][] board = dataLoader.getBoard();
+		EnumMap<GhostType, int[]> ghostsPosition = dataLoader.getGhostsPosition();
+		EnumMap<Entity, Integer> points = dataLoader.getEntityPoints();
 		
 		System.out.println("BoardHeight : "+boardHeight);
 		System.out.println("BoardWidth : "+boardWidth);
@@ -39,6 +42,17 @@ public class Test {
 				System.out.print(board[i][j]);
 			}
 			System.out.println("");
+		}
+		for(GhostType type : GhostType.values()) {
+			System.out.println(type.toString());
+			for(int k : ghostsPosition.get(type)) {
+				System.out.println(k);
+			}
+		}
+		for(Entity type : Entity.values()) {
+			System.out.println(type.toString());
+			if(type.isGivingPoints())
+				System.out.println(points.get(type));
 		}
 
 	}

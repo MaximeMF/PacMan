@@ -6,7 +6,7 @@ import java.util.EnumMap;
  * Interface providing methods that can be used by the Logic package.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
-public interface IData {
+public interface IDataLoader {
 	
 	/**
 	 * Gets the height of the board.
@@ -36,7 +36,7 @@ public interface IData {
 	 * Gets the position of the ghosts on the board.
 	 * @return the ghosts position
 	 */
-	public EnumMap<GhostType, Integer[]> getGhostsPosition();
+	public EnumMap<GhostType, int[]> getGhostsPosition();
 	
 	/**
 	 * Gets the points corresponding to the entities.
