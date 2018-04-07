@@ -11,14 +11,14 @@ public interface IDataLoader {
 	/**
 	 * Gets the height of the board.
 	 * @return the board height
-	 * @post boardHeight >= 10
+	 * @post boardHeight >= 5
 	 */
 	public int getBoardHeight();
 	
 	/**
 	 * Gets the width of the board.
 	 * @return the board width
-	 * @post boardWidth >= 10
+	 * @post boardWidth >= 5
 	 */
 	public int getBoardWidth();
 	
@@ -32,7 +32,7 @@ public interface IDataLoader {
 	/**
 	 * Gets the position of Pacman on the board.
 	 * @return the Pacman position
-	 * @post pacmanPosition.length() = 2 && 0 <= pacmanPosition[0] < boardWidth && 0 <= pacmanPosition[1] < boardHeight
+	 * @post pacmanPosition.length = 2 && 0 <= pacmanPosition[0] < boardWidth && 0 <= pacmanPosition[1] < boardHeight
 	 */
 	public int[] getPacmanPosition();
 	
@@ -60,28 +60,28 @@ public interface IDataLoader {
 	/**
 	 * Gets the number of levels.
 	 * @return the levels number
-	 * @post 256 >= levels >= 1
+	 * @post levels >= 1
 	 */
 	public int getLevels();
 	
 	/**
 	 * Gets the number of gommes in each level.
 	 * @return the gommes number
-	 * @post gommes >= 10
+	 * @post boardWidth*boardHeight >= gommes >= 1
 	 */
 	public int getGommes();
 	
 	/**
 	 * Gets the number of Pacman lives.
 	 * @return the lives number
-	 * @post 5 >= lives >= 0
+	 * @post lives >= 0
 	 */
 	public int getLives();
 	
 	/**
-	 * Gets the speed coefficient.
-	 * @return the speed coefficient
-	 * @post 2 >= speed >= 0
+	 * Gets the speed percent.
+	 * @return the speed percent
+	 * @post 200 >= speed >= 50
 	 */
 	public int getSpeed();
 	

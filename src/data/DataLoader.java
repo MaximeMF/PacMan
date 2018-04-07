@@ -44,6 +44,7 @@ public class DataLoader implements IDataLoader {
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
+		assert this.json != null : "postcondition violated : no json configuration file";
 	}
 	
 	
@@ -55,6 +56,7 @@ public class DataLoader implements IDataLoader {
 	 * @pre json.containsKey(key) == true
 	 */
 	private int parseInt(String key) {
+		assert this.json.containsKey(key) : "precondition violated : no "+key+" key in json configuration file";
 		long value = (long) this.json.get(key);
 		return Math.toIntExact(value);
 	}
@@ -67,6 +69,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getBoardHeight() {
 		int boardHeight = parseInt("boardHeight");
+		assert boardHeight >= 5 : "postcondition violated : specified boardHeight in json configuration file doesn't meet the specifications";
 		return boardHeight;
 	}
 
@@ -76,6 +79,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getBoardWidth() {
 		int boardWidth = parseInt("boardWidth");
+		assert boardWidth >= 5 : "postcondition violated : specified boardWidth in json configuration file doesn't meet the specifications";
 		return boardWidth;
 	}
 
@@ -92,6 +96,7 @@ public class DataLoader implements IDataLoader {
 			JSONArray row = (JSONArray) board.get(i);
 	       	for(int j=0; j<boardWidth; j++) {
 	       		boardMatrix[i][j] = Entity.getEntityById(Math.toIntExact((long)row.get(j)));
+	       		assert boardMatrix[i][j] != null : "postcondition violated : specified board in json configuration file doesn't meet the specifications";
 	       	}
 	    }
 		return boardMatrix;
@@ -107,6 +112,7 @@ public class DataLoader implements IDataLoader {
         for(int i=0; i<position.size(); i++) {
         	posArray[i] = Math.toIntExact((long)position.get(i));
         }
+        assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
         return posArray;
 	}
 
@@ -122,6 +128,7 @@ public class DataLoader implements IDataLoader {
 			int[] posArray = new int[pos.size()];
 	        for(int i=0; i<pos.size(); i++) {
 	        	posArray[i] = Math.toIntExact((long)pos.get(i));
+	        	assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posGhosts in json configuration file doesn't meet the specifications";	        
 	        }
 			posMap.put(type, posArray);
 		}
@@ -139,6 +146,7 @@ public class DataLoader implements IDataLoader {
 			if(type.isGivingPoints()) {
 				int points = Math.toIntExact((long)pointsEntities.get(type.name().toLowerCase()));
 		        pointsMap.put(type, points);
+		        assert points > 0 :  "postcondition violated : specified points in json configuration file doesn't meet the specifications";
 			}
 		}
 		return pointsMap;
@@ -150,6 +158,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getBestScore() {
 		int bestScore = parseInt("bestScore");
+		assert bestScore >= 0 : "postcondition violated : specified bestScore in json configuration file doesn't meet the specifications";
 		return bestScore;
 	}
 
@@ -159,6 +168,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getLevels() {
 		int nbLevels = parseInt("nbLevels");
+		assert nbLevels >= 1 :  "postcondition violated : specified nbLevels in json configuration file doesn't meet the specifications";
 		return nbLevels;
 	}
 
@@ -168,6 +178,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getGommes() {
 		int nbGommes = parseInt("nbGommes");
+		assert nbGommes >= 1 && nbGommes <= getBoardWidth()*getBoardHeight() :  "postcondition violated : specified nbGommes in json configuration file doesn't meet the specifications";
 		return nbGommes;
 	}
 
@@ -177,6 +188,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getLives() {
 		int nbLives = parseInt("nbLives");
+		assert nbLives >= 1 :  "postcondition violated : specified nbLives in json configuration file doesn't meet the specifications";
 		return nbLives;
 	}
 
@@ -185,7 +197,8 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getSpeed() {
-		int speed = parseInt("speed");
+		int speed = parseInt("speedPercent");
+		assert speed >= 50 && speed <= 200 :  "postcondition violated : specified speedPercent in json configuration file doesn't meet the specifications";
 		return speed;
 	}
 
@@ -195,6 +208,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getPowerTime() {
 		int powerTime = parseInt("powerTime");
+		assert powerTime >= 0 :  "postcondition violated : specified powerTime in json configuration file doesn't meet the specifications";
 		return powerTime;
 	}
 
