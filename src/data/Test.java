@@ -1,11 +1,6 @@
 package data;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.EnumMap;
-import java.util.Scanner;
 
 public class Test {
 
@@ -22,7 +17,7 @@ public class Test {
 		int powerTime = dataLoader.getPowerTime();
 		int speed = dataLoader.getSpeed();
 		int[] pacmanPosition = dataLoader.getPacmanPosition();
-		int[][] board = dataLoader.getBoard();
+		Entity[][] board = dataLoader.getBoard();
 		EnumMap<GhostType, int[]> ghostsPosition = dataLoader.getGhostsPosition();
 		EnumMap<Entity, Integer> points = dataLoader.getEntityPoints();
 		
@@ -39,7 +34,7 @@ public class Test {
 		}
 		for(int i=0; i<board.length; i++) {
 			for(int j=0; j<board[0].length; j++) {
-				System.out.print(board[i][j]);
+				System.out.print(board[i][j].name()+" ");
 			}
 			System.out.println("");
 		}

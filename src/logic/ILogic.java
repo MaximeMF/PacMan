@@ -19,7 +19,7 @@ public interface ILogic {
 	 * Gets Plateau.
 	 * @return Plateau
 	 */
-	public int[][] getPlateau();
+	public Entity[][] getPlateau();
 	
 	/**
 	 * Gets PacMan

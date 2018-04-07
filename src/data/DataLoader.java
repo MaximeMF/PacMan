@@ -34,6 +34,7 @@ public class DataLoader implements IDataLoader {
 	
 	/**
 	 * Gets the json config file.
+	 * @post json != null
 	 */
 	private void initialise() {
 		JSONParser parser = new JSONParser();
@@ -51,6 +52,7 @@ public class DataLoader implements IDataLoader {
 	 * Parse the json object.
 	 * @param key the element's name whose value is sought.
 	 * @return the int value associated to the key
+	 * @pre json.containsKey(key) == true
 	 */
 	private int parseInt(String key) {
 		long value = (long) this.json.get(key);
@@ -81,15 +83,15 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int[][] getBoard() {
+	public Entity[][] getBoard() {
 		int boardHeight = getBoardHeight();
 		int boardWidth = getBoardWidth();
 		JSONArray board = (JSONArray) this.json.get("board");
-		int[][] boardMatrix = new int[boardHeight][boardWidth];
+		Entity[][] boardMatrix = new Entity[boardHeight][boardWidth];
 		for(int i=0; i<boardHeight; i++) {
 			JSONArray row = (JSONArray) board.get(i);
 	       	for(int j=0; j<boardWidth; j++) {
-	       		boardMatrix[i][j] = Math.toIntExact((long)row.get(j));
+	       		boardMatrix[i][j] = Entity.getEntityById(Math.toIntExact((long)row.get(j)));
 	       	}
 	    }
 		return boardMatrix;

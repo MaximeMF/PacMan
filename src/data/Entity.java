@@ -36,6 +36,20 @@ public enum Entity {
 	}
 	
 	/**
+	 * Gets an entity by his id.
+	 * @param id the id of the entity to get
+	 * @return the entity associated to the id
+	 */
+	public static Entity getEntityById(int id) {
+		Entity ret = null;
+		for(Entity ent : Entity.values()) {
+			if(ent.id == id)
+				ret = ent;
+		}
+		return ret;
+	}
+	
+	/**
 	 * Checks if the entity can give points.
 	 * @return true if the entity can give points, false otherwise
 	 */
