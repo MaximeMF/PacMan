@@ -29,14 +29,14 @@ public interface ILogic {
 	 * Moves a Ghost.
 	 * @param type the type of the ghost to move
 	 * @param dir the direction the ghost should move towards
-	 * @post 0 <= ghost.x < boardWidth && 0 <= ghost.y < boardHeight
+	 * @post {@code 0 <= ghost.x < boardWidth && 0 <= ghost.y < boardHeight}
 	 */
 	public void moveGhost(GhostType type, Direction dir);
 	
 	/**
 	 * Moves PacMan.
 	 * @param dir the direction the ghost should move towards
-	 * @post 0 <= pacman.x < boardWidth && 0 <= pacman.y < boardHeight
+	 * @post {@code 0 <= pacman.x < boardWidth && 0 <= pacman.y < boardHeight}
 	 */
 	public void movePlayer(Direction dir);
 	
@@ -61,63 +61,63 @@ public interface ILogic {
 	/**
 	 * Gets the board.
 	 * @return the matrix of the board
-	 * @post board[x][y] != null for any x,y < boardWidth, boardHeight
+	 * @post {@code board[x][y] != null for any x,y < boardWidth, boardHeight}
 	 */
 	public Entity[][] getBoard();
 	
 	/**
 	 * Gets the height of the board.
 	 * @return the board height
-	 * @post boardHeight >= 5
+	 * @post {@code boardHeight >= 5}
 	 */
 	public int getBoardHeight();
 	
 	/**
 	 * Gets the width of the board.
 	 * @return the board width
-	 * @post boardWidth >= 5
+	 * @post {@code boardWidth >= 5}
 	 */
 	public int getBoardWidth();
 	
 	/**
 	 * Gets the position of Pacman on the board.
 	 * @return the Pacman position
-	 * @post pacmanPosition.length = 2 && 0 <= pacmanPosition[0] < boardWidth && 0 <= pacmanPosition[1] < boardHeight
+	 * @post {@code pacmanPosition.length = 2 && 0 <= pacmanPosition[0] < boardWidth && 0 <= pacmanPosition[1] < boardHeight}
 	 */
 	public int[] getPacmanPosition();
 	
 	/**
 	 * Gets the position of the ghosts on the board.
 	 * @return the ghosts position
-	 * @post int[].length() = 2 && 0 <= int[0] < boardWidth && 0 <= int[1] < boardHeight
+	 * @post {@code int[].length() = 2 && 0 <= int[0] < boardWidth && 0 <= int[1] < boardHeight}
 	 */
 	public EnumMap<GhostType, int[]> getGhostsPosition();
 	
 	/**
 	 * Gets the speed percent.
 	 * @return the speed percent
-	 * @post 200 >= speed >= 50
+	 * @post {@code 200 >= speed >= 50}
 	 */
 	public int getSpeed();
 	
 	/**
 	 * Gets the best score.
 	 * @return the best score
-	 * @post bestScore >= 0
+	 * @post {@code bestScore >= 0}
 	 */
 	public int getBestScore();
 	
 	/**
 	 * Gets the current score.
 	 * @return current score
-	 * @post score >= 0
+	 * @post {@code score >= 0}
 	 */
 	public int getScore();
 	
 	/**
 	 * Gets the current level.
 	 * @return current level
-	 * @post 5 >= level >= 1
+	 * @post {@code 5 >= level >= 1}
 	 */
 	public int getLevel();
 	
@@ -125,21 +125,21 @@ public interface ILogic {
 	/**
 	 * Gets the number of lives left.
 	 * @return the number of lives left
-	 * @post lives >= 0
+	 * @post {@code lives >= 0}
 	 */
 	public int getLives();
 	
 	/**
 	 * Has PacMan won the level
 	 * @return true if PacMan ate all the dots, false otherwise
-	 * @pre gommes >= 0
+	 * @pre {@code gommes >= 0}
 	 */
 	public boolean hasWon();
 	
 	/**
 	 * Has PacMan lost
 	 * @return true if PacMan lost all his lives, false otherwise
-	 * @pre pacman.lives >= 0
+	 * @pre {@code pacman.lives >= 0}
 	 */
 	public boolean hasLost();
 }
