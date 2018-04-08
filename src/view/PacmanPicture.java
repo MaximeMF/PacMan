@@ -36,6 +36,7 @@ public class PacmanPicture extends JPanel {
         timer.start();
     }
 
+    
     private void setKeyBindings(PacmanDirection dir, int keyCode) {
         int condition = WHEN_IN_FOCUSED_WINDOW;
         InputMap inputMap = getInputMap(condition);
@@ -47,10 +48,12 @@ public class PacmanPicture extends JPanel {
         inputMap.put(keyPressed, keyPressed.toString());
         inputMap.put(keyReleased, keyReleased.toString());
 
-        actionMap.put(keyPressed.toString(), new MoveAction(dir, false));
-        actionMap.put(keyReleased.toString(), new MoveAction(dir, true));
+        actionMap.put(keyPressed.toString(), new MoveAction(dir));
+        actionMap.put(keyReleased.toString(), new MoveAction(dir));
     }
 
+    
+    
     @Override
     public Dimension getPreferredSize() {
         if (isPreferredSizeSet()) {
@@ -63,25 +66,23 @@ public class PacmanPicture extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         pacman.draw(g);
+      
     }
 
     private class MoveAction extends AbstractAction {
         private PacmanDirection dir;
-        private boolean released;
 
-        public MoveAction(PacmanDirection dir, boolean released) {
+        public MoveAction(PacmanDirection dir) {
             this.dir = dir;
-            this.released = released;
+           
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (released) {
-            	pacman.setMoving(true);
-            } else {
-            	pacman.setMoving(true);
-            	pacman.setDirection(dir);
-            }
+            
+            		pacman.setMoving(true);
+            		pacman.setDirection(dir);
+            
         }
     }
 
@@ -95,18 +96,5 @@ public class PacmanPicture extends JPanel {
             }
     }
 
-    private static void createAndShowGui() {
-    		PacmanPicture mainPanel = new PacmanPicture();
-
-        JFrame frame = new JFrame("PacMan");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(mainPanel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> createAndShowGui());
-    }
+   
 }

@@ -1,19 +1,20 @@
 package view;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.*;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
- class PacmanView {
- 
-    private static final int MAX_MOVING_INDEX = 4;
+public class GhostView {
+	private static final int MAX_MOVING_INDEX = 4;
     private static final int Speed = 4;
     private PacmanDirection direction;
     private Map<PacmanDirection, Image> standingImgMap = new EnumMap<>(PacmanDirection.class);
@@ -23,11 +24,11 @@ import javax.imageio.ImageIO;
     private boolean moving = false;
     private int movingIndex = 0;
 
-    public PacmanView(PacmanDirection direction, int x, int y) throws IOException {
+    public GhostView(PacmanDirection direction, int x, int y) throws IOException {
         this.direction = direction;
         this.x = x;
         this.y = y;
-        createPacman();
+        createGhost();
     }
 
     public void draw(Graphics g) {
@@ -42,50 +43,13 @@ import javax.imageio.ImageIO;
     
      
     
-    private void createPacman() throws IOException 
+    private void createGhost() throws IOException 
     {
        
-        BufferedImage imgup = ImageIO.read(new File("res/pacmanup.png"));
-        BufferedImage imgdown = ImageIO.read(new File("res/pacmandown.png"));
-        BufferedImage imgleft = ImageIO.read(new File("res/pacmanleft.png"));
-        BufferedImage imgright = ImageIO.read(new File("res/pacmanright.png"));
+        BufferedImage ghost = ImageIO.read(new File("res/ghost.png"));
+        ghost  = GhostView.resize(ghost, 40, 40);
         
-        imgup  = PacmanView.resize(imgup, 40, 40);
-        imgdown= PacmanView.resize(imgdown, 40, 40) ;
-        imgleft= PacmanView.resize(imgleft, 40, 40);
-        imgright= PacmanView.resize(imgright, 40, 40);
-        
-        // get sub-images (sprites) from the sprite sheet
-       
-        
-        for (int row = 0; row < 4; row++) {
-            PacmanDirection dir = PacmanDirection.values()[row];
-            List<Image> imgList = new ArrayList<>();
-            imgList.add(imgup);
-           
-            movingImgMap.put(dir, imgList);
-            for (int col = 0; col < 5; col++) {
-                if (col == 0) {
-                    // first image is standing
-                		standingImgMap.put(dir, imgup);	
-                }
-                else
-                {
-                		imgList.add(imgup);
-                		imgList.add(imgup);
-                		imgList.add(imgup);
-                }
-                
-                
-                
-            
-            }
-        }
-            
-            
-            
- 
-        
+              
     }
 
     public PacmanDirection getDirection() {
@@ -129,19 +93,7 @@ import javax.imageio.ImageIO;
 
     public void tick() {
         if (moving) {
-            switch (direction) {
-            case RIGHT:
-                x += Speed;
-                break;
-            case LEFT:
-                x -= Speed;
-                break;
-            case FORWARD:
-                y += Speed;
-                break;
-            case AWAY:
-                y -= Speed;
-            }
+            
             movingIndex++;
             movingIndex %= MAX_MOVING_INDEX;
         }
@@ -166,5 +118,4 @@ import javax.imageio.ImageIO;
 
         return dimg;
     }
-
 }
