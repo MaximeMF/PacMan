@@ -19,10 +19,10 @@ public interface IGhost {
 	public void move(Direction dir);
 	
 	/**
-	 * Gets the ghosts PacMan just ate.
-	 * @return the type of the ghosts PacMan ate or null if none was eaten
+	 * Tests whether the ghost has been eaten
+	 * @return true if the ghost has been eaten, false otherwise
 	 */
-	public GhostType[] isDead();
+	public boolean isDead();
 	
 	/**
 	 * Gets the position of the ghost on the board.
