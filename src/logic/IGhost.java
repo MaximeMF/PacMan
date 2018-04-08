@@ -1,7 +1,5 @@
 package logic;
 
-import data.GhostType;
-
 public interface IGhost {
 	
 	/**
