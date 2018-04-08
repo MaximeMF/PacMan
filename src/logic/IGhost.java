@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.EnumMap;
-
 import data.GhostType;
 
 public interface IGhost {
