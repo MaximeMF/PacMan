@@ -15,7 +15,6 @@ public interface IGhost {
 	
 	/**
 	 * Moves the ghost.
-	 * @param type the type of the ghost to move
 	 * @param dir the direction the ghost should move towards
 	 * @post {@code 0 <= ghost.x < boardWidth && 0 <= ghost.y < boardHeight}
 	 */
