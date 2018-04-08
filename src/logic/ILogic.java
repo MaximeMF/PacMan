@@ -19,14 +19,14 @@ public interface ILogic {
 	public boolean canMoveGhost(GhostType type, Direction dir);
 	
 	/**
-	 * Tests whether PacMan can move in the given direction
+	 * Tests whether PacMan can move in the given direction.
 	 * @param dir the direction PacMan should move towards
 	 * @return true if PacMan can move in the given direction, false otherwise
 	 */
 	public boolean canMovePlayer(Direction dir);
 	
 	/**
-	 * Moves a Ghost
+	 * Moves a Ghost.
 	 * @param type the type of the ghost to move
 	 * @param dir the direction the ghost should move towards
 	 * @post 0 <= ghost.x < boardWidth && 0 <= ghost.y < boardHeight
@@ -34,11 +34,29 @@ public interface ILogic {
 	public void moveGhost(GhostType type, Direction dir);
 	
 	/**
-	 * Moves PacMan
+	 * Moves PacMan.
 	 * @param dir the direction the ghost should move towards
 	 * @post 0 <= pacman.x < boardWidth && 0 <= pacman.y < boardHeight
 	 */
 	public void movePlayer(Direction dir);
+	
+	/**
+	 * Tests whether PacMan has been eaten by a ghost.
+	 * @return true if PacMan is on the same case as a ghost, false otherwise
+	 */
+	public boolean isPlayerDead();
+	
+	/**
+	 * Gets the ghosts PacMan just ate.
+	 * @return the type of the ghosts PacMan ate or null if none was eaten
+	 */
+	public GhostType[] isGhostDead();
+	
+	/**
+	 * Tests whether PacMan can eat ghosts.
+	 * @return true if PacMan can eat ghosts
+	 */
+	public boolean isPlayerPowered();
 	
 	/**
 	 * Gets the board.
@@ -102,6 +120,14 @@ public interface ILogic {
 	 * @post 5 >= level >= 1
 	 */
 	public int getLevel();
+	
+	
+	/**
+	 * Gets the number of lives left.
+	 * @return the number of lives left
+	 * @post lives >= 0
+	 */
+	public int getLives();
 	
 	/**
 	 * Has PacMan won the level
