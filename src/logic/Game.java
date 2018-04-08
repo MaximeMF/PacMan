@@ -1,6 +1,7 @@
 package logic;
 
 import data.Entity;
+import data.GhostType;
 
 public class Game implements IGame{
 
@@ -44,6 +45,18 @@ public class Game implements IGame{
 	public boolean hasLost() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public IPacMan getPlayer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IGhost getGhost(GhostType type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

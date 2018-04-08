@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.EnumMap;
-
 import data.*;
 
 /**
@@ -58,4 +56,17 @@ public interface IGame {
 	 * @pre {@code pacman.lives >= 0}
 	 */
 	public boolean hasLost();
+	
+	/**
+	 * Gets PacMan.
+	 * @return PacMan object representing the player
+	 */
+	public IPacMan getPlayer();
+	
+	/**
+	 * Gets the ghost of a certain type.
+	 * @param type the type of the ghost
+	 * @return Ghost object representing the ghost
+	 */
+	public IGhost getGhost(GhostType type);
 }
