@@ -5,24 +5,24 @@ package logic;
  * @author Robin ALGIER - Maxime MATHIS--FUMEL - Yassin OURKIA
  */
 public enum Direction {
-  
-  UP,
-  LEFT,
-  RIGHT,
-  DOWN;
 
-  public static Direction opposite(Direction dir) {
-    switch(dir) {
-    case UP:
-      return DOWN;
-    case DOWN:
-      return UP;
-    case LEFT:
-      return RIGHT;
-    case RIGHT:
-      return LEFT;
-    }
-    return null;
-  }
-  
+	UP,
+	LEFT,
+	RIGHT,
+	DOWN;
+
+	public static Direction opposite(Direction dir) {
+		switch(dir) {
+		case UP:
+			return DOWN;
+		case DOWN:
+			return UP;
+		case LEFT:
+			return RIGHT;
+		case RIGHT:
+			return LEFT;
+		}
+		return null;
+	}
+
 }
