@@ -1,7 +1,10 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
@@ -11,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.json.simple.JSONArray;
@@ -46,7 +50,7 @@ public class Maze {
 	        };*/
 		//Figure [][] figures = this.drawMaze();
 	        //this.figure = new CompoundFigure(figures[1]);
-	        this.canvas = Canvas.getCanvas();
+	       // this.canvas = Canvas.getCanvas();
 	       
 		
 	}
@@ -80,9 +84,9 @@ public class Maze {
 	
 	
 	
-	public void drawMaze() throws FileNotFoundException, IOException, ParseException
+	public WallPane[][] drawMaze() throws FileNotFoundException, IOException, ParseException
 	{
-		
+		WallPane [][] murs = new WallPane[31][28];
 		int [][] board = this.getBoard();
 		for( int i=0; i<board.length;i++)
 		{
@@ -92,10 +96,11 @@ public class Maze {
 				{
 						int k = i ;
 						int m = j ;
-						new WallPane(k,m);		
+						murs[i][j] = new WallPane(k*40,m*40);		
 				}
 			}
 		}
+		return murs;
    	}
 	
 	
@@ -109,21 +114,27 @@ public class Maze {
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
 		Maze m = new Maze();
 		//m.draw();
-		Graphics g = null;
-		m.drawMaze( );
+		WallPane pp [][] = m.drawMaze( );
+		JFrame jp1 = new JFrame();
+		//JPanel pan = new JPanel();
+        for(int i=0;i<pp.length;i++)
+        {
+        		for (int j=0;j<pp[i].length;j++)
+        		{
+        			if(pp[i][j] != null)
+        			{
+        				jp1.getContentPane().add(pp[i][j]).setBounds(pp[i][j].x,pp[i][j].y,80,80);
+        				System.out.println(pp[i][j].x+ " , "+pp[i][j].y);
+        			}
+        		}
+        }
+		//
+        
+        //jp1.getContentPane().add(pan, BorderLayout.CENTER);
+        jp1.setSize(new Dimension(500,500));
+        jp1.setVisible(true);
 		
 		
-		Canvas c = Canvas.getCanvas();
-		
-		/*for( int i=0; i<f.length;i++)
-		{
-			for( int j=0; j<f[i].length;j++)
-			{
-				f[i][j].draw();;
-			}
-			System.out.println();
-		}
-		*/
 		
 		
 		
@@ -133,25 +144,50 @@ public class Maze {
 			
 	}
 	
-	@SuppressWarnings("serial")
-	class WallPane extends JPanel
+	
+	private  class WallPane extends JPanel
 	{
 		private   BufferedImage wall ;
-		private int x , y;
+		public int x , y;
 
 		public WallPane(int x,int y) throws IOException{
 			this.x =x;
 			this.y =y;
 			this.wall = ImageIO.read(new File("res/wall.png"));
+			this.wall = Maze.resize(wall,40,40);
 		
 		}
 		
-		public void paintCompoenent(Graphics g)
+		
+		public void paintComponent(Graphics g)
 		{
+			
 			super.paintComponent(g);
-			g.drawImage(this.wall, this.x, this.y, null);
+			g.drawImage(this.wall, 20,20, null);
+			
+		}
+		public int getHeightImage()
+		{
+			return wall.getHeight();
+		}
+		public int getWidthImage()
+		{
+			return wall.getWidth();
 		}
 		
 	}
 	
+	  public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
+	        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+	        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+	        Graphics2D g2d = dimg.createGraphics();
+	        g2d.drawImage(tmp, 0, 0, null);
+	        g2d.dispose();
+
+	        return dimg;
+	    }
+	
 }
+
+
