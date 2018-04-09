@@ -4,24 +4,25 @@ import java.util.Arrays;
 
 import data.Entity;
 
-public class PacMan implements IPacMan{
+public class PacMan{
 
 	private boolean powered = false;
 	private int[] position;
 	private int score = 0;
 	private int lives;
 	private int level = 1;
+	private int[] respawnPosition;
 
 	public PacMan(int[] pos, int lives) {
 		this.position = pos;
 		this.lives = lives;
+		this.respawnPosition = pos;
 	}
 
 	public void addScore(int value) {
 		this.score += value;
 	}
 
-	@Override
 	public boolean canMove(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -47,7 +48,6 @@ public class PacMan implements IPacMan{
 		return false;
 	}
 
-	@Override
 	public void move(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -92,51 +92,55 @@ public class PacMan implements IPacMan{
 			board[x][y] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.SUPERGOMME));
 			Game.INSTANCE.decreaseGommes();
+			this.powered = true;
 			for(Ghost ghost : Game.INSTANCE.ghosts) {
 				ghost.changeState();
 			}
+			Game.INSTANCE.startPowerTimer();
 			break;
 		default:
 
 		}
 	}
 
-	@Override
 	public boolean isDead() {
 		Game game = Game.INSTANCE;
 		for(Ghost ghost : game.ghosts) {
 			if(Arrays.equals(ghost.getPosition(), this.position))
-				if(!ghost.canBeEaten()) {
-					this.lives--;
+				if(!ghost.canBeEaten())
 					return true;
-				}
 		}
 		return false;
 	}
 
-	@Override
 	public boolean isPowered() {
 		return this.powered;
 	}
 
-	@Override
 	public int[] getPosition() {
 		return this.position;
 	}
 
-	@Override
 	public int getScore() {
 		return this.score;
 	}
 
-	@Override
 	public int getLevel() {
 		return this.level;
 	}
 
-	@Override
 	public int getLives() {
 		return this.lives;
+	}
+
+	public void respawn(boolean isDead) {
+		if(isDead)
+			this.lives--;
+		this.position = this.respawnPosition;
+	}
+	
+	public void unpower() {
+		this.powered = false;
 	}
 
 }

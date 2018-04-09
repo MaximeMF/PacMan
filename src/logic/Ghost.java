@@ -6,7 +6,7 @@ import java.util.Random;
 import data.Entity;
 import data.GhostType;
 
-public class Ghost implements IGhost{
+public class Ghost{
 
 	private int[] position;
 	private GhostType type;
@@ -62,7 +62,6 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
-	@Override
 	public void move() {
 		int max = Direction.values().length;
 		Direction dir;
@@ -113,7 +112,6 @@ public class Ghost implements IGhost{
 		}
 	}
 
-	@Override
 	public boolean isDead() {
 		if(this.canBeEaten) {
 			Game game = Game.INSTANCE;
@@ -124,7 +122,6 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
-	@Override
 	public int[] getPosition() {
 		return position;
 	}

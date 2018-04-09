@@ -49,29 +49,61 @@ public interface IGame {
 	public int getBestScore();
 
 	/**
-	 * Has PacMan won the level
+	 * Has PacMan won the level.
 	 * @return true if PacMan ate all the dots, false otherwise
 	 * @pre {@code gommes >= 0}
 	 */
 	public boolean hasWon();
 
 	/**
-	 * Has PacMan lost
+	 * Has PacMan lost.
 	 * @return true if PacMan lost all his lives, false otherwise
 	 * @pre {@code pacman.lives >= 0}
 	 */
 	public boolean hasLost();
-
+	
 	/**
-	 * Gets PacMan.
-	 * @return PacMan object representing the player
+	 * Tests whether PacMan can move in the desired direction
+	 * @param dir the direction PacMan should move towards
 	 */
-	public IPacMan getPlayer();
-
+	public boolean canMovePlayer(Direction dir);
+	
 	/**
-	 * Gets the ghost of a certain type.
+	 * Moves PacMan in the desired direction.
+	 * @param dir the direction PacMan should move towards
+	 */
+	public void movePlayer(Direction dir);
+	
+	/**
+	 * Moves the ghost.
+	 * @param type the type of the ghost to move
+	 */
+	public void moveGhost(GhostType type);
+	
+	/**
+	 * Gets the position of PacMan.
+	 * @return the position of PacMan
+	 * @post {@code pacmanPosition.length = 2 && 0 <= pacmanPosition[0] < boardWidth && 0 <= pacmanPosition[1] < boardHeight}
+	 */
+	public int[] getPlayerPosition();
+	
+	/**
+	 * Gets the position of a given ghost.
+	 * @param type the type of the ghost to get the position from
+	 * @return the position of the ghost
+	 */
+	public int[] getGhostPosition(GhostType type);
+	
+	/**
+	 * Tests whether the ghost can be eaten.
 	 * @param type the type of the ghost
-	 * @return Ghost object representing the ghost
+	 * @return true if the ghost can be eaten, false otherwise
 	 */
-	public IGhost getGhost(GhostType type);
+	public boolean canGhostBeEaten(GhostType type);
+	
+	/**
+	 * Tests whether power is currently active.
+	 * @return true if power is currently active, false otherwise
+	 */
+	public boolean isPowerActive();
 }
