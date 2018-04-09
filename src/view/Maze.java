@@ -1,10 +1,17 @@
 package view;
+
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +23,7 @@ public class Maze {
 	private Figure figure;
 	int rows = 45;
     int columns = 45;
-
+    
     // Short delay between steps in making and solving maze
    
 
@@ -40,6 +47,7 @@ public class Maze {
 		//Figure [][] figures = this.drawMaze();
 	        //this.figure = new CompoundFigure(figures[1]);
 	        this.canvas = Canvas.getCanvas();
+	       
 		
 	}
 
@@ -72,26 +80,22 @@ public class Maze {
 	
 	
 	
-	public Figure[][] drawMaze() throws FileNotFoundException, IOException, ParseException
+	public void drawMaze() throws FileNotFoundException, IOException, ParseException
 	{
-		Figure [][] blocks = new Figure[31][28];
+		
 		int [][] board = this.getBoard();
 		for( int i=0; i<board.length;i++)
 		{
 			for( int j=0; j<board[i].length;j++)
 			{
 				if(board[i][j] == 0)
-					{
-						//int k = i +;
-						//int m = j +;
-						blocks[i][j] = new Square(40, i, j,Color.BLUE);
-						System.out.print("here");
-						
-					};
+				{
+						int k = i ;
+						int m = j ;
+						new WallPane(k,m);		
+				}
 			}
-			
 		}
-		return blocks;
    	}
 	
 	
@@ -105,18 +109,12 @@ public class Maze {
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
 		Maze m = new Maze();
 		//m.draw();
-		Figure[][] f = m.drawMaze();
-		/*int [][]plateau = m.getBoard();
-		for( int i=0; i<plateau.length;i++)
-		{
-			for( int j=0; j<plateau[i].length;j++)
-			{
-				System.out.print(plateau[i][j]);
-			}
-			System.out.println();
-		}
-		*/
+		Graphics g = null;
+		m.drawMaze( );
+		
+		
 		Canvas c = Canvas.getCanvas();
+		
 		/*for( int i=0; i<f.length;i++)
 		{
 			for( int j=0; j<f[i].length;j++)
@@ -135,6 +133,25 @@ public class Maze {
 			
 	}
 	
-	
+	@SuppressWarnings("serial")
+	class WallPane extends JPanel
+	{
+		private   BufferedImage wall ;
+		private int x , y;
+
+		public WallPane(int x,int y) throws IOException{
+			this.x =x;
+			this.y =y;
+			this.wall = ImageIO.read(new File("res/wall.png"));
+		
+		}
+		
+		public void paintCompoenent(Graphics g)
+		{
+			super.paintComponent(g);
+			g.drawImage(this.wall, this.x, this.y, null);
+		}
+		
+	}
 	
 }

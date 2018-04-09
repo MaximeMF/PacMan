@@ -256,7 +256,7 @@ public class Canvas {
                 graphic.drawString(text, x, y);
             } else if (image != null)
             {
-            	graphic.drawImage(image, 0, y, width, height, null);
+            	graphic.drawImage(image, x, y, width, height, null);
             }
         }
     }
