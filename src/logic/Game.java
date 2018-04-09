@@ -151,4 +151,19 @@ public class Game implements IGame{
 		return this.player.isPowered();
 	}
 
+	@Override
+	public int getScore() {
+		return this.player.getScore();
+	}
+
+	@Override
+	public int getLives() {
+		return this.player.getLives();
+	}
+
+	@Override
+	public int getLevel() {
+		return this.player.getLevel();
+	}
+	
 }

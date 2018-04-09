@@ -106,4 +106,25 @@ public interface IGame {
 	 * @return true if power is currently active, false otherwise
 	 */
 	public boolean isPowerActive();
+
+	/**
+	 * Gets the current score.
+	 * @return the current score
+	 * @post {@code score >= 0}
+	 */
+	public int getScore();
+
+	/**
+	 * Gets the remaining lives.
+	 * @return the remaining lives
+	 * @post {@code lives >= 0}
+	 */
+	public int getLives();
+
+	/**
+	 * Gets the current level.
+	 * @return the current level
+	 * @post {@code 1 <= level <= 5}
+	 */
+	public int getLevel();
 }
