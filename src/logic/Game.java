@@ -87,6 +87,8 @@ public class Game implements IGame{
 		return this.player.getLives() == 0;
 	}
 
+	//PLAYER
+	
 	@Override
 	public boolean canMovePlayer(Direction dir) {
 		return this.player.canMove(dir);
@@ -109,9 +111,15 @@ public class Game implements IGame{
 		return ghost;
 	}
 	
+	//GHOST
+	
 	@Override
 	public void moveGhost(GhostType type) {
-		this.getGhost(type).move();
+		Ghost ghost = this.getGhost(type);
+		ghost.move();
+		if(ghost.isDead()) {
+			ghost.respawn(true);
+		}
 	}
 
 	@Override

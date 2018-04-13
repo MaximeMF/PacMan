@@ -71,12 +71,6 @@ public class Ghost{
 		} while(Direction.opposite(dir) == this.currentDirection || !this.canMove(dir));
 		this.move(dir);
 		this.currentDirection = dir;
-		if(this.isDead()) {
-			this.canBeEaten = false;
-			Game.INSTANCE.player.addScore(this.points);
-			this.position = this.respawnPosition;
-			this.movable = false;
-		}
 	}
 
 	private void move(Direction dir) {
@@ -136,6 +130,14 @@ public class Ghost{
 
 	public void changeState() {
 		this.canBeEaten = !this.canBeEaten;
+	}
+
+	public void respawn(boolean isDead) {
+		this.canBeEaten = false;
+		if(isDead)
+			Game.INSTANCE.player.addScore(this.points);
+		this.position = this.respawnPosition;
+		this.movable = false;
 	}
 
 }
