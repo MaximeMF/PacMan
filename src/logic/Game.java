@@ -148,4 +148,8 @@ public class Game implements IGame{
 		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
+
+	public int getLevels() {
+		return this.loader.getLevels();
+	}
 }

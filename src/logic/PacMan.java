@@ -109,7 +109,7 @@ public class PacMan implements IPacMan{
 				this.addScore(Game.INSTANCE.getEntityPoints(Entity.GHOST));
 			}
 		if(Game.INSTANCE.getGommes() == 0) {
-			if(this.level == 3)
+			if(this.level == Game.INSTANCE.getLevels())
 				Game.INSTANCE.won();
 			else {
 				this.level++;
