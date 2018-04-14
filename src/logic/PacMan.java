@@ -29,11 +29,11 @@ public class PacMan implements IPacMan{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
-			if(x > 0 && board[x-1][y] != Entity.MUR)
+			if(x > 0 && board[y][x-1] != Entity.MUR)
 				return true;
 			break;
 		case RIGHT:
-			if(x < Game.INSTANCE.getBoardWidth()-1 && board[x+1][y] != Entity.MUR)
+			if(x < Game.INSTANCE.getBoardWidth()-1 && board[y][x+1] != Entity.MUR)
 				return true;
 			break;
 		case UP:
@@ -41,7 +41,7 @@ public class PacMan implements IPacMan{
 				return true;
 			break;
 		case DOWN:
-			if(x < Game.INSTANCE.getBoardHeight()-1 && board[x][y+1] != Entity.MUR)
+			if(x < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
 				return true;
 			break;
 		}
@@ -54,42 +54,42 @@ public class PacMan implements IPacMan{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL)
 				this.position[0] = Game.INSTANCE.getBoardWidth() - 1;
 			else
 				this.position[0]--;
 			break;
 		case RIGHT:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL)
 				this.position[0] = 0;
 			else
 				this.position[0]++;
 			break;
 		case UP:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL)
 				this.position[1] = Game.INSTANCE.getBoardHeight() - 1;
 			else
 				this.position[1]--;
 			break;
 		case DOWN:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL)
 				this.position[1] = 0;
 			else
 				this.position[1]++;
 			break;
 		}
-		switch(board[x][y]) {
+		switch(board[y][x]) {
 		case GOMME:
-			board[x][y] = Entity.CHEMIN;
+			board[y][x] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.GOMME));
 			Game.INSTANCE.decreaseGommes();
 			break;
 		case FRUIT:
-			board[x][y] = Entity.CHEMIN;
+			board[y][x] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.FRUIT));
 			break;
 		case SUPERGOMME:
-			board[x][y] = Entity.CHEMIN;
+			board[y][x] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.SUPERGOMME));
 			Game.INSTANCE.decreaseGommes();
 			this.powered = true;

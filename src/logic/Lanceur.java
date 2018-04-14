@@ -80,11 +80,11 @@ public class Lanceur {
 						brd += ".";
 						break;
 					}
-				y++;
+				x++;
 			}
 			brd += "\n";
-			x++;
-			y = 0;
+			y++;
+			x = 0;
 		}
 		System.out.println(brd);
 	}

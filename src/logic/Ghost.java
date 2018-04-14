@@ -27,7 +27,7 @@ public class Ghost implements IGhost{
 		this.respawnTime = respawnTime;
 		if(type == GhostType.RED) {
 			this.movable = true;
-			this.position = new int[] {11,13};
+			this.position = new int[] {13,11};
 		}
 		else
 			this.respawn(false);
@@ -50,27 +50,27 @@ public class Ghost implements IGhost{
 			int y = this.position[1];
 			switch(dir) {
 			case LEFT:
-				if(x == 0 && board[x][y] == Entity.TUNNEL)
+				if(x == 0 && board[y][x] == Entity.TUNNEL)
 					return true;
-				else if(x > 0 && board[x-1][y] != Entity.MUR)
+				else if(x > 0 && board[y][x-1] != Entity.MUR)
 					return true;
 				break;
 			case RIGHT:
-				if(x == Game.INSTANCE.getBoardWidth()-1 && board[x][y] == Entity.TUNNEL)
+				if(x == Game.INSTANCE.getBoardWidth()-1 && board[y][x] == Entity.TUNNEL)
 					return true;
-				else if(x < Game.INSTANCE.getBoardWidth()-1 && board[x+1][y] != Entity.MUR)
+				else if(x < Game.INSTANCE.getBoardWidth()-1 && board[y][x+1] != Entity.MUR)
 					return true;
 				break;
 			case UP:
-				if(y == 0 && board[x][y] == Entity.TUNNEL)
+				if(y == 0 && board[y][x] == Entity.TUNNEL)
 					return true;
-				else if(y > 0 && board[x][y-1] != Entity.MUR)
+				else if(y > 0 && board[y-1][x] != Entity.MUR)
 					return true;
 				break;
 			case DOWN:
-				if(y == Game.INSTANCE.getBoardHeight()-1 && board[x][y] == Entity.TUNNEL)
+				if(y == Game.INSTANCE.getBoardHeight()-1 && board[y][x] == Entity.TUNNEL)
 					return true;
-				else if(x < Game.INSTANCE.getBoardHeight()-1 && board[x][y+1] != Entity.MUR)
+				else if(x < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
 					return true;
 				break;
 			}
@@ -82,13 +82,15 @@ public class Ghost implements IGhost{
 		if(this.isMovable()) {
 			int max = Direction.values().length;
 			Direction dir;
+			Direction[] val = Direction.values();
 			Random rd = new Random();
-			int stuck = 0;
 			do {
-				dir = Direction.values()[rd.nextInt(max)];
-				stuck++;
-				if(stuck > 9)
-					System.out.println("STUCK");
+				int rd_int = rd.nextInt(max);
+				dir = val[rd_int];
+				Direction temp = val[max-1];
+				val[max-1] = dir;
+				val[rd_int] = temp;
+				max--;
 			} while(Direction.opposite(dir) == this.currentDirection || !this.canMove(dir));
 			this.move(dir);
 			this.currentDirection = dir;
@@ -101,7 +103,7 @@ public class Ghost implements IGhost{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
-			if(board[x][y] == Entity.TUNNEL && x == 0) {
+			if(board[y][x] == Entity.TUNNEL && x == 0) {
 				this.position[0] = Game.INSTANCE.getBoardWidth() - 1;
 				System.out.println("TUNNEL new pos: " + this.position[0]);
 			}
@@ -109,7 +111,7 @@ public class Ghost implements IGhost{
 				this.position[0]--;
 			break;
 		case RIGHT:
-			if(board[x][y] == Entity.TUNNEL && x == Game.INSTANCE.getBoardWidth()-1) {
+			if(board[y][x] == Entity.TUNNEL && x == Game.INSTANCE.getBoardWidth()-1) {
 				this.position[0] = 0;
 				System.out.println("TUNNEL new pos: " + this.position[0]);
 			}
@@ -117,13 +119,13 @@ public class Ghost implements IGhost{
 				this.position[0]++;
 			break;
 		case UP:
-			if(board[x][y] == Entity.TUNNEL && y == 0)
+			if(board[y][x] == Entity.TUNNEL && y == 0)
 				this.position[1] = Game.INSTANCE.getBoardHeight() - 1;
 			else
 				this.position[1]--;
 			break;
 		case DOWN:
-			if(board[x][y] == Entity.TUNNEL && y == Game.INSTANCE.getBoardHeight()-1)
+			if(board[y][x] == Entity.TUNNEL && y == Game.INSTANCE.getBoardHeight()-1)
 				this.position[1] = 0;
 			else
 				this.position[1]++;
@@ -169,7 +171,7 @@ public class Ghost implements IGhost{
 			@Override
 			public void run() {
 				movable = true;
-				position = new int[] {11,13}; //à récupérer dans loader plus tard
+				position = new int[] {13,11}; //à récupérer dans loader plus tard
 			}
 		}, this.respawnTime);;
 	}

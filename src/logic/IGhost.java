@@ -3,9 +3,8 @@ package logic;
 
 public interface IGhost {
 	/**
-	 * Gets the position of a given ghost.
-	 * @param type the type of the ghost to get the position from
-	 * @return the position of the ghost
+	 * Gets the position of the ghost.
+	 * @return the coordinates (x,y) of the ghost
 	 */
 	public int[] getPosition();
 	

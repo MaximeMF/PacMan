@@ -30,7 +30,7 @@ public interface IPacMan {
 	
 	/**
 	 * Gets the position of PacMan.
-	 * @return the position of PacMan
+	 * @return the coordinates (x,y) of PacMan
 	 * @post {@code pacmanPosition.length = 2 && 0 <= pacmanPosition[0] < boardWidth && 0 <= pacmanPosition[1] < boardHeight}
 	 */
 	public int[] getPosition();
