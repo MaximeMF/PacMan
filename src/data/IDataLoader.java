@@ -37,7 +37,7 @@ public interface IDataLoader {
 	public int[] getPacmanPosition();
 	
 	/**
-	 * Gets the exit position of the ghost house.
+	 * Gets the exit position of the ghosts house.
 	 * @return the exit position
 	 * @post {@code exitPosition.length = 2 && 0 <= exitPosition[0] < boardWidth && 0 <= exitPosition[1] < boardHeight}
 	 */

@@ -116,6 +116,9 @@ public class DataLoader implements IDataLoader {
         return posArray;
 	}
 	
+    /**
+     * {@inheritDoc }
+     */
 	@Override
 	public int[] getExitPosition() {
 		JSONArray position = (JSONArray) this.json.get("exitPosition");
