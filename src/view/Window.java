@@ -44,7 +44,7 @@ public class Window extends JFrame {
 		
 		//this.pack();
 	    
-	    //this.setResizable(false);
+	    this.setResizable(false);
 	
 		this.setVisible(true);
 
