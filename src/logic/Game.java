@@ -25,6 +25,11 @@ public class Game implements IGame{
 		this.speed = loader.getSpeed();
 		this.gommes = loader.getGommes();
 		this.player = new PacMan(loader.getPacmanPosition(), loader.getLives());
+		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000);
+		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000);
+		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000);
+		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000);
+		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
 
 	static Game INSTANCE = new Game();
@@ -87,21 +92,7 @@ public class Game implements IGame{
 		return this.player.getLives() == 0;
 	}
 
-	//PLAYER
-	
-	@Override
-	public boolean canMovePlayer(Direction dir) {
-		return this.player.canMove(dir);
-	}
-
-	@Override
-	public void movePlayer(Direction dir) {
-		this.player.move(dir);
-		if(this.player.isDead())
-			this.player.respawn(true);
-	}
-
-	private Ghost getGhost(GhostType type) {
+	public IGhost getGhost(GhostType type) {
 		int i = 0;
 		Ghost ghost;
 		do {
@@ -110,26 +101,10 @@ public class Game implements IGame{
 		} while(ghost.getType() != type);
 		return ghost;
 	}
-	
-	//GHOST
-	
-	@Override
-	public void moveGhost(GhostType type) {
-		Ghost ghost = this.getGhost(type);
-		ghost.move();
-		if(ghost.isDead()) {
-			ghost.respawn(true);
-		}
-	}
 
 	@Override
-	public int[] getPlayerPosition() {
-		return this.player.getPosition();
-	}
-
-	@Override
-	public int[] getGhostPosition(GhostType type) {
-		return this.getGhost(type).getPosition();
+	public IPacMan getPlayer() {
+		return this.player;
 	}
 	
 	private void resetPower() {
@@ -137,6 +112,7 @@ public class Game implements IGame{
 			if(ghost.canBeEaten())
 				ghost.changeState();
 		}
+		this.player.unpower();
 	}
 	
 	public void startPowerTimer() {
@@ -144,34 +120,7 @@ public class Game implements IGame{
 			@Override
 			public void run() {
 				resetPower();
-				player.unpower();
 			}
 		}, this.loader.getPowerTime()*1000);
-	}
-
-	@Override
-	public boolean canGhostBeEaten(GhostType type) {
-		return this.getGhost(type).canBeEaten();
-	}
-
-	@Override
-	public boolean isPowerActive() {
-		return this.player.isPowered();
-	}
-
-	@Override
-	public int getScore() {
-		return this.player.getScore();
-	}
-
-	@Override
-	public int getLives() {
-		return this.player.getLives();
-	}
-
-	@Override
-	public int getLevel() {
-		return this.player.getLevel();
-	}
-	
+	}	
 }

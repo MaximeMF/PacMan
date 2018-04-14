@@ -2,11 +2,13 @@ package logic;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import data.Entity;
 import data.GhostType;
 
-public class Ghost{
+public class Ghost implements IGhost{
 
 	private int[] position;
 	private GhostType type;
@@ -15,14 +17,20 @@ public class Ghost{
 	private boolean canBeEaten = false;
 	private boolean movable = false; //false if in the "house"
 	private Direction currentDirection;
+	private long respawnTime;
 
-	public Ghost(int[] pos, int points, GhostType type) {
+	public Ghost(int[] pos, int points, GhostType type, long respawnTime) {
 		this.position = pos;
 		this.respawnPosition = pos;
 		this.points = points;
 		this.type = type;
-		if(type == GhostType.RED)
+		this.respawnTime = respawnTime;
+		if(type == GhostType.RED) {
 			this.movable = true;
+			this.position = new int[] {11,13};
+		}
+		else
+			this.respawn(false);
 	}
 
 	public boolean isMovable() {
@@ -63,18 +71,19 @@ public class Ghost{
 	}
 
 	public void move() {
-		int max = Direction.values().length;
-		Direction dir;
-		Random rd = new Random();
-		do {
-			dir = Direction.values()[rd.nextInt(max)];
-		} while(Direction.opposite(dir) == this.currentDirection || !this.canMove(dir));
-		this.move(dir);
-		this.currentDirection = dir;
+		if(this.isMovable()) {
+			int max = Direction.values().length;
+			Direction dir;
+			Random rd = new Random();
+			do {
+				dir = Direction.values()[rd.nextInt(max)];
+			} while(Direction.opposite(dir) == this.currentDirection || !this.canMove(dir));
+			this.move(dir);
+			this.currentDirection = dir;
+		}
 	}
 
 	private void move(Direction dir) {
-		this.movable = true;
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
 		int y = this.position[1];
@@ -138,6 +147,15 @@ public class Ghost{
 			Game.INSTANCE.player.addScore(this.points);
 		this.position = this.respawnPosition;
 		this.movable = false;
+		Timer release = new Timer();
+		release.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				movable = true;
+				position = new int[] {11,13}; //à récupérer dans loader plus tard
+			}
+		}, this.respawnTime);;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import data.Entity;
 
-public class PacMan{
+public class PacMan implements IPacMan{
 
 	private boolean powered = false;
 	private int[] position;
