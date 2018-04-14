@@ -115,6 +115,17 @@ public class DataLoader implements IDataLoader {
         assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
         return posArray;
 	}
+	
+	@Override
+	public int[] getExitPosition() {
+		JSONArray position = (JSONArray) this.json.get("exitPosition");
+		int[] posArray = new int[position.size()];
+		for(int i=0; i<position.size(); i++) {
+        	posArray[i] = Math.toIntExact((long)position.get(i));
+        }
+        assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
+        return posArray;
+	}
 
     /**
      * {@inheritDoc }

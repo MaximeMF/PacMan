@@ -8,12 +8,14 @@
 	"speedPercent":100,
 	"powerTime":10,
 	"posPacman":[14,23],
+	"exitPosition":[14,11],
 	"posGhosts":{
-		"red":[14,12],
-		"pink":[14,13],
-		"cyan":[13,13],
-		"orange":[15,13]
+		"red":[14,13],
+		"pink":[14,14],
+		"cyan":[13,14],
+		"orange":[15,14]
 	}
+	
 	"points":{
 		"gomme":10,
 		"supergomme":50,

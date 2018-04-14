@@ -17,6 +17,7 @@ public class Test {
 		int powerTime = dataLoader.getPowerTime();
 		int speed = dataLoader.getSpeed();
 		int[] pacmanPosition = dataLoader.getPacmanPosition();
+		int[] exitPosition = dataLoader.getExitPosition();
 		Entity[][] board = dataLoader.getBoard();
 		EnumMap<GhostType, int[]> ghostsPosition = dataLoader.getGhostsPosition();
 		EnumMap<Entity, Integer> points = dataLoader.getEntityPoints();
@@ -31,6 +32,9 @@ public class Test {
 		System.out.println("Speed : "+speed);
 		for(int i=0; i<pacmanPosition.length; i++) {
 			System.out.println("PacmanPosition["+i+"] : "+pacmanPosition[i]);
+		}
+		for(int i=0; i<exitPosition.length; i++) {
+			System.out.println("ExitPosition["+i+"] : "+exitPosition[i]);
 		}
 		for(int i=0; i<board.length; i++) {
 			for(int j=0; j<board[0].length; j++) {
