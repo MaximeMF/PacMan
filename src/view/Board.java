@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,8 +19,6 @@ import javax.swing.Timer;
 
 import data.Entity;
 import logic.Game;
-import logic.IGame;
-import logic.PacMan;
 
 
 public class Board extends JPanel implements ActionListener{
@@ -37,7 +36,8 @@ public class Board extends JPanel implements ActionListener{
 		
 		this.setLayout(new FlowLayout()); 
 		this.setPreferredSize(new Dimension(CELLSIZE*28, CELLSIZE*31));
-		label = new JLabel(new ImageIcon("res/pacmanmin.gif"));
+		label = new JLabel();
+		label.setIcon(new ImageIcon(new ImageIcon("res/pacmanmin.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
         
 		
         label.addKeyListener(new KeyAdapter()
@@ -83,18 +83,21 @@ public class Board extends JPanel implements ActionListener{
 				int m = j;
 				switch(e) {
 					case MUR : 
-						JLabel wall = new JLabel(new ImageIcon("res/wall.png"));
-						wall.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
+						JLabel wall = new JLabel();
+						wall.setIcon(new ImageIcon(new ImageIcon("res/wall.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+						//wall.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
 						this.add(wall).setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);;
 						break;
 					case GOMME :
-						JLabel gum = new JLabel(new ImageIcon("res/gum.png"));
-						gum.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
+						JLabel gum = new JLabel();
+						gum.setIcon(new ImageIcon(new ImageIcon("res/gum.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+						//gum.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
 						this.add(gum).setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);;
 						break;
 					case SUPERGOMME :
 						JLabel supergum = new JLabel(new ImageIcon("res/fruit.png"));
-						supergum.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
+						supergum.setIcon(new ImageIcon(new ImageIcon("res/fruit.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+						//supergum.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
 						this.add(supergum).setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
 						break;
 					case CHEMIN :
@@ -103,13 +106,15 @@ public class Board extends JPanel implements ActionListener{
 						this.add(chemin).setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
 						break;
 					case TUNNEL:
-						JLabel tunnel = new JLabel("res/wall2.png");
-						tunnel.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
+						JLabel tunnel = new JLabel();
+						tunnel.setIcon(new ImageIcon(new ImageIcon("res/wall2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+						//tunnel.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
 						this.add(tunnel).setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
 						break;
 					case FRUIT :
 						JLabel fruit = new JLabel("res/fruit_cherry.png");
-						fruit.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
+						fruit.setIcon(new ImageIcon(new ImageIcon("res/fruit_cheyrry.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+						//fruit.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
 						this.add(fruit).setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
 						break;
 					default :
