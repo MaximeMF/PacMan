@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import data.Entity;
@@ -10,18 +11,30 @@ public class Lanceur {
 	public static void main(String args[]) {
 		IGame game = Game.getInstance();
 		printBoard(game.getBoard(), game);
+		int i = 0;
 		while(true) {
-			System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			//System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 			//System.out.println("\f");
-			for(GhostType gt : GhostType.values())
-				game.getGhost(gt).move();
-			printBoard(game.getBoard(), game);
 			try {
-				Thread.currentThread().sleep(1000);
+				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			for(GhostType gt : GhostType.values())
+				game.getGhost(gt).move();
+			printBoard(game.getBoard(), game);
+			try {
+				Thread.currentThread().sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(i);
+			i++;
 		}
 	}
 
@@ -37,25 +50,25 @@ public class Lanceur {
 		for(Entity[] i : board) {
 			for(Entity j : i) {
 				if(Arrays.equals(rpos, new int[] {x,y}))
-					brd += "☻";
+					brd += "F";
 				else if(Arrays.equals(cpos, new int[] {x,y}))
-					brd += "☻";
+					brd += "F";
 				else if(Arrays.equals(ppos, new int[] {x,y}))
-					brd += "☻";
+					brd += "F";
 				else if(Arrays.equals(opos, new int[] {x,y}))
-					brd += "☻";
+					brd += "F";
 				else if(Arrays.equals(plpos, new int[] {x,y}))
-					brd += "☺";
+					brd += "P";
 				else
 					switch(j) {
 					case MUR:
 						brd += "█";
 						break;
 					case GOMME:
-						brd += "◦";
+						brd += "o";
 						break;
 					case SUPERGOMME:
-						brd += "○";
+						brd += "O";
 						break;
 					case CHEMIN:
 						brd += " ";
@@ -64,7 +77,7 @@ public class Lanceur {
 						brd += " ";
 						break;
 					case FRUIT:
-						brd += "♣";
+						brd += ".";
 						break;
 					}
 				y++;

@@ -50,19 +50,27 @@ public class Ghost implements IGhost{
 			int y = this.position[1];
 			switch(dir) {
 			case LEFT:
-				if(x > 0 && board[x-1][y] != Entity.MUR)
+				if(x == 0 && board[x][y] == Entity.TUNNEL)
+					return true;
+				else if(x > 0 && board[x-1][y] != Entity.MUR)
 					return true;
 				break;
 			case RIGHT:
-				if(x < Game.INSTANCE.getBoardWidth()-1 && board[x+1][y] != Entity.MUR)
+				if(x == Game.INSTANCE.getBoardWidth()-1 && board[x][y] == Entity.TUNNEL)
+					return true;
+				else if(x < Game.INSTANCE.getBoardWidth()-1 && board[x+1][y] != Entity.MUR)
 					return true;
 				break;
 			case UP:
-				if(y > 0 && board[x][y-1] != Entity.MUR)
+				if(y == 0 && board[x][y] == Entity.TUNNEL)
+					return true;
+				else if(y > 0 && board[x][y-1] != Entity.MUR)
 					return true;
 				break;
 			case DOWN:
-				if(x < Game.INSTANCE.getBoardHeight()-1 && board[x][y+1] != Entity.MUR)
+				if(y == Game.INSTANCE.getBoardHeight()-1 && board[x][y] == Entity.TUNNEL)
+					return true;
+				else if(x < Game.INSTANCE.getBoardHeight()-1 && board[x][y+1] != Entity.MUR)
 					return true;
 				break;
 			}
@@ -75,8 +83,12 @@ public class Ghost implements IGhost{
 			int max = Direction.values().length;
 			Direction dir;
 			Random rd = new Random();
+			int stuck = 0;
 			do {
 				dir = Direction.values()[rd.nextInt(max)];
+				stuck++;
+				if(stuck > 9)
+					System.out.println("STUCK");
 			} while(Direction.opposite(dir) == this.currentDirection || !this.canMove(dir));
 			this.move(dir);
 			this.currentDirection = dir;
@@ -89,25 +101,29 @@ public class Ghost implements IGhost{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[x][y] == Entity.TUNNEL && x == 0) {
 				this.position[0] = Game.INSTANCE.getBoardWidth() - 1;
+				System.out.println("TUNNEL new pos: " + this.position[0]);
+			}
 			else
 				this.position[0]--;
 			break;
 		case RIGHT:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[x][y] == Entity.TUNNEL && x == Game.INSTANCE.getBoardWidth()-1) {
 				this.position[0] = 0;
+				System.out.println("TUNNEL new pos: " + this.position[0]);
+			}
 			else
 				this.position[0]++;
 			break;
 		case UP:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[x][y] == Entity.TUNNEL && y == 0)
 				this.position[1] = Game.INSTANCE.getBoardHeight() - 1;
 			else
 				this.position[1]--;
 			break;
 		case DOWN:
-			if(board[x][y] == Entity.TUNNEL)
+			if(board[x][y] == Entity.TUNNEL && y == Game.INSTANCE.getBoardHeight()-1)
 				this.position[1] = 0;
 			else
 				this.position[1]++;
