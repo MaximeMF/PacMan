@@ -35,7 +35,7 @@ public class Board extends JPanel implements ActionListener{
 		
 		this.setBackground(Color.BLACK);
 		
-		this.setLayout(new FlowLayout()); // A MODIFIER
+		this.setLayout(new FlowLayout()); 
 		this.setPreferredSize(new Dimension(CELLSIZE*28, CELLSIZE*31));
 		label = new JLabel(new ImageIcon("res/pacmanmin.gif"));
         
@@ -54,7 +54,7 @@ public class Board extends JPanel implements ActionListener{
                 }
                 if(ke.getKeyCode() == KeyEvent.VK_LEFT)
                 {
-                		label.setLocation(label.getX()-CELLSIZE +(CELLSIZE/2),label.getY());      
+                		label.setLocation(label.getX()-CELLSIZE ,label.getY());      
                 }
                 if(ke.getKeyCode() == KeyEvent.VK_RIGHT)
                 {
