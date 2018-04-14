@@ -25,10 +25,10 @@ public class Game implements IGame{
 		this.speed = loader.getSpeed();
 		this.gommes = loader.getGommes();
 		this.player = new PacMan(loader.getPacmanPosition(), loader.getLives());
-		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000);
-		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000);
-		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000);
-		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000);
+		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition());
+		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition());
+		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition());
+		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
 

@@ -13,21 +13,23 @@ public class Ghost implements IGhost{
 	private int[] position;
 	private GhostType type;
 	private int[] respawnPosition;
+	private int[] exitPosition;
 	private int points;
 	private boolean canBeEaten = false;
 	private boolean movable = false; //false if in the "house"
 	private Direction currentDirection;
 	private long respawnTime;
 
-	public Ghost(int[] pos, int points, GhostType type, long respawnTime) {
+	public Ghost(int[] pos, int points, GhostType type, long respawnTime, int[] exitPosition) {
 		this.position = pos;
 		this.respawnPosition = pos;
 		this.points = points;
 		this.type = type;
 		this.respawnTime = respawnTime;
+		this.exitPosition = exitPosition;
 		if(type == GhostType.RED) {
 			this.movable = true;
-			this.position = new int[] {13,11};
+			this.position = exitPosition;
 		}
 		else
 			this.respawn(false);
@@ -171,7 +173,7 @@ public class Ghost implements IGhost{
 			@Override
 			public void run() {
 				movable = true;
-				position = new int[] {13,11}; //à récupérer dans loader plus tard
+				position = exitPosition;
 			}
 		}, this.respawnTime);;
 	}
