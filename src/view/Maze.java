@@ -22,7 +22,7 @@ import org.json.simple.parser.ParseException;
 public class Maze {
 	
 	
-	private Figure figure;
+	
 	int rows = 45;
     int columns = 45;
     

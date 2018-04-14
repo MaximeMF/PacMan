@@ -35,14 +35,14 @@ public class Board extends JPanel {
             public void keyPressed(KeyEvent ke)
                 {
             	
-                if(ke.getKeyCode() == KeyEvent.VK_DOWN)
+                while(ke.getKeyCode() == KeyEvent.VK_DOWN)
                     {
                 		
                 		label.setBounds(label.getX(), label.getY()+CELLSIZE, CELLSIZE, CELLSIZE);
                 		
                     
                 }
-                if(ke.getKeyCode() == KeyEvent.VK_UP)
+                while(ke.getKeyCode() == KeyEvent.VK_UP)
                     {
                 			
                 			label.setBounds(label.getX(), label.getY()-CELLSIZE, CELLSIZE, CELLSIZE);
@@ -50,13 +50,13 @@ public class Board extends JPanel {
                   
                     
                 }
-                if(ke.getKeyCode() == KeyEvent.VK_LEFT)
+                while(ke.getKeyCode() == KeyEvent.VK_LEFT)
                     {
                     		label.setLocation(label.getX()-CELLSIZE,label.getY());
                
                    
                 }
-                if(ke.getKeyCode() == KeyEvent.VK_RIGHT)
+                while(ke.getKeyCode() == KeyEvent.VK_RIGHT)
                     {
                 		
                     label.setLocation(label.getX()+CELLSIZE,label.getY());
