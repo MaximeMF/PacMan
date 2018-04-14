@@ -1,13 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,7 +21,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 public class Maze {
 	
-	private Canvas canvas;
+	
 	private Figure figure;
 	int rows = 45;
     int columns = 45;
@@ -96,26 +94,27 @@ public class Maze {
 				{
 						int k = i ;
 						int m = j ;
-						murs[i][j] = new WallPane(k*40,m*40);		
+						murs[i][j] = new WallPane(k*20,m*20);
+						
 				}
+				
+				System.out.print(board[i][j]);
 			}
+			System.out.println();
 		}
 		return murs;
    	}
 	
 	
 	
-	public void draw()
-    {
-        this.figure.draw();
-        this.canvas.redraw();
-    }
+	
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
 		Maze m = new Maze();
 		//m.draw();
 		WallPane pp [][] = m.drawMaze( );
 		JFrame jp1 = new JFrame();
+		jp1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//JPanel pan = new JPanel();
         for(int i=0;i<pp.length;i++)
         {
@@ -123,14 +122,16 @@ public class Maze {
         		{
         			if(pp[i][j] != null)
         			{
-        				jp1.getContentPane().add(pp[i][j]).setBounds(pp[i][j].x,pp[i][j].y,80,80);
-        				System.out.println(pp[i][j].x+ " , "+pp[i][j].y);
+        				
+        				jp1.getContentPane().add(pp[i][j]).setBounds(pp[i][j].x,pp[i][j].y,40,40);
+        				//System.out.println(pp[i][j].x+ " , "+pp[i][j].y);
         			}
+        			
         		}
         }
 		//
-        
-        //jp1.getContentPane().add(pan, BorderLayout.CENTER);
+        //PacmanPicture mainPanel = new PacmanPicture();
+        //jp1.getContentPane().add(mainPanel, BorderLayout.CENTER);
         jp1.setSize(new Dimension(500,500));
         jp1.setVisible(true);
 		
@@ -154,7 +155,7 @@ public class Maze {
 			this.x =x;
 			this.y =y;
 			this.wall = ImageIO.read(new File("res/wall.png"));
-			this.wall = Maze.resize(wall,40,40);
+			this.wall = Maze.resize(wall,20,20);
 		
 		}
 		
