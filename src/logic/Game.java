@@ -18,6 +18,8 @@ public class Game implements IGame{
 	public Ghost[] ghosts;
 	private int gommes;
 	private Timer powerTimer;
+	private boolean won = false;
+	private boolean lost = false;
 
 	private Game() {
 		this.loader = new DataLoader();
@@ -84,12 +86,20 @@ public class Game implements IGame{
 
 	@Override
 	public boolean hasWon() {
-		return this.gommes == 0;
+		return this.won ;
 	}
 
 	@Override
 	public boolean hasLost() {
-		return this.player.getLives() == 0;
+		return this.lost;
+	}
+	
+	public void won() {
+		this.won = true;
+	}
+	
+	public void lost() {
+		this.lost = true;
 	}
 
 	public IGhost getGhost(GhostType type) {
@@ -122,5 +132,20 @@ public class Game implements IGame{
 				resetPower();
 			}
 		}, this.loader.getPowerTime()*1000);
-	}	
+	}
+
+	public int getGommes() {
+		return this.gommes;
+	}
+	
+	public void nextLevel() {
+		this.board = loader.getBoard();
+		this.gommes = loader.getGommes();
+		this.speed = loader.getSpeed();
+		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition());
+		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition());
+		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition());
+		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition());
+		this.ghosts = new Ghost[] {red, cyan, pink, orange};
+	}
 }

@@ -133,6 +133,11 @@ public class Ghost implements IGhost{
 				this.position[1]++;
 			break;
 		}
+		if(this.isDead())
+			this.respawn(true);
+		if(Game.INSTANCE.player.isDead()) {
+			Game.INSTANCE.player.respawn(true);
+		}
 	}
 
 	public boolean isDead() {

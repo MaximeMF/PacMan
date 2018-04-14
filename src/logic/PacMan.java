@@ -99,7 +99,23 @@ public class PacMan implements IPacMan{
 			Game.INSTANCE.startPowerTimer();
 			break;
 		default:
-
+			break;
+		}
+		if(this.isDead())
+			this.respawn(true);
+		for(Ghost ghost : Game.INSTANCE.ghosts)
+			if(ghost.isDead()) {
+				ghost.respawn(true);
+				this.addScore(Game.INSTANCE.getEntityPoints(Entity.GHOST));
+			}
+		if(Game.INSTANCE.getGommes() == 0) {
+			if(this.level == 3)
+				Game.INSTANCE.won();
+			else {
+				this.level++;
+				this.respawn(false);
+				Game.INSTANCE.nextLevel();
+			}
 		}
 	}
 
@@ -134,11 +150,15 @@ public class PacMan implements IPacMan{
 	}
 
 	public void respawn(boolean isDead) {
-		if(isDead)
-			this.lives--;
-		this.position = this.respawnPosition;
+		if(this.lives == 1)
+			Game.INSTANCE.lost();
+		else {
+			if(isDead)
+				this.lives--;
+			this.position = this.respawnPosition;
+		}
 	}
-	
+
 	public void unpower() {
 		this.powered = false;
 	}
