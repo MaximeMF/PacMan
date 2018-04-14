@@ -35,7 +35,7 @@ public class Window extends JFrame {
 	    this.add(logo, BorderLayout.NORTH);
 	    
 	    IDataLoader data = new DataLoader(); // A SUPPRIMER
-	    Board board = new Board(data.getBoard());
+	    Board board = new Board();
 	    this.add(board, BorderLayout.CENTER);
 	   
 	   
