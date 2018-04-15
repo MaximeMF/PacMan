@@ -155,4 +155,8 @@ public class Game implements IGame{
 	public int getLevels() {
 		return this.loader.getLevels();
 	}
+	
+	public int getPowerTime() {
+		return this.loader.getPowerTime()*1000;
+	}
 }

@@ -34,6 +34,8 @@ public class Board extends JPanel implements KeyListener{
 	ImageIcon fruitIcon = new ImageIcon(new ImageIcon("res/fruit_cherry.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon tunnelIcon = new ImageIcon(new ImageIcon("res/wall2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghostIcon = new ImageIcon(new ImageIcon("res/ghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon ghost2Icon = new ImageIcon(new ImageIcon("res/ghost2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon ghost3Icon = new ImageIcon(new ImageIcon("res/ghost3.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ScoreBar scoreBar;
 	Direction dir;
 	private boolean started;
@@ -83,7 +85,12 @@ public class Board extends JPanel implements KeyListener{
 							}
 						if(!ga) {
 							JLabel ghost = new JLabel();
-							ghost.setIcon(ghostIcon);
+							if(game.getGhost(gt).getState() == 1)
+								ghost.setIcon(ghostIcon);
+							else if(game.getGhost(gt).getState() == 2)
+								ghost.setIcon(ghost2Icon);
+							else
+								ghost.setIcon(ghost3Icon);
 							addComp(ghost);
 							pos[k] = gtPos;
 							k++;

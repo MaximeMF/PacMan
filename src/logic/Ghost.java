@@ -19,6 +19,7 @@ public class Ghost implements IGhost{
 	private boolean movable = false; //false if in the "house"
 	private Direction currentDirection;
 	private long respawnTime;
+	private int state = 1;
 
 	public Ghost(int[] pos, int points, GhostType type, long respawnTime, int[] exitPosition) {
 		this.position = pos.clone();
@@ -158,10 +159,28 @@ public class Ghost implements IGhost{
 
 	public void changeState() {
 		this.canBeEaten = !this.canBeEaten;
+		if(this.canBeEaten) {
+			this.state = 2;
+			(new Timer()).schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					state = 3;
+					
+				}
+			}, (long)(Math.floor(Game.INSTANCE.getPowerTime()*0.70)));
+		}
+		else
+			this.state = 1;
+	}
+	
+	public int getState() {
+		return this.state;
 	}
 
 	public void respawn(boolean isDead) {
 		this.canBeEaten = false;
+		this.state = 1;
 		if(isDead)
 			Game.INSTANCE.player.addScore(this.points);
 		this.position = this.respawnPosition.clone();

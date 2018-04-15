@@ -25,4 +25,10 @@ public interface IGhost {
 	 * Starts spawn timer.
 	 */
 	public void init();
+
+	/**
+	 * Gets the state of the ghost.
+	 * @return integer representing state of the ghost
+	 */
+	public int getState();
 }
