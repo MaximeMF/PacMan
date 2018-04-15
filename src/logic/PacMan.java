@@ -160,7 +160,7 @@ public class PacMan implements IPacMan{
 	}
 
 	public void respawn(boolean isDead) {
-		if(this.lives == 1)
+		if(this.lives == 0)
 			Game.INSTANCE.lost();
 		else {
 			if(isDead)
