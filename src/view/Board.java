@@ -36,12 +36,12 @@ public class Board extends JPanel implements KeyListener{
 	ImageIcon ghostIcon = new ImageIcon(new ImageIcon("res/ghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghost2Icon = new ImageIcon(new ImageIcon("res/ghost2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghost3Icon = new ImageIcon(new ImageIcon("res/ghost3.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
-	ScoreBar scoreBar;
+	BottomBar scoreBar;
 	Direction dir;
 	private boolean started;
 
-	public Board(ScoreBar scoreBar) {
-		this.scoreBar = scoreBar;
+	public Board(BottomBar bottomBar) {
+		this.scoreBar = bottomBar;
 		this.setBackground(Color.BLACK);
 		position = game.getPlayer().getPosition();
 		this.setLayout(new GridLayout(game.getBoardHeight(),game.getBoardWidth())); 

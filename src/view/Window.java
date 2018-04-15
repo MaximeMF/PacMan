@@ -32,7 +32,7 @@ public class Window extends JFrame {
 	    
 	    this.add(logo, BorderLayout.NORTH);
 	    
-	    ScoreBar scoreBar = new ScoreBar(0, Game.getInstance().getPlayer().getLives(), Game.getInstance().getPlayer().getLevel()); // A MODIFIER
+	    BottomBar scoreBar = new BottomBar(0, Game.getInstance().getPlayer().getLives(), Game.getInstance().getPlayer().getLevel()); // A MODIFIER
 	    Board board = new Board(scoreBar);
 	    this.add(board, BorderLayout.CENTER);
 	    
