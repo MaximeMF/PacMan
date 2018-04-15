@@ -14,9 +14,9 @@ public class PacMan implements IPacMan{
 	private int[] respawnPosition;
 
 	public PacMan(int[] pos, int lives) {
-		this.position = pos;
+		this.position = pos.clone();
 		this.lives = lives;
-		this.respawnPosition = pos;
+		this.respawnPosition = pos.clone();
 	}
 
 	public void addScore(int value) {
@@ -29,18 +29,26 @@ public class PacMan implements IPacMan{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
+			if(x == 0 && board[y][x] == Entity.TUNNEL)
+				return true;
 			if(x > 0 && board[y][x-1] != Entity.MUR)
 				return true;
 			break;
 		case RIGHT:
+			if(x == Game.INSTANCE.getBoardWidth()-1 && board[y][x] == Entity.TUNNEL)
+				return true;
 			if(x < Game.INSTANCE.getBoardWidth()-1 && board[y][x+1] != Entity.MUR)
 				return true;
 			break;
 		case UP:
-			if(y > 0 && board[x][y-1] != Entity.MUR)
+			if(y == 0 && board[y][x] == Entity.TUNNEL)
+				return true;
+			if(y > 0 && board[y-1][x] != Entity.MUR)
 				return true;
 			break;
 		case DOWN:
+			if(y == Game.INSTANCE.getBoardHeight()-1 && board[y][x] == Entity.TUNNEL)
+				return true;
 			if(x < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
 				return true;
 			break;
@@ -54,30 +62,32 @@ public class PacMan implements IPacMan{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
-			if(board[y][x] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL && x == 0)
 				this.position[0] = Game.INSTANCE.getBoardWidth() - 1;
 			else
 				this.position[0]--;
 			break;
 		case RIGHT:
-			if(board[y][x] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL && x == Game.INSTANCE.getBoardWidth()-1)
 				this.position[0] = 0;
 			else
 				this.position[0]++;
 			break;
 		case UP:
-			if(board[y][x] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL && y == 0)
 				this.position[1] = Game.INSTANCE.getBoardHeight() - 1;
 			else
 				this.position[1]--;
 			break;
 		case DOWN:
-			if(board[y][x] == Entity.TUNNEL)
+			if(board[y][x] == Entity.TUNNEL && y == Game.INSTANCE.getBoardHeight()-1)
 				this.position[1] = 0;
 			else
 				this.position[1]++;
 			break;
 		}
+		x = this.position[0];
+		y = this.position[1];
 		switch(board[y][x]) {
 		case GOMME:
 			board[y][x] = Entity.CHEMIN;
@@ -155,7 +165,7 @@ public class PacMan implements IPacMan{
 		else {
 			if(isDead)
 				this.lives--;
-			this.position = this.respawnPosition;
+			this.position = this.respawnPosition.clone();
 		}
 	}
 

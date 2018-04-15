@@ -17,7 +17,7 @@ public class Game implements IGame{
 	public PacMan player;
 	public Ghost[] ghosts;
 	private int gommes;
-	private Timer powerTimer;
+	private Timer powerTimer = new Timer();
 	private boolean won = false;
 	private boolean lost = false;
 
@@ -147,6 +147,9 @@ public class Game implements IGame{
 		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition());
 		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
+		cyan.init();
+		pink.init();
+		orange.init();
 	}
 
 	public int getLevels() {

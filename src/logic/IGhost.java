@@ -20,4 +20,9 @@ public interface IGhost {
 	 * @param type the type of the ghost to move
 	 */
 	public void move();
+	
+	/**
+	 * Starts spawn timer.
+	 */
+	public void init();
 }

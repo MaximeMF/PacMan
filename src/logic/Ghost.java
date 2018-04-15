@@ -21,18 +21,16 @@ public class Ghost implements IGhost{
 	private long respawnTime;
 
 	public Ghost(int[] pos, int points, GhostType type, long respawnTime, int[] exitPosition) {
-		this.position = pos;
-		this.respawnPosition = pos;
+		this.position = pos.clone();
+		this.respawnPosition = pos.clone();
 		this.points = points;
 		this.type = type;
 		this.respawnTime = respawnTime;
 		this.exitPosition = exitPosition;
 		if(type == GhostType.RED) {
 			this.movable = true;
-			this.position = exitPosition;
+			this.position = exitPosition.clone();
 		}
-		else
-			this.respawn(false);
 	}
 
 	public boolean isMovable() {
@@ -105,18 +103,14 @@ public class Ghost implements IGhost{
 		int y = this.position[1];
 		switch(dir) {
 		case LEFT:
-			if(board[y][x] == Entity.TUNNEL && x == 0) {
+			if(board[y][x] == Entity.TUNNEL && x == 0)
 				this.position[0] = Game.INSTANCE.getBoardWidth() - 1;
-				System.out.println("TUNNEL new pos: " + this.position[0]);
-			}
 			else
 				this.position[0]--;
 			break;
 		case RIGHT:
-			if(board[y][x] == Entity.TUNNEL && x == Game.INSTANCE.getBoardWidth()-1) {
+			if(board[y][x] == Entity.TUNNEL && x == Game.INSTANCE.getBoardWidth()-1)
 				this.position[0] = 0;
-				System.out.println("TUNNEL new pos: " + this.position[0]);
-			}
 			else
 				this.position[0]++;
 			break;
@@ -170,7 +164,7 @@ public class Ghost implements IGhost{
 		this.canBeEaten = false;
 		if(isDead)
 			Game.INSTANCE.player.addScore(this.points);
-		this.position = this.respawnPosition;
+		this.position = this.respawnPosition.clone();
 		this.movable = false;
 		Timer release = new Timer();
 		release.schedule(new TimerTask() {
@@ -178,9 +172,13 @@ public class Ghost implements IGhost{
 			@Override
 			public void run() {
 				movable = true;
-				position = exitPosition;
+				position = exitPosition.clone();
 			}
 		}, this.respawnTime);;
+	}
+	
+	public void init() {
+		this.respawn(false);
 	}
 
 }
