@@ -2,6 +2,10 @@ package data;
 
 import java.util.EnumMap;
 
+/**
+ * Class Testing Getting Data 
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ */
 public class Test {
 
 	public static void main(String[] args) {

@@ -4,6 +4,11 @@ import java.util.Arrays;
 
 import data.Entity;
 
+/**
+ * Class Controlling the PacMan's Movements 
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
 public class PacMan implements IPacMan{
 
 	private boolean powered = false;
@@ -13,16 +18,28 @@ public class PacMan implements IPacMan{
 	private int level = 1;
 	private int[] respawnPosition;
 
+	/**
+	 * Construct an instance of PacMan
+	 * @param pos
+	 * @param lives
+	 */
 	public PacMan(int[] pos, int lives) {
 		this.position = pos.clone();
 		this.lives = lives;
 		this.respawnPosition = pos.clone();
 	}
 
+	/**
+	 * Add to the Score a value passing in paramaters
+	 * @param value
+	 */
 	public void addScore(int value) {
 		this.score += value;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#canMove(logic.Direction)
+	 */
 	public boolean canMove(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -56,6 +73,9 @@ public class PacMan implements IPacMan{
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#move(logic.Direction)
+	 */
 	public void move(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -129,6 +149,10 @@ public class PacMan implements IPacMan{
 		}
 	}
 
+	/**
+	 * Tests if the PacMAn is dead
+	 * @return true if the PacMan is dead
+	 */
 	public boolean isDead() {
 		Game game = Game.INSTANCE;
 		for(Ghost ghost : game.ghosts) {
@@ -139,26 +163,45 @@ public class PacMan implements IPacMan{
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#isPowered()
+	 */
 	public boolean isPowered() {
 		return this.powered;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#getPosition()
+	 */
 	public int[] getPosition() {
 		return this.position;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#getScore()
+	 */
 	public int getScore() {
 		return this.score;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#getLevel()
+	 */
 	public int getLevel() {
 		return this.level;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IPacMan#getLives()
+	 */
 	public int getLives() {
 		return this.lives;
 	}
 
+	/**
+	 * Decrements lives number of a player
+	 * @param isDead
+	 */
 	public void respawn(boolean isDead) {
 		if(this.lives == 0)
 			Game.INSTANCE.lost();
@@ -169,6 +212,9 @@ public class PacMan implements IPacMan{
 		}
 	}
 
+	/**
+	 * Unpower the PacMan
+	 */
 	public void unpower() {
 		this.powered = false;
 	}

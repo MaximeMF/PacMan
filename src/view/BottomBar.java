@@ -7,6 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Class Displaying Score and Level and lives informations 
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
+
 public class BottomBar extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -15,6 +21,11 @@ public class BottomBar extends JPanel {
 	private JLabel jLevel = new JLabel();
 	private JLabel jLives = new JLabel();
 	
+	/** Construct an instance of BottomBar 
+	 * @param score
+	 * @param lives
+	 * @param level
+	 */
 	public BottomBar(int score, int lives, int level) {
 		
 		this.setLayout(new BorderLayout());
@@ -33,6 +44,12 @@ public class BottomBar extends JPanel {
 		this.add(jLives, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Update the values of score,level and lives according to the game
+	 * @param score
+	 * @param lives
+	 * @param level
+	 */
 	public void update(int score, int lives, int level) {
 		this.jScore.setText("Score : "+score);
 		this.jLevel.setText("Level : "+level);

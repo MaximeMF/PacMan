@@ -22,6 +22,12 @@ import logic.Direction;
 import logic.Game;
 
 
+/**
+ * Class displaying the pacman's elements (pacman,walls,ghost,tunnels,fruits,gums..) 
+ * and control them using the logic layer
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
 public class Board extends JPanel implements KeyListener{
 	private static final long serialVersionUID = 1L;
 	Timer t = new Timer();
@@ -41,6 +47,10 @@ public class Board extends JPanel implements KeyListener{
 	Direction dir;
 	private boolean started;
 
+	/**
+	 * Constructs an instance of Board 
+	 * @param bottomBar
+	 */
 	public Board(BottomBar bottomBar) {
 		this.scoreBar = bottomBar;
 		this.setBackground(Color.BLACK);
@@ -66,6 +76,9 @@ public class Board extends JPanel implements KeyListener{
 		toRepeat();
 	}
 
+	/**
+	 * Display elements of the game
+	 */
 	private void toRepeat() {
 		this.removeAll();
 		for(int i=0; i<game.getBoard().length; i++) {
@@ -151,10 +164,20 @@ public class Board extends JPanel implements KeyListener{
 		repaint();
 	}
 
+	/**
+	 * Add each component to the panel game
+	 * @param comp
+	 */
 	private void addComp(Component comp) {
 		this.add(comp);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
 		boolean pressed = false;
@@ -193,6 +216,10 @@ public class Board extends JPanel implements KeyListener{
 		}
 	}
 
+	/**
+	 * Move the Pacman with instruction of direction keys
+	 * Move Ghosts 
+	 */
 	private void move() {
 		if (dir != null && game.getPlayer().canMove(this.dir)) {
 			game.getPlayer().move(this.dir);
@@ -217,11 +244,17 @@ public class Board extends JPanel implements KeyListener{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub

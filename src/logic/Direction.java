@@ -11,6 +11,10 @@ public enum Direction {
 	RIGHT,
 	DOWN;
 
+	/**
+	 * @param dir
+	 * @return Direction
+	 */
 	public static Direction opposite(Direction dir) {
 		switch(dir) {
 		case UP:

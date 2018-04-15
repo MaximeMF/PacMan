@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
+/**
+ * Class Launching the Game
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
 public class Launcher {
 	
 	public static void main(String[] args) { 

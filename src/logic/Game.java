@@ -9,6 +9,11 @@ import java.util.TimerTask;
 
 import data.DataLoader;
 
+/**
+ * Class Controlling the entire elements of the game (Ghost, Pacman, Scores,Lives...)
+ * @author Robin ALGIER - Maxime MATHIS--FUMEL - Yassin OURKIA
+ *
+ */
 public class Game implements IGame{
 
 	private Entity[][] board;
@@ -21,6 +26,9 @@ public class Game implements IGame{
 	private boolean won = false;
 	private boolean lost = false;
 
+	/**
+	 * Construct an instance of Game using singleton pattern
+	 */
 	private Game() {
 		this.loader = new DataLoader();
 		this.board = loader.getBoard();
@@ -33,9 +41,14 @@ public class Game implements IGame{
 		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
-
+	
+	
 	static Game INSTANCE = new Game();
 
+	/**
+	 * return one and only instance of game (singleton)
+	 * @return
+	 */
 	public static IGame getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new Game();
@@ -43,39 +56,65 @@ public class Game implements IGame{
 		return INSTANCE;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#newGame()
+	 */
 	public void newGame() {
 		INSTANCE = new Game();
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getBoard()
+	 */
 	@Override
 	public Entity[][] getBoard() {
 		return this.board;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getBoardHeight()
+	 */
 	@Override
 	public int getBoardHeight() {
 		return this.loader.getBoardHeight();
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getBoardWidth()
+	 */
 	@Override
 	public int getBoardWidth() {
 		return this.loader.getBoardWidth();
 	}
 
+	/**
+	 * Gets the Entity points
+	 * @param entity
+	 * @return
+	 */
 	public int getEntityPoints(Entity entity) {
 		return this.loader.getEntityPoints().get(entity);
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getSpeed()
+	 */
 	@Override
 	public int getSpeed() {
 		return this.speed;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getBestScore()
+	 */
 	@Override
 	public int getBestScore() {
 		return loader.getBestScore();
 	}
 
+	/**
+	 * Decraeses Number the gums eaten by the PacMan
+	 */
 	public void decreaseGommes() {
 		this.gommes--;
 		if(this.hasWon()) {
@@ -84,24 +123,39 @@ public class Game implements IGame{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#hasWon()
+	 */
 	@Override
 	public boolean hasWon() {
 		return this.won ;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#hasLost()
+	 */
 	@Override
 	public boolean hasLost() {
 		return this.lost;
 	}
 	
+	/**
+	 * Has the PacMan won
+	 */
 	public void won() {
 		this.won = true;
 	}
 	
+	/**
+	 * Has the PacMan lost
+	 */
 	public void lost() {
 		this.lost = true;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getGhost(data.GhostType)
+	 */
 	public IGhost getGhost(GhostType type) {
 		int i = 0;
 		Ghost ghost;
@@ -112,11 +166,17 @@ public class Game implements IGame{
 		return ghost;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGame#getPlayer()
+	 */
 	@Override
 	public IPacMan getPlayer() {
 		return this.player;
 	}
 	
+	/**
+	 * Reset the Power of ghosts
+	 */
 	private void resetPower() {
 		for(Ghost ghost : this.ghosts) {
 			if(ghost.canBeEaten())
@@ -125,6 +185,9 @@ public class Game implements IGame{
 		this.player.unpower();
 	}
 	
+	/**
+	 * Start Power timer
+	 */
 	public void startPowerTimer() {
 		this.powerTimer.schedule(new TimerTask() {
 			@Override
@@ -134,10 +197,17 @@ public class Game implements IGame{
 		}, this.loader.getPowerTime()*1000);
 	}
 
+	/**
+	 * Gets Gums
+	 * @return
+	 */
 	public int getGommes() {
 		return this.gommes;
 	}
 	
+	/**
+	 * The Pacman start the next level
+	 */
 	public void nextLevel() {
 		this.board = loader.getBoard();
 		this.gommes = loader.getGommes();
@@ -152,10 +222,16 @@ public class Game implements IGame{
 		orange.init();
 	}
 
+	/**
+	 * @return
+	 */
 	public int getLevels() {
 		return this.loader.getLevels();
 	}
 	
+	/**
+	 * @return
+	 */
 	public int getPowerTime() {
 		return this.loader.getPowerTime()*1000;
 	}

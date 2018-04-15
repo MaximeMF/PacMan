@@ -8,6 +8,11 @@ import java.util.TimerTask;
 import data.Entity;
 import data.GhostType;
 
+/**
+ * Class Controlling the Ghost's movements and functionalities  
+ * @author Robin ALGIER - Maxime MATHIS--FUMEL - Yassin OURKIA
+ *
+ */
 public class Ghost implements IGhost{
 
 	private int[] position;
@@ -21,6 +26,14 @@ public class Ghost implements IGhost{
 	private long respawnTime;
 	private int state = 1;
 
+	/**
+	 * Constructs an instance of Ghost
+	 * @param pos
+	 * @param points
+	 * @param type
+	 * @param respawnTime
+	 * @param exitPosition
+	 */
 	public Ghost(int[] pos, int points, GhostType type, long respawnTime, int[] exitPosition) {
 		this.position = pos.clone();
 		this.respawnPosition = pos.clone();
@@ -34,6 +47,9 @@ public class Ghost implements IGhost{
 		}
 	}
 
+	/**
+	 * @return true if the ghost is movable
+	 */
 	public boolean isMovable() {
 		return this.movable;
 	}
@@ -44,6 +60,7 @@ public class Ghost implements IGhost{
 	 * @param dir the direction the ghost should move towards
 	 * @return true if the ghost can move in the given direction, false otherwise
 	 */
+	
 	public boolean canMove(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		if(this.movable) {
@@ -79,6 +96,9 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGhost#move()
+	 */
 	public void move() {
 		if(this.isMovable()) {
 			int max = Direction.values().length;
@@ -98,6 +118,10 @@ public class Ghost implements IGhost{
 		}
 	}
 
+	/**
+	 * Move the Pacman according to Direction giving in paramaters
+	 * @param dir
+	 */
 	private void move(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -135,6 +159,10 @@ public class Ghost implements IGhost{
 		}
 	}
 
+	/**
+	 * Tests if a Ghost is dead
+	 * @return true if the Ghost is eaten by The Pacman
+	 */
 	public boolean isDead() {
 		if(this.canBeEaten) {
 			Game game = Game.INSTANCE;
@@ -145,18 +173,31 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGhost#getPosition()
+	 */
 	public int[] getPosition() {
 		return position;
 	}
 
+	/**
+	 * Gets the Type of ghost
+	 * @return the Ghost Type
+	 */
 	public GhostType getType() {
 		return this.type;
 	}
 
+	/* (non-Javadoc)
+	 * @see logic.IGhost#canBeEaten()
+	 */
 	public boolean canBeEaten() {
 		return this.canBeEaten;
 	}
 
+	/**
+	 * Change the state of an Ghost either be eaten or not
+	 */
 	public void changeState() {
 		this.canBeEaten = !this.canBeEaten;
 		if(this.canBeEaten) {
@@ -174,10 +215,16 @@ public class Ghost implements IGhost{
 			this.state = 1;
 	}
 	
+	/* (non-Javadoc)
+	 * @see logic.IGhost#getState()
+	 */
 	public int getState() {
 		return this.state;
 	}
 
+	/**
+	 * @param isDead
+	 */
 	public void respawn(boolean isDead) {
 		this.canBeEaten = false;
 		this.state = 1;

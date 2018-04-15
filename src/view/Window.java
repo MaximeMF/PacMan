@@ -15,11 +15,22 @@ import logic.Game;
 
 
 
+/**
+ * Class Displaying all the components of the game 
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
 public class Window extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
 	
+	/**
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 * Construct an instance of Window
+	 */
 	public Window() throws IOException, ParseException {
 
 		super("Pac-Man");

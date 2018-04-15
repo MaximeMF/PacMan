@@ -1,5 +1,9 @@
 package logic;
 
+/**
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
 public interface IPacMan {
 	/**
 	 * Gets the current score.

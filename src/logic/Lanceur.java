@@ -6,6 +6,11 @@ import java.util.Arrays;
 import data.Entity;
 import data.GhostType;
 
+/**
+ * Class Launcher Testing the logic classes 
+ * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
+ *
+ */
 public class Lanceur {
 
 	public static void main(String args[]) {
@@ -38,6 +43,11 @@ public class Lanceur {
 		}
 	}
 
+	/**
+	 * Print board on console 
+	 * @param board
+	 * @param game
+	 */
 	public static void printBoard(Entity[][] board, IGame game) {
 		String brd = "";
 		int[] plpos = game.getPlayer().getPosition();
