@@ -203,14 +203,17 @@ public class Board extends JPanel implements KeyListener{
 		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())
 		{
-			ImageIcon img = new ImageIcon(new ImageIcon("res/gameover.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
-		    JOptionPane.showMessageDialog(null, " Vous avez perdu", "Information", JOptionPane.INFORMATION_MESSAGE, img); 
+			
+			int exit = JOptionPane.showConfirmDialog(null, " Vous avez perdu", "Information", JOptionPane.OK_CANCEL_OPTION); 
+		    if(exit == JOptionPane.OK_OPTION || exit == JOptionPane.CANCEL_OPTION){
+		    	   System.exit(0);
+		    }
 			System.out.println("GAME OVER");
 		
 		}else if(game.hasWon())
 		{
 			ImageIcon img = new ImageIcon(new ImageIcon("res/youwin.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
-		    JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagné", "Information", JOptionPane.INFORMATION_MESSAGE, img); 
+		    JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagné", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
 		}
 	}
 
