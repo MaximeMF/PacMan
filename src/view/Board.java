@@ -13,6 +13,7 @@ import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import data.Entity;
@@ -201,9 +202,16 @@ public class Board extends JPanel implements KeyListener{
 		toRepeat();
 		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())
+		{
+			ImageIcon img = new ImageIcon(new ImageIcon("res/gameover.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+		    JOptionPane.showMessageDialog(null, " Vous avez perdu", "Information", JOptionPane.INFORMATION_MESSAGE, img); 
 			System.out.println("GAME OVER");
-		else if(game.hasWon())
-			System.out.println("GG !");
+		
+		}else if(game.hasWon())
+		{
+			ImageIcon img = new ImageIcon(new ImageIcon("res/youwin.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
+		    JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagné", "Information", JOptionPane.INFORMATION_MESSAGE, img); 
+		}
 	}
 
 	@Override
