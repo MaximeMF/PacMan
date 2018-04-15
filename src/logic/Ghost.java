@@ -165,8 +165,8 @@ public class Ghost implements IGhost{
 				
 				@Override
 				public void run() {
-					state = 3;
-					
+					if(state == 2)
+						state = 3;
 				}
 			}, (long)(Math.floor(Game.INSTANCE.getPowerTime()*0.70)));
 		}
