@@ -6,12 +6,10 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import org.json.simple.parser.ParseException;
 
-import data.DataLoader;
-import data.IDataLoader;
+import logic.Game;
 
 
 
@@ -34,12 +32,10 @@ public class Window extends JFrame {
 	    
 	    this.add(logo, BorderLayout.NORTH);
 	    
-	    IDataLoader data = new DataLoader(); // A SUPPRIMER
-	    Board board = new Board();
+	    ScoreBar scoreBar = new ScoreBar(0, Game.getInstance().getPlayer().getLives(), Game.getInstance().getPlayer().getLevel()); // A MODIFIER
+	    Board board = new Board(scoreBar);
 	    this.add(board, BorderLayout.CENTER);
-	   
-	   
-	    ScoreBar scoreBar = new ScoreBar(10, 20); // A MODIFIER
+	    
 	    this.add(scoreBar, BorderLayout.SOUTH);
 		
 		//this.pack();
