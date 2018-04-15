@@ -26,7 +26,7 @@ public class Window extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.setSize(new Dimension(600,600));
-	    this.setBounds(20, 20, 490,700 );
+	    this.setBounds(20, 20, 490,700);
 	    
 	    JLabel logo = new JLabel(new ImageIcon("res/logo.png"));
 	    

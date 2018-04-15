@@ -44,8 +44,8 @@ public class Board extends JPanel implements KeyListener{
 		this.scoreBar = scoreBar;
 		this.setBackground(Color.BLACK);
 		position = game.getPlayer().getPosition();
-		this.setLayout(new GridLayout(game.getBoardWidth()+4,game.getBoardHeight())); 
-		this.setPreferredSize(new Dimension(CELLSIZE*28, CELLSIZE*31));
+		this.setLayout(new GridLayout(game.getBoardHeight(),game.getBoardWidth())); 
+		this.setPreferredSize(new Dimension(CELLSIZE*game.getBoardWidth(), CELLSIZE*game.getBoardHeight()));
 		label = new JLabel();
 		label.setIcon(new ImageIcon(new ImageIcon("res/pacmanmin.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 
