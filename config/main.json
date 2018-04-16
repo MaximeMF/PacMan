@@ -1,5 +1,5 @@
 {
-	"bestScore":0,
+	"bestScore":"config/main_bestscore",
 	"boardHeight":31,
 	"boardWidth":28,
 	"nbLevels":5,

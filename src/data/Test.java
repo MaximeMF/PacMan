@@ -57,6 +57,8 @@ public class Test {
 			if(type.isGivingPoints())
 				System.out.println(points.get(type));
 		}
+		
+		//dataLoader.setBestScore(2652);
 
 	}
 

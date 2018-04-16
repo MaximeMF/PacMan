@@ -65,6 +65,13 @@ public interface IDataLoader {
 	public int getBestScore();
 	
 	/**
+	 * Sets the new best score.
+	 * @param bs the new best score
+	 * @pre {@code bs > 0}
+	 */
+	public void setBestScore(int bs);
+	
+	/**
 	 * Gets the number of levels.
 	 * @return the levels number
 	 * @post {@code levels >= 1}

@@ -1,6 +1,9 @@
 package data;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
 
@@ -171,9 +174,29 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getBestScore() {
-		int bestScore = parseInt("bestScore");
-		assert bestScore >= 0 : "postcondition violated : specified bestScore in json configuration file doesn't meet the specifications";
+		int bestScore = -1;
+		String filename = (String) this.json.get("bestScore");
+		try (BufferedReader file = new BufferedReader(new FileReader(filename))) {
+			bestScore = Integer.valueOf(file.readLine());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		assert bestScore >= 0 : "postcondition violated : specified bestScore doesn't meet the specifications";
 		return bestScore;
+	}
+	
+    /**
+     * {@inheritDoc }
+     */
+	@Override
+	public void setBestScore(int bs) {
+		assert bs > 0 : "precondition violated : new bestScore <= 0";
+		String filename = (String) this.json.get("bestScore");
+		try (BufferedWriter file = new BufferedWriter(new FileWriter(filename))) {
+			file.write(String.valueOf(bs));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
     /**
