@@ -99,6 +99,7 @@ public class Ghost implements IGhost{
 	/* (non-Javadoc)
 	 * @see logic.IGhost#move()
 	 */
+	@Override
 	public void move() {
 		if(this.isMovable()) {
 			int max = Direction.values().length;
@@ -176,6 +177,7 @@ public class Ghost implements IGhost{
 	/* (non-Javadoc)
 	 * @see logic.IGhost#getPosition()
 	 */
+	@Override
 	public int[] getPosition() {
 		return position;
 	}
@@ -184,6 +186,7 @@ public class Ghost implements IGhost{
 	 * Gets the Type of ghost
 	 * @return the Ghost Type
 	 */
+	
 	public GhostType getType() {
 		return this.type;
 	}
@@ -191,6 +194,7 @@ public class Ghost implements IGhost{
 	/* (non-Javadoc)
 	 * @see logic.IGhost#canBeEaten()
 	 */
+	@Override
 	public boolean canBeEaten() {
 		return this.canBeEaten;
 	}
@@ -218,11 +222,13 @@ public class Ghost implements IGhost{
 	/* (non-Javadoc)
 	 * @see logic.IGhost#getState()
 	 */
+	@Override
 	public int getState() {
 		return this.state;
 	}
 
 	/**
+	 * Resets the ghost status the initial one
 	 * @param isDead
 	 */
 	public void respawn(boolean isDead) {

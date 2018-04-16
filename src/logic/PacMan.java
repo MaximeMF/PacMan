@@ -31,7 +31,7 @@ public class PacMan implements IPacMan{
 
 	/**
 	 * Add to the Score a value passing in paramaters
-	 * @param value
+	 * @param value of the score
 	 */
 	public void addScore(int value) {
 		this.score += value;
@@ -40,6 +40,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#canMove(logic.Direction)
 	 */
+	@Override
 	public boolean canMove(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -76,6 +77,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#move(logic.Direction)
 	 */
+	@Override
 	public void move(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
@@ -166,6 +168,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#isPowered()
 	 */
+	@Override
 	public boolean isPowered() {
 		return this.powered;
 	}
@@ -173,6 +176,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#getPosition()
 	 */
+	@Override
 	public int[] getPosition() {
 		return this.position;
 	}
@@ -180,6 +184,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#getScore()
 	 */
+	@Override
 	public int getScore() {
 		return this.score;
 	}
@@ -187,6 +192,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#getLevel()
 	 */
+	@Override
 	public int getLevel() {
 		return this.level;
 	}
@@ -194,6 +200,7 @@ public class PacMan implements IPacMan{
 	/* (non-Javadoc)
 	 * @see logic.IPacMan#getLives()
 	 */
+	@Override
 	public int getLives() {
 		return this.lives;
 	}

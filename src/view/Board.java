@@ -185,21 +185,26 @@ public class Board extends JPanel implements KeyListener{
 		{
 			this.dir = Direction.DOWN;
 			pressed = true;
+			label.setIcon(new ImageIcon(new ImageIcon("res/imagedown.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_UP)
 		{
 			this.dir = Direction.UP;
 			pressed = true;
+			label.setIcon(new ImageIcon(new ImageIcon("res/imageup.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			this.dir = Direction.LEFT;
 			pressed = true;
+			label.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			this.dir = Direction.RIGHT;
 			pressed = true;
+			label.setIcon(new ImageIcon(new ImageIcon("res/imageright.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		if(pressed && !this.started) {
 			started = true;

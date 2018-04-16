@@ -47,7 +47,7 @@ public class Game implements IGame{
 
 	/**
 	 * return one and only instance of game (singleton)
-	 * @return
+	 * @return the instance of game 
 	 */
 	public static IGame getInstance() {
 		if (INSTANCE == null) {
@@ -90,7 +90,7 @@ public class Game implements IGame{
 	/**
 	 * Gets the Entity points
 	 * @param entity
-	 * @return
+	 * @return Points from an entity passing in param
 	 */
 	public int getEntityPoints(Entity entity) {
 		return this.loader.getEntityPoints().get(entity);
@@ -175,7 +175,7 @@ public class Game implements IGame{
 	}
 	
 	/**
-	 * Reset the Power of ghosts
+	 * Reset the Ghost status to the initial one
 	 */
 	private void resetPower() {
 		for(Ghost ghost : this.ghosts) {
@@ -199,7 +199,7 @@ public class Game implements IGame{
 
 	/**
 	 * Gets Gums
-	 * @return
+	 * @return the gums 
 	 */
 	public int getGommes() {
 		return this.gommes;
@@ -223,14 +223,15 @@ public class Game implements IGame{
 	}
 
 	/**
-	 * @return
+	 * @return the level number from the data loader 
 	 */
 	public int getLevels() {
 		return this.loader.getLevels();
 	}
 	
 	/**
-	 * @return
+	 * Get the Power Time
+	 * @return the Power time
 	 */
 	public int getPowerTime() {
 		return this.loader.getPowerTime()*1000;
