@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import data.Entity;
-import data.GhostType;
-import logic.Direction;
+import enums.Direction;
+import enums.Entity;
+import enums.GhostType;
 import logic.Game;
 
 

@@ -2,7 +2,8 @@ package logic;
 
 import java.util.Arrays;
 
-import data.Entity;
+import enums.Direction;
+import enums.Entity;
 
 /**
  * Class Controlling the PacMan's Movements 

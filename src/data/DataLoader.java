@@ -12,6 +12,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import enums.Entity;
+import enums.GhostType;
+
 /**
  * Class loading game data from a json config file.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia

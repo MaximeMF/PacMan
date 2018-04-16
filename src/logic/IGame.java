@@ -1,6 +1,8 @@
 package logic;
 
 import data.*;
+import enums.Entity;
+import enums.GhostType;
 
 /**
  * Interface of Logic class to use in View package.

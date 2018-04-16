@@ -1,8 +1,8 @@
 package logic;
 
-import data.Entity;
-import data.GhostType;
 import data.IDataLoader;
+import enums.Entity;
+import enums.GhostType;
 
 import java.util.Timer;
 import java.util.TimerTask;

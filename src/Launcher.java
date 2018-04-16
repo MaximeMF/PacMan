@@ -1,4 +1,4 @@
-package view;
+
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class Launcher {
 		javax.swing.SwingUtilities.invokeLater (new Runnable() { 
     		public void run() { 
     			try {
-					new Window();
+					new view.Window();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

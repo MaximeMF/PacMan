@@ -2,6 +2,9 @@ package data;
 
 import java.util.EnumMap;
 
+import enums.Entity;
+import enums.GhostType;
+
 /**
  * Class Testing Getting Data 
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia

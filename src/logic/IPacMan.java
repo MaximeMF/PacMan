@@ -1,5 +1,7 @@
 package logic;
 
+import enums.Direction;
+
 /**
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  *

@@ -1,4 +1,4 @@
-package data;
+package enums;
 
 /**
  * Enumeration representing the ghosts types.

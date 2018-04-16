@@ -3,8 +3,8 @@ package logic;
 import java.io.IOException;
 import java.util.Arrays;
 
-import data.Entity;
-import data.GhostType;
+import enums.Entity;
+import enums.GhostType;
 
 /**
  * Class Launcher Testing the logic classes 

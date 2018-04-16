@@ -5,8 +5,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import data.Entity;
-import data.GhostType;
+import enums.Direction;
+import enums.Entity;
+import enums.GhostType;
 
 /**
  * Class Controlling the Ghost's movements and functionalities  

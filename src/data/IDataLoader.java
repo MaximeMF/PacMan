@@ -2,6 +2,9 @@ package data;
 
 import java.util.EnumMap;
 
+import enums.Entity;
+import enums.GhostType;
+
 /**
  * Interface providing methods that can be used by the Logic package.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
