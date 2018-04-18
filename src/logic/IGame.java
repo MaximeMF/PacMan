@@ -1,6 +1,5 @@
 package logic;
 
-import data.*;
 import enums.Entity;
 import enums.GhostType;
 

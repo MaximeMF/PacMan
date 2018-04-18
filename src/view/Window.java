@@ -31,13 +31,13 @@ public class Window extends JFrame {
 	 * @throws ParseException
 	 * Construct an instance of Window
 	 */
-	public Window() throws IOException, ParseException {
+	public Window() {
 
 		super("Pac-Man");
 	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.setSize(new Dimension(600,600));
+		//this.setSize(new Dimension(600,600));
 	    this.setBounds(20, 20, 490,700);
 	    
 	    JLabel logo = new JLabel(new ImageIcon("res/logo.png"));
@@ -49,8 +49,7 @@ public class Window extends JFrame {
 	    this.add(board, BorderLayout.CENTER);
 	    
 	    this.add(scoreBar, BorderLayout.SOUTH);
-		
-		//this.pack();
+
 	    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	    this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	    this.setResizable(false);

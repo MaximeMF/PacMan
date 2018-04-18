@@ -144,6 +144,9 @@ public class Game implements IGame{
 	 */
 	public void won() {
 		this.won = true;
+		if(this.player.getScore() > this.getBestScore()) {
+			this.setBestScore(this.player.getScore());
+		}
 	}
 	
 	/**
@@ -151,6 +154,13 @@ public class Game implements IGame{
 	 */
 	public void lost() {
 		this.lost = true;
+		if(this.player.getScore() > this.getBestScore()) {
+			this.setBestScore(this.player.getScore());
+		}
+	}
+
+	private void setBestScore(int score) {
+		this.loader.setBestScore(score);
 	}
 
 	/* (non-Javadoc)

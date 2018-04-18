@@ -33,7 +33,7 @@ public class Lanceur {
 				game.getGhost(gt).move();
 			printBoard(game.getBoard(), game);
 			try {
-				Thread.currentThread().sleep(200);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,6 +88,8 @@ public class Lanceur {
 						break;
 					case FRUIT:
 						brd += ".";
+						break;
+					default:
 						break;
 					}
 				x++;

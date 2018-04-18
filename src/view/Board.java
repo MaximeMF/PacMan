@@ -45,7 +45,7 @@ public class Board extends JPanel implements KeyListener{
 	ImageIcon ghost3Icon = new ImageIcon(new ImageIcon("res/ghost3.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	BottomBar scoreBar;
 	Direction dir;
-	private boolean started;
+	Direction previousDir;
 
 	/**
 	 * Constructs an instance of Board 
@@ -58,7 +58,7 @@ public class Board extends JPanel implements KeyListener{
 		this.setLayout(new GridLayout(game.getBoardHeight(),game.getBoardWidth())); 
 		this.setPreferredSize(new Dimension(CELLSIZE*game.getBoardWidth(), CELLSIZE*game.getBoardHeight()));
 		label = new JLabel();
-		label.setIcon(new ImageIcon(new ImageIcon("res/pacmanmin.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+		label.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 
 
 		this.addKeyListener(this);
@@ -73,7 +73,19 @@ public class Board extends JPanel implements KeyListener{
 		//this.add(label).setBounds(x2, y2, CELLSIZE, CELLSIZE);;
 		//this.add(label);
 		//label.setFocusable(true);
+		this.dir = Direction.LEFT;
+		this.previousDir = Direction.LEFT;
 		toRepeat();
+		for(GhostType gt : GhostType.values())
+			if(gt != GhostType.RED)
+				game.getGhost(gt).init();
+		t.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				move();
+			}
+		}, 0, 300);
 	}
 
 	/**
@@ -84,8 +96,6 @@ public class Board extends JPanel implements KeyListener{
 		for(int i=0; i<game.getBoard().length; i++) {
 			for(int j=0; j<game.getBoard()[0].length; j++) {
 				Entity e = game.getBoard()[i][j];
-				//int k = i;
-				//int m = j;
 				boolean g = false;
 				int[][] pos = {{-1,-1},{-1,-1},{-1,-1},{-1,-1}};
 				int k = 0;
@@ -116,7 +126,6 @@ public class Board extends JPanel implements KeyListener{
 					continue;
 				if(j == game.getPlayer().getPosition()[0] && i == game.getPlayer().getPosition()[1]) {
 					addComp(label);
-					label.setFocusable(true);
 				}
 				else
 					switch(e) {
@@ -175,49 +184,28 @@ public class Board extends JPanel implements KeyListener{
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
-	/* (non-Javadoc)
-	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
-		boolean pressed = false;
 		if(ke.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			this.dir = Direction.DOWN;
-			pressed = true;
 			label.setIcon(new ImageIcon(new ImageIcon("res/imagedown.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_UP)
 		{
 			this.dir = Direction.UP;
-			pressed = true;
 			label.setIcon(new ImageIcon(new ImageIcon("res/imageup.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			this.dir = Direction.LEFT;
-			pressed = true;
 			label.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			this.dir = Direction.RIGHT;
-			pressed = true;
 			label.setIcon(new ImageIcon(new ImageIcon("res/imageright.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
-		}
-		if(pressed && !this.started) {
-			started = true;
-			for(GhostType gt : GhostType.values())
-				if(gt != GhostType.RED)
-					game.getGhost(gt).init();
-			t.scheduleAtFixedRate(new TimerTask() {
-				
-				@Override
-				public void run() {
-					move();
-				}
-			}, 0, 300);
 		}
 	}
 
@@ -226,9 +214,12 @@ public class Board extends JPanel implements KeyListener{
 	 * Move Ghosts 
 	 */
 	private void move() {
-		if (dir != null && game.getPlayer().canMove(this.dir)) {
+		if (game.getPlayer().canMove(this.dir) && (this.dir != Direction.opposite(this.previousDir) || !game.getPlayer().canMove(this.previousDir))) {
 			game.getPlayer().move(this.dir);
+			this.previousDir = this.dir;
 		}
+		else if(game.getPlayer().canMove(this.previousDir))
+			game.getPlayer().move(this.previousDir);
 		for(GhostType gt : GhostType.values())
 			game.getGhost(gt).move();
 		toRepeat();

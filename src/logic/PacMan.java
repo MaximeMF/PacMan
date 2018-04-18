@@ -68,7 +68,7 @@ public class PacMan implements IPacMan{
 		case DOWN:
 			if(y == Game.INSTANCE.getBoardHeight()-1 && board[y][x] == Entity.TUNNEL)
 				return true;
-			if(x < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
+			if(y < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
 				return true;
 			break;
 		}
