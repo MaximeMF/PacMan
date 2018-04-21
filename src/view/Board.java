@@ -17,25 +17,26 @@ import javax.swing.JPanel;
 
 import enums.*;
 import logic.Game;
+import logic.IGhost;
 
 /**
  * Class displaying the maze and the game elements.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
 public class Board extends JPanel implements KeyListener {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	Timer t = new Timer();
-	
+
 	public static final int CELLSIZE = 12;
-	
+
 	JLabel jPacman;
-	
+
 	logic.IGame game = Game.getInstance();
-	
+
 	int[] position;
-	
+
 	// RESIZE A REVOIR
 	ImageIcon wallIcon = new ImageIcon(new ImageIcon("res/wall.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	//ImageIcon wallIcon = new ImageIcon("res/wall.png");
@@ -46,12 +47,19 @@ public class Board extends JPanel implements KeyListener {
 	ImageIcon ghostIcon = new ImageIcon(new ImageIcon("res/ghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghost2Icon = new ImageIcon(new ImageIcon("res/ghost2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghost3Icon = new ImageIcon(new ImageIcon("res/ghost3.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
-	
+	ImageIcon pacLeft = new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon pacRight = new ImageIcon(new ImageIcon("res/imageright.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon pacUp = new ImageIcon(new ImageIcon("res/imageup.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon pacDown = new ImageIcon(new ImageIcon("res/imageDown.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+
 	BottomBar scoreBar;
-	
+
 	Direction dir;
-	
+
 	Direction previousDir;
+
+	private JLabel[][] jCells;
+
 
 	/**
 	 * Constructs an instance of Board.
@@ -65,6 +73,13 @@ public class Board extends JPanel implements KeyListener {
 		this.setPreferredSize(new Dimension(CELLSIZE*game.getBoardWidth(), CELLSIZE*game.getBoardHeight()));
 		jPacman = new JLabel();
 		jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+		jCells = new JLabel[game.getBoardHeight()][game.getBoardWidth()];
+		for(int i = 0; i < game.getBoardHeight() ; i++) {
+			for(int j = 0; j < game.getBoardWidth() ; j++) {
+				jCells[i][j] = new JLabel();
+				this.add(jCells[i][j]);
+			}
+		}
 
 
 		this.addKeyListener(this);
@@ -82,11 +97,11 @@ public class Board extends JPanel implements KeyListener {
 		this.dir = Direction.LEFT;
 		this.previousDir = Direction.LEFT;
 		toRepeat();
-		
+
 		for(GhostType gt : GhostType.values())
 			if(gt != GhostType.RED)
 				game.getGhost(gt).init();
-		
+
 		t.scheduleAtFixedRate(new TimerTask() {	
 			@Override
 			public void run() {
@@ -94,128 +109,97 @@ public class Board extends JPanel implements KeyListener {
 			}
 		}, 0, 300);
 	}
-	
-	
+
+
 	// PLACER TOUT CE QUI SERT A INITIALISER L'AFFICHAGE DU BOARD AU DEBUT ICI
 	public void initialise() {
-		
+
 	}
-	
-	
+
+
 
 	/**
 	 * Display the elements of the game.
 	 */
 	private void toRepeat() {
-		this.removeAll();
-		for(int i=0; i<game.getBoard().length; i++) {
-			for(int j=0; j<game.getBoard()[0].length; j++) {
-				Entity e = game.getBoard()[i][j];
-				boolean g = false;
-				int[][] pos = {{-1,-1},{-1,-1},{-1,-1},{-1,-1}};
-				int k = 0;
-				for(GhostType gt : GhostType.values()) {
-					int[] gtPos = game.getGhost(gt).getPosition();
-					if(j == gtPos[0] && i == gtPos[1]) {
-						boolean ga = false;
-						for(int kk = 0 ; kk < k ; kk++)
-							if(Arrays.equals(pos[kk], game.getGhost(gt).getPosition())) {
-								ga = true;
-							}
-						if(!ga) {
-							JLabel ghost = new JLabel();
-							if(game.getGhost(gt).getState() == 1)
-								ghost.setIcon(ghostIcon);
-							else if(game.getGhost(gt).getState() == 2)
-								ghost.setIcon(ghost2Icon);
-							else
-								ghost.setIcon(ghost3Icon);
-							this.add(ghost);
-							pos[k] = gtPos;
-							k++;
-						}
-						g = true;
-					}
-				}
-				if(g)
-					continue;
-				if(j == game.getPlayer().getPosition()[0] && i == game.getPlayer().getPosition()[1]) {
-					this.add(jPacman);
-				}
-				else
-					switch(e) {
-					case MUR : 
-						JLabel wall = new JLabel();
-						wall.setIcon(wallIcon);
-						//wall.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-						this.add(wall);//.setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);;
-						break;
-					case GOMME :
-						JLabel gum = new JLabel();
-						gum.setIcon(gumIcon);
-						//gum.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-						this.add(gum);//.setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);;
-						break;
-					case SUPERGOMME :
-						JLabel supergum = new JLabel();
-						supergum.setIcon(supergumIcon);
-						//supergum.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-						this.add(supergum);//.setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
-						break;
-					case CHEMIN :
-						JLabel chemin = new JLabel();
-						chemin.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-						this.add(chemin);//.setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
-						break;
-					case TUNNEL:
-						JLabel tunnel = new JLabel();
-						tunnel.setIcon(tunnelIcon);
-						//tunnel.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-						this.add(tunnel);//.setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
-						break;
-					case FRUIT :
-						JLabel fruit = new JLabel("res/fruit_cherry.png");
-						fruit.setIcon(fruitIcon);
-						//fruit.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-						this.add(fruit);//.setBounds(k*CELLSIZE, m*CELLSIZE, CELLSIZE, CELLSIZE);
-						break;
-					default :
+		Entity[][] board = this.game.getBoard();
+		for(int i=0; i<board.length; i++) {
+			for(int j=0; j<board[0].length; j++) {
+				switch(board[i][j]) {
+				case MUR : 
+					this.jCells[i][j].setIcon(wallIcon);
+					break;
+				case GOMME :
+					this.jCells[i][j].setIcon(gumIcon);
+					break;
+				case SUPERGOMME :
+					this.jCells[i][j].setIcon(supergumIcon);
+					break;
+				case CHEMIN :
+					this.jCells[i][j].setIcon(null);
+					break;
+				case TUNNEL:
+					this.jCells[i][j].setIcon(tunnelIcon);
+					break;
+				case FRUIT :
+					this.jCells[i][j].setIcon(fruitIcon);
+					break;
+				default :
 
-					}
+				}
 			}
 		}
-		revalidate();
-		repaint();
+		for(GhostType gt : GhostType.values()) {
+			IGhost ghost = game.getGhost(gt);
+			int[] gtPos = ghost.getPosition();
+			if(ghost.getState() == 1)
+				jCells[gtPos[1]][gtPos[0]].setIcon(ghostIcon);
+			else if(ghost.getState() == 2)
+				jCells[gtPos[1]][gtPos[0]].setIcon(ghost2Icon);
+			else
+				jCells[gtPos[1]][gtPos[0]].setIcon(ghost3Icon);
+		}
+		int[] pacPos = game.getPlayer().getPosition();
+		switch(this.dir) {
+		case UP:
+			jCells[pacPos[1]][pacPos[0]].setIcon(pacUp);
+			break;
+		case DOWN:
+			jCells[pacPos[1]][pacPos[0]].setIcon(pacDown);
+			break;
+		case LEFT:
+			jCells[pacPos[1]][pacPos[0]].setIcon(pacLeft);
+			break;
+		case RIGHT:
+			jCells[pacPos[1]][pacPos[0]].setIcon(pacRight);
+			break;
+		}
 	}
 
-    /**
-     * {@inheritDoc }
-     */
+	/**
+	 * {@inheritDoc }
+	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
 		if(ke.getKeyCode() == KeyEvent.VK_DOWN)
 		{
 			this.dir = Direction.DOWN;
-			jPacman.setIcon(new ImageIcon(new ImageIcon("res/imagedown.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_UP)
 		{
 			this.dir = Direction.UP;
-			jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageup.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_LEFT)
 		{
 			this.dir = Direction.LEFT;
-			jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 		else if(ke.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			this.dir = Direction.RIGHT;
-			jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageright.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		}
 	}
-	
-	
+
+
 
 	/**
 	 * Moves the pacman and the ghosts.
@@ -233,24 +217,24 @@ public class Board extends JPanel implements KeyListener {
 		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())
 		{
-			
+
 			int exit = JOptionPane.showConfirmDialog(null, " Vous avez perdu", "Information", JOptionPane.OK_CANCEL_OPTION); 
-		    if(exit == JOptionPane.OK_OPTION || exit == JOptionPane.CANCEL_OPTION){
-		    	   System.exit(0);
-		    }
+			if(exit == JOptionPane.OK_OPTION || exit == JOptionPane.CANCEL_OPTION){
+				System.exit(0);
+			}
 			System.out.println("GAME OVER");
-		
+
 		}else if(game.hasWon())
 		{
 			ImageIcon img = new ImageIcon(new ImageIcon("res/youwin.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
-		    JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagnÃ©", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
+			JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagné", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
 		}
 	}
-	
-	
+
+
 
 	public void keyReleased(KeyEvent arg0) {}
-	
+
 	public void keyTyped(KeyEvent arg0) {}
 
 }
