@@ -23,6 +23,7 @@ public class PacMan implements IPacMan{
 	private int baseSpeed;
 	private int speed;
 	private Timer t = new Timer();
+	private boolean taskScheduled = false;
 	private int liveUpScore = 10000;
 
 	/**
@@ -247,15 +248,19 @@ public class PacMan implements IPacMan{
 		this.powered = false;
 		this.speed = this.baseSpeed;
 	}
-	
+
 	@Override
 	public int getSpeed() {
 		return this.speed;
 	}
-	
+
 	private void newSpeed(int spd, int duration) {
-		t.cancel();
-		this.speed = this.baseSpeed - spd;
+		/*if(this.taskScheduled) {
+			t.cancel();
+			this.taskScheduled = false;
+		}
+		this.taskScheduled = true;*/
+		this.speed = spd;
 		t.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -263,6 +268,7 @@ public class PacMan implements IPacMan{
 					speed = baseSpeed + 10;
 				else
 					speed = baseSpeed;
+				taskScheduled = false;
 			}
 		}, duration);
 	}
