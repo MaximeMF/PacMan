@@ -23,6 +23,7 @@ public class PacMan implements IPacMan{
 	private int baseSpeed;
 	private int speed;
 	private Timer t = new Timer();
+	private int liveUpScore = 10000;
 
 	/**
 	 * Construct an instance of PacMan
@@ -43,6 +44,10 @@ public class PacMan implements IPacMan{
 	 */
 	public void addScore(int value) {
 		this.score += value;
+		if(this.score > this.liveUpScore) {
+			this.lives++;
+			this.liveUpScore += 10000;
+		}
 	}
 
 	/* (non-Javadoc)
