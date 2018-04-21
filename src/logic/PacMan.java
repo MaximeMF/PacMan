@@ -1,6 +1,8 @@
 package logic;
 
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import enums.Direction;
 import enums.Entity;
@@ -18,16 +20,21 @@ public class PacMan implements IPacMan{
 	private int lives;
 	private int level = 1;
 	private int[] respawnPosition;
+	private int baseSpeed;
+	private int speed;
+	private Timer t = new Timer();
 
 	/**
 	 * Construct an instance of PacMan
 	 * @param pos
 	 * @param lives
 	 */
-	public PacMan(int[] pos, int lives) {
+	public PacMan(int[] pos, int lives, int speed) {
 		this.position = pos.clone();
 		this.lives = lives;
 		this.respawnPosition = pos.clone();
+		this.speed = speed;
+		this.baseSpeed = speed;
 	}
 
 	/**
@@ -116,6 +123,8 @@ public class PacMan implements IPacMan{
 			board[y][x] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.GOMME));
 			Game.INSTANCE.decreaseGommes();
+			if(!this.powered)
+				this.newSpeed(this.baseSpeed - 9, 500);
 			break;
 		case FRUIT:
 			board[y][x] = Entity.CHEMIN;
@@ -124,6 +133,8 @@ public class PacMan implements IPacMan{
 		case SUPERGOMME:
 			board[y][x] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.SUPERGOMME));
+			if(!this.powered)
+				this.newSpeed(this.baseSpeed - 1, 500);
 			Game.INSTANCE.decreaseGommes();
 			this.powered = true;
 			for(Ghost ghost : Game.INSTANCE.ghosts) {
@@ -214,8 +225,12 @@ public class PacMan implements IPacMan{
 		if(this.lives == 0)
 			Game.INSTANCE.lost();
 		else {
-			if(isDead)
+			if(isDead) {
 				this.lives--;
+				for (Ghost ghost : Game.INSTANCE.ghosts) {
+					ghost.init();
+				}
+			}
 			this.position = this.respawnPosition.clone();
 		}
 	}
@@ -225,6 +240,26 @@ public class PacMan implements IPacMan{
 	 */
 	public void unpower() {
 		this.powered = false;
+		this.speed = this.baseSpeed;
+	}
+	
+	@Override
+	public int getSpeed() {
+		return this.speed;
+	}
+	
+	private void newSpeed(int spd, int duration) {
+		t.cancel();
+		this.speed = this.baseSpeed - spd;
+		t.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(powered)
+					speed = baseSpeed + 10;
+				else
+					speed = baseSpeed;
+			}
+		}, duration);
 	}
 
 }

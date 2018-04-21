@@ -52,4 +52,10 @@ public interface IPacMan {
 	 * @param dir the direction PacMan should move towards
 	 */
 	public boolean canMove(Direction dir);
+	
+	/**
+	 * Gets PacMan's speed.
+	 * @return speed
+	 */
+	public int getSpeed();
 }

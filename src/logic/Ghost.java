@@ -26,6 +26,8 @@ public class Ghost implements IGhost{
 	private Direction currentDirection;
 	private long respawnTime;
 	private int state = 1;
+	private int speed;
+	private int baseSpeed;
 
 	/**
 	 * Constructs an instance of Ghost
@@ -35,7 +37,7 @@ public class Ghost implements IGhost{
 	 * @param respawnTime
 	 * @param exitPosition
 	 */
-	public Ghost(int[] pos, int points, GhostType type, long respawnTime, int[] exitPosition) {
+	public Ghost(int[] pos, int points, GhostType type, long respawnTime, int[] exitPosition, int speed) {
 		this.position = pos.clone();
 		this.respawnPosition = pos.clone();
 		this.points = points;
@@ -46,6 +48,8 @@ public class Ghost implements IGhost{
 			this.movable = true;
 			this.position = exitPosition.clone();
 		}
+		this.speed = speed;
+		this.baseSpeed = speed;
 	}
 
 	/**
@@ -154,6 +158,16 @@ public class Ghost implements IGhost{
 				this.position[1]++;
 			break;
 		}
+		if(board[this.position[1]][this.position[0]] == Entity.TUNNEL) {
+			this.speed -= 35;
+			(new Timer()).schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					speed = baseSpeed;
+				}
+			}, 500);
+		}
 		if(this.isDead())
 			this.respawn(true);
 		if(Game.INSTANCE.player.isDead()) {
@@ -207,6 +221,7 @@ public class Ghost implements IGhost{
 		this.canBeEaten = !this.canBeEaten;
 		if(this.canBeEaten) {
 			this.state = 2;
+			this.speed = this.baseSpeed - 25;
 			(new Timer()).schedule(new TimerTask() {
 				
 				@Override
@@ -216,8 +231,10 @@ public class Ghost implements IGhost{
 				}
 			}, (long)(Math.floor(Game.INSTANCE.getPowerTime()*0.70)));
 		}
-		else
+		else {
 			this.state = 1;
+			this.speed = this.baseSpeed;
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -252,6 +269,11 @@ public class Ghost implements IGhost{
 	
 	public void init() {
 		this.respawn(false);
+	}
+
+	@Override
+	public int getSpeed() {
+		return this.speed;
 	}
 
 }

@@ -31,4 +31,10 @@ public interface IGhost {
 	 * @return integer representing state of the ghost
 	 */
 	public int getState();
+	
+	/**
+	 * Gets the ghost's speed.
+	 * @return speed
+	 */
+	public int getSpeed();
 }
