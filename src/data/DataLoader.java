@@ -23,7 +23,7 @@ public class DataLoader implements IDataLoader {
 	
 	
 	
-	private final String CONFIG = "main";
+	private final String CONFIG = "test";
 	
 	private JSONObject json;
 	

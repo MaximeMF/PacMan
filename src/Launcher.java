@@ -9,7 +9,7 @@ public class Launcher {
 
 		javax.swing.SwingUtilities.invokeLater (new Runnable() { 
     		public void run() { 
-					new view.Window();
+				new view.Window();
     		}
 		});
 	} 

@@ -1,35 +1,25 @@
 package view;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import org.json.simple.parser.ParseException;
-
 import logic.Game;
 
-
-
-
 /**
- * Class Displaying all the components of the game 
+ * Class displaying the frame.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
- *
  */
 public class Window extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	
 	/**
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
-	 * Construct an instance of Window
+	 * Constructs an instance of Window.
 	 */
 	public Window() {
 
