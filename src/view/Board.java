@@ -38,7 +38,6 @@ public class Board extends JPanel implements KeyListener {
 
 	// RESIZE A REVOIR
 	ImageIcon wallIcon = new ImageIcon(new ImageIcon("res/wall.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
-	//ImageIcon wallIcon = new ImageIcon("res/wall.png");
 	ImageIcon gumIcon = new ImageIcon(new ImageIcon("res/gum.png").getImage().getScaledInstance(CELLSIZE-(CELLSIZE/2), CELLSIZE- (CELLSIZE/2), Image.SCALE_DEFAULT));
 	ImageIcon supergumIcon = new ImageIcon(new ImageIcon("res/fruit.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon fruitIcon = new ImageIcon(new ImageIcon("res/fruit_cherry.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
@@ -105,12 +104,7 @@ public class Board extends JPanel implements KeyListener {
 	}
 
 
-	// PLACER TOUT CE QUI SERT A INITIALISER L'AFFICHAGE DU BOARD AU DEBUT ICI
-	/*
-	 public void initialise() {
-		game.getPlayer().move(Direction.RIGHT);
-	}
-	*/
+	
 
 
 
@@ -226,8 +220,12 @@ public class Board extends JPanel implements KeyListener {
 
 		}else if(game.hasWon())
 		{
-			ImageIcon img = new ImageIcon(new ImageIcon("res/youwin.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
-			JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagn�", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
+			int exit = JOptionPane.showConfirmDialog(null, " Vous avez Gagné", "Information", JOptionPane.OK_CANCEL_OPTION); 
+			if(exit == JOptionPane.OK_OPTION || exit == JOptionPane.CANCEL_OPTION){
+				System.exit(0);
+			}
+			System.out.println("Vous avez gagné");
+		
 		}
 	}
 
