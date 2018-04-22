@@ -251,7 +251,7 @@ public class Board extends JPanel implements KeyListener {
 			game.getPlayer().move(this.previousDir);
 
 		toRepeat();
-		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
+		scoreBar.update(game.getPlayer().getScore(), game.getBestScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())
 		{
 
@@ -287,7 +287,7 @@ public class Board extends JPanel implements KeyListener {
 	{
 		game.getGhost(gt).move();
 		toRepeat();
-		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
+		scoreBar.update(game.getPlayer().getScore(), game.getBestScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		(new Timer()).schedule(new TimerTask() {
 
 			@Override

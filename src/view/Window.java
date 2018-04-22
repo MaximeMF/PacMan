@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import logic.Game;
+import logic.IGame;
 
 /**
  * Class displaying the frame.
@@ -35,7 +36,8 @@ public class Window extends JFrame {
 	    
 	    this.add(logo, BorderLayout.NORTH);
 	    
-	    BottomBar scoreBar = new BottomBar(0, Game.getInstance().getPlayer().getLives(), Game.getInstance().getPlayer().getLevel()); // A MODIFIER
+	    IGame game = Game.getInstance();
+	    BottomBar scoreBar = new BottomBar(0, game.getBestScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 	    Board board = new Board(scoreBar);
 	    this.add(board, BorderLayout.CENTER);
 	    
