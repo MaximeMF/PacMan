@@ -149,7 +149,6 @@ public class Board extends JPanel implements KeyListener {
 			int[] gtPos = ghost.getPosition();
 			if(ghost.getState() == 1)
 			{
-				
 				jCells[gtPos[1]][gtPos[0]].setIcon(ghostIcon);
 				
 			}
