@@ -220,8 +220,12 @@ public class Board extends JPanel implements KeyListener {
 
 		}else if(game.hasWon())
 		{
-			ImageIcon img = new ImageIcon(new ImageIcon("res/youwin.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
-			JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagn�", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
+			int exit = JOptionPane.showConfirmDialog(null, " Vous avez Gagné", "Information", JOptionPane.OK_CANCEL_OPTION); 
+			if(exit == JOptionPane.OK_OPTION || exit == JOptionPane.CANCEL_OPTION){
+				System.exit(0);
+			}
+			System.out.println("Vous avez gagné");
+		
 		}
 	}
 
