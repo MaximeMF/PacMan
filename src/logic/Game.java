@@ -203,6 +203,8 @@ public class Game implements IGame{
 	 * Start Power timer
 	 */
 	public void startPowerTimer() {
+		this.powerTimer.cancel(); //ensure that the power will not reset too early due to another task scheduled
+		this.powerTimer = new Timer();
 		this.powerTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {

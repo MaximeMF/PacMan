@@ -23,7 +23,6 @@ public class PacMan implements IPacMan{
 	private int baseSpeed;
 	private int speed;
 	private Timer t = new Timer();
-	//private boolean taskScheduled = false;
 	private int liveUpScore = 10000;
 	private Direction dir;
 
@@ -52,8 +51,8 @@ public class PacMan implements IPacMan{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#canMove(logic.Direction)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean canMove(Direction dir) {
@@ -89,8 +88,8 @@ public class PacMan implements IPacMan{
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#move(logic.Direction)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void move(Direction dir) {
@@ -98,7 +97,7 @@ public class PacMan implements IPacMan{
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
 		int y = this.position[1];
-		switch(dir) {
+		switch(dir) { //move Pacman
 		case LEFT:
 			if(board[y][x] == Entity.TUNNEL && x == 0)
 				this.position[0] = Game.INSTANCE.getBoardWidth() - 1;
@@ -126,7 +125,7 @@ public class PacMan implements IPacMan{
 		}
 		x = this.position[0];
 		y = this.position[1];
-		switch(board[y][x]) {
+		switch(board[y][x]) { //eat whatever is under Pacman
 		case GOMME:
 			board[y][x] = Entity.CHEMIN;
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.GOMME));
@@ -145,7 +144,7 @@ public class PacMan implements IPacMan{
 				this.newSpeed(this.baseSpeed - 1, 500);
 			Game.INSTANCE.decreaseGommes();
 			this.powered = true;
-			for(Ghost ghost : Game.INSTANCE.ghosts) {
+			for(Ghost ghost : Game.INSTANCE.ghosts) { //ghosts can be eaten
 				ghost.changeState();
 			}
 			Game.INSTANCE.startPowerTimer();
@@ -185,40 +184,40 @@ public class PacMan implements IPacMan{
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#isPowered()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isPowered() {
 		return this.powered;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#getPosition()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int[] getPosition() {
 		return this.position;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#getScore()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getScore() {
 		return this.score;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#getLevel()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getLevel() {
 		return this.level;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IPacMan#getLives()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getLives() {
@@ -226,7 +225,7 @@ public class PacMan implements IPacMan{
 	}
 
 	/**
-	 * Decrements lives number of a player
+	 * Decrements the lives of the player if Pacman has been eaten and reset its position.
 	 * @param isDead
 	 */
 	public void respawn(boolean isDead) {
@@ -251,18 +250,22 @@ public class PacMan implements IPacMan{
 		this.speed = this.baseSpeed;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getSpeed() {
 		return this.speed;
 	}
 
+	/**
+	 * Changes the speed for a given duration.
+	 * @param spd the new speed to apply
+	 * @param duration the duration before reverting to normal speed
+	 */
 	private void newSpeed(int spd, int duration) {
-		//if(this.taskScheduled) {
 		t.cancel();
 		t = new Timer();
-		//	this.taskScheduled = false;
-		//}
-		//this.taskScheduled = true;
 		this.speed = spd;
 		t.schedule(new TimerTask() {
 			@Override
@@ -271,11 +274,14 @@ public class PacMan implements IPacMan{
 					speed = baseSpeed + 10;
 				else
 					speed = baseSpeed;
-				//taskScheduled = false;
 			}
 		}, duration);
 	}
 
+	/**
+	 * Gets the direction of Pacman.
+	 * @return the current direction
+	 */
 	public Direction getDirection() {
 		return this.dir;
 	}
