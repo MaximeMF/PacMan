@@ -238,6 +238,7 @@ public class Game implements IGame{
 		pink.init();
 		orange.init();
 		this.player.setRespawnPosition(this.loader.getPacmanPosition(this.player.getLevel()));
+		this.player.setBaseSpeed(this.loader.getSpeed(this.player.getLevel()));
 		this.player.respawn(false);
 		//red is already out
 	}

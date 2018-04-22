@@ -94,6 +94,7 @@ public class Board extends JPanel implements KeyListener {
 
 		toRepeat();
 
+		this.movePlayer();
 		for(GhostType gt : GhostType.values()) {
 			if(gt != GhostType.RED)
 			{
@@ -101,7 +102,6 @@ public class Board extends JPanel implements KeyListener {
 			}
 			this.move(gt);
 		}
-		this.movePlayer();
 	}
 
 
@@ -276,7 +276,7 @@ public class Board extends JPanel implements KeyListener {
 			public void run() {
 				movePlayer();
 			}
-		}, (110-game.getPlayer().getSpeed())*15);
+		}, (110-game.getPlayer().getSpeed())*13);
 	}
 
 	/**
@@ -294,7 +294,7 @@ public class Board extends JPanel implements KeyListener {
 			public void run() {
 				move(gt);
 			}
-		}, (110-game.getGhost(gt).getSpeed())*15);
+		}, (110-game.getGhost(gt).getSpeed())*13);
 	}
 
 

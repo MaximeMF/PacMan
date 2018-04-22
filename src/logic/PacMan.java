@@ -284,6 +284,10 @@ public class PacMan implements IPacMan{
 			}
 		}, duration);
 	}
+	
+	public void setBaseSpeed(int spd) {
+		this.baseSpeed = spd;
+	}
 
 	/**
 	 * Gets the direction of Pacman.

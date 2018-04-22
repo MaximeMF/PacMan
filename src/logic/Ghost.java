@@ -173,9 +173,9 @@ public class Ghost implements IGhost{
 		}
 		if(board[this.position[1]][this.position[0]] == Entity.TUNNEL) {
 			if(Game.INSTANCE.getPlayer().getLevel() > 1)
-				this.speed -= 35;
+				this.speed = this.baseSpeed - 35;
 			else
-				this.speed -= 40;
+				this.speed = this.baseSpeed - 40;
 			(new Timer()).schedule(new TimerTask() {
 
 				@Override
