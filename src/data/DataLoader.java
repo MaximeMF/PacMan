@@ -16,7 +16,7 @@ import enums.Entity;
 import enums.GhostType;
 
 /**
- * Class loading game data from a json config file.
+ * Class loading game data from a gameData config file.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
 public class DataLoader implements IDataLoader {
@@ -25,7 +25,7 @@ public class DataLoader implements IDataLoader {
 	
 	private final String CONFIG = "main";
 	
-	private JSONObject json;
+	private JSONObject gameData;
 	
 	
 	
@@ -39,31 +39,31 @@ public class DataLoader implements IDataLoader {
 	
 	
 	/**
-	 * Gets the json config file.
-	 * @post json != null
+	 * Gets the gameData config file.
+	 * @post gameData != null
 	 */
 	private void initialise() {
 		JSONParser parser = new JSONParser();
 		try {
 			Object obj = parser.parse(new FileReader("config/"+CONFIG+".json"));
-			this.json = (JSONObject) obj;			
+			this.gameData = (JSONObject) obj;			
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
-		assert this.json != null : "postcondition violated : no json configuration file";
+		assert this.gameData != null : "postcondition violated : no gameData configuration file";
 	}
 	
 	
 	
 	/**
-	 * Parse the json object.
+	 * Parses the gameData object.
 	 * @param key the element's name whose value is sought.
 	 * @return the int value associated to the key
-	 * @pre json.containsKey(key) == true
+	 * @pre gameData.containsKey(key) == true
 	 */
-	private int parseInt(String key) {
-		assert this.json.containsKey(key) : "precondition violated : no "+key+" key in json configuration file";
-		long value = (long) this.json.get(key);
+	private int parseInt(JSONObject loc, String key) {
+		assert loc.containsKey(key) : "precondition violated : no "+key+" key in json configuration file";
+		long value = (long) loc.get(key);
 		return Math.toIntExact(value);
 	}
 	
@@ -73,8 +73,9 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int getBoardHeight() {
-		int boardHeight = parseInt("boardHeight");
+	public int getBoardHeight(int lvl) {
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		int boardHeight = parseInt(level, "boardHeight");
 		assert boardHeight >= 5 : "postcondition violated : specified boardHeight in json configuration file doesn't meet the specifications";
 		return boardHeight;
 	}
@@ -83,8 +84,9 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int getBoardWidth() {
-		int boardWidth = parseInt("boardWidth");
+	public int getBoardWidth(int lvl) {
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		int boardWidth = parseInt(level, "boardWidth");
 		assert boardWidth >= 5 : "postcondition violated : specified boardWidth in json configuration file doesn't meet the specifications";
 		return boardWidth;
 	}
@@ -93,10 +95,11 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public Entity[][] getBoard() {
-		int boardHeight = getBoardHeight();
-		int boardWidth = getBoardWidth();
-		JSONArray board = (JSONArray) this.json.get("board");
+	public Entity[][] getBoard(int lvl) {
+		int boardHeight = getBoardHeight(lvl);
+		int boardWidth = getBoardWidth(lvl);
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONArray board = (JSONArray) level.get("board");
 		Entity[][] boardMatrix = new Entity[boardHeight][boardWidth];
 		for(int i=0; i<boardHeight; i++) {
 			JSONArray row = (JSONArray) board.get(i);
@@ -112,13 +115,14 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int[] getPacmanPosition() {
-		JSONArray position = (JSONArray) this.json.get("posPacman");
+	public int[] getPacmanPosition(int lvl) {
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONArray position = (JSONArray) level.get("posPacman");
 		int[] posArray = new int[position.size()];
         for(int i=0; i<position.size(); i++) {
         	posArray[i] = Math.toIntExact((long)position.get(i));
         }
-        assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
+        assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth(lvl) && posArray[1] >= 0 && posArray[1]<getBoardHeight(lvl) : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
         return posArray;
 	}
 	
@@ -126,13 +130,14 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int[] getExitPosition() {
-		JSONArray position = (JSONArray) this.json.get("exitPosition");
+	public int[] getExitPosition(int lvl) {
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONArray position = (JSONArray) level.get("exitPosition");
 		int[] posArray = new int[position.size()];
 		for(int i=0; i<position.size(); i++) {
         	posArray[i] = Math.toIntExact((long)position.get(i));
         }
-        assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
+        assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth(lvl) && posArray[1] >= 0 && posArray[1]<getBoardHeight(lvl) : "postcondition violated : specified posPacman in json configuration file doesn't meet the specifications";
         return posArray;
 	}
 
@@ -140,15 +145,16 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public EnumMap<GhostType, int[]> getGhostsPosition() {
+	public EnumMap<GhostType, int[]> getGhostsPosition(int lvl) {
 		EnumMap<GhostType, int[]> posMap = new EnumMap<>(GhostType.class);
-		JSONObject posGhosts = (JSONObject) this.json.get("posGhosts");
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject posGhosts = (JSONObject) level.get("posGhosts");
 		for(GhostType type : GhostType.values()) {
 			JSONArray pos = (JSONArray) posGhosts.get(type.name().toLowerCase());
 			int[] posArray = new int[pos.size()];
 	        for(int i=0; i<pos.size(); i++) {
 	        	posArray[i] = Math.toIntExact((long)pos.get(i));
-	        	assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth() && posArray[1] >= 0 && posArray[1]<getBoardHeight() : "postcondition violated : specified posGhosts in json configuration file doesn't meet the specifications";	        
+	        	assert posArray.length == 2 && posArray[0] >= 0 && posArray[0]<getBoardWidth(lvl) && posArray[1] >= 0 && posArray[1]<getBoardHeight(lvl) : "postcondition violated : specified posGhosts in json configuration file doesn't meet the specifications";	        
 	        }
 			posMap.put(type, posArray);
 		}
@@ -161,7 +167,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public EnumMap<Entity, Integer> getEntityPoints() {
 		EnumMap<Entity, Integer> pointsMap = new EnumMap<>(Entity.class);
-		JSONObject pointsEntities = (JSONObject) this.json.get("points");
+		JSONObject pointsEntities = (JSONObject) this.gameData.get("points");
 		for(Entity type : Entity.values()) {
 			if(type.isGivingPoints()) {
 				int points = Math.toIntExact((long)pointsEntities.get(type.name().toLowerCase()));
@@ -178,7 +184,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public int getBestScore() {
 		int bestScore = -1;
-		String filename = (String) this.json.get("bestScore");
+		String filename = (String) this.gameData.get("bestScore");
 		try (BufferedReader file = new BufferedReader(new FileReader(filename))) {
 			bestScore = Integer.valueOf(file.readLine());
 		} catch (IOException e) {
@@ -194,7 +200,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public void setBestScore(int bs) {
 		assert bs > 0 : "precondition violated : new bestScore <= 0";
-		String filename = (String) this.json.get("bestScore");
+		String filename = (String) this.gameData.get("bestScore");
 		try (BufferedWriter file = new BufferedWriter(new FileWriter(filename))) {
 			file.write(String.valueOf(bs));
 		} catch (IOException e) {
@@ -207,7 +213,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getLevels() {
-		int nbLevels = parseInt("nbLevels");
+		int nbLevels = parseInt(this.gameData, "nbLevels");
 		assert nbLevels >= 1 :  "postcondition violated : specified nbLevels in json configuration file doesn't meet the specifications";
 		return nbLevels;
 	}
@@ -216,9 +222,10 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int getGommes() {
-		int nbGommes = parseInt("nbGommes");
-		assert nbGommes >= 1 && nbGommes <= getBoardWidth()*getBoardHeight() :  "postcondition violated : specified nbGommes in json configuration file doesn't meet the specifications";
+	public int getGommes(int lvl) {
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		int nbGommes = parseInt(level, "nbGommes");
+		assert nbGommes >= 1 && nbGommes <= getBoardWidth(lvl)*getBoardHeight(lvl) :  "postcondition violated : specified nbGommes in json configuration file doesn't meet the specifications";
 		return nbGommes;
 	}
 
@@ -227,7 +234,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getLives() {
-		int nbLives = parseInt("nbLives");
+		int nbLives = parseInt(this.gameData, "nbLives");
 		assert nbLives >= 1 :  "postcondition violated : specified nbLives in json configuration file doesn't meet the specifications";
 		return nbLives;
 	}
@@ -236,8 +243,9 @@ public class DataLoader implements IDataLoader {
      * {@inheritDoc }
      */
 	@Override
-	public int getSpeed() {
-		int speed = parseInt("speedPercent");
+	public int getSpeed(int lvl) {
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		int speed = parseInt(level, "speedPercent");
 		assert speed >= 50 && speed <= 200 :  "postcondition violated : specified speedPercent in json configuration file doesn't meet the specifications";
 		return speed;
 	}
@@ -247,7 +255,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getPowerTime() {
-		int powerTime = parseInt("powerTime");
+		int powerTime = parseInt(this.gameData, "powerTime");
 		assert powerTime >= 0 :  "postcondition violated : specified powerTime in json configuration file doesn't meet the specifications";
 		return powerTime;
 	}

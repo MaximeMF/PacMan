@@ -12,23 +12,26 @@ import enums.GhostType;
 public class Test {
 
 	public static void main(String[] args) {
+		
+		int lvl = 1;
 
 		DataLoader dataLoader = new DataLoader();
 		
-		int boardHeight = dataLoader.getBoardHeight();
-		int boardWidth = dataLoader.getBoardWidth();
+		int boardHeight = dataLoader.getBoardHeight(lvl);
+		int boardWidth = dataLoader.getBoardWidth(lvl);
 		int bestScore = dataLoader.getBestScore();
-		int gommes = dataLoader.getGommes();
+		int gommes = dataLoader.getGommes(lvl);
 		int levels = dataLoader.getLevels();
 		int lives = dataLoader.getLives();
 		int powerTime = dataLoader.getPowerTime();
-		int speed = dataLoader.getSpeed();
-		int[] pacmanPosition = dataLoader.getPacmanPosition();
-		int[] exitPosition = dataLoader.getExitPosition();
-		Entity[][] board = dataLoader.getBoard();
-		EnumMap<GhostType, int[]> ghostsPosition = dataLoader.getGhostsPosition();
+		int speed = dataLoader.getSpeed(lvl);
+		int[] pacmanPosition = dataLoader.getPacmanPosition(lvl);
+		int[] exitPosition = dataLoader.getExitPosition(lvl);
+		Entity[][] board = dataLoader.getBoard(lvl);
+		EnumMap<GhostType, int[]> ghostsPosition = dataLoader.getGhostsPosition(lvl);
 		EnumMap<Entity, Integer> points = dataLoader.getEntityPoints();
 		
+		System.out.println("Level : "+lvl);
 		System.out.println("BoardHeight : "+boardHeight);
 		System.out.println("BoardWidth : "+boardWidth);
 		System.out.println("BestScore : "+bestScore);
@@ -60,9 +63,6 @@ public class Test {
 			if(type.isGivingPoints())
 				System.out.println(points.get(type));
 		}
-		
-		//dataLoader.setBestScore(2652);
-
 	}
 
 }
