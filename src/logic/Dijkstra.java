@@ -90,9 +90,14 @@ public class Dijkstra {
 		}
 		ArrayList<Integer> chemin = new ArrayList<>();
 		chemin.add(j);
+		int pathNotFound = j;
 		int x = j;
 		while(x != i) { //fetch the path from source to destination
 			x = pere[x]; //follow the path backwards
+			if(x == pathNotFound)
+				return chemin;
+			else
+				pathNotFound = x;
 			chemin.add(0, x);
 		}
 		return chemin;
