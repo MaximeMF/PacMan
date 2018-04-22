@@ -32,7 +32,7 @@ public class Board extends JPanel implements KeyListener {
 	JLabel jPacman;
 
 	logic.IGame game = Game.getInstance();
-	public static final int CELLSIZE = Window.WINDOW_WIDTH / Game.getInstance().getBoardWidth();
+	public int CELLSIZE = Window.WINDOW_WIDTH / Game.getInstance().getBoardWidth();
 
 	int[] position;
 
@@ -74,8 +74,8 @@ public class Board extends JPanel implements KeyListener {
 		layout.setHgap(0);
 		layout.setVgap(0);
 		this.setLayout(layout); 
-		jPacman = new JLabel();
-		jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+		this.jPacman = new JLabel();
+		this.jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		jCells = new JLabel[game.getBoardHeight()][game.getBoardWidth()];
 		for(int i = 0; i < game.getBoardHeight() ; i++) {
 			for(int j = 0; j < game.getBoardWidth() ; j++) {
@@ -115,8 +115,10 @@ public class Board extends JPanel implements KeyListener {
 	private void toRepeat() {
 		Entity[][] board = this.game.getBoard();
 		if(board.length != this.jCells.length || board[0].length != this.jCells[0].length) {
+			this.CELLSIZE = Window.WINDOW_WIDTH / board[0].length;
 			this.removeAll();
-			jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+			this.jPacman = new JLabel();
+			this.jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 			GridLayout layout = new GridLayout(board.length, board[0].length);
 			layout.setHgap(0);
 			layout.setVgap(0);
@@ -261,7 +263,7 @@ public class Board extends JPanel implements KeyListener {
 			public void run() {
 				movePlayer();
 			}
-		}, (120-game.getPlayer().getSpeed())*10);
+		}, (110-game.getPlayer().getSpeed())*15);
 	}
 
 	/**
@@ -279,7 +281,7 @@ public class Board extends JPanel implements KeyListener {
 			public void run() {
 				move(gt);
 			}
-		}, (120-game.getGhost(gt).getSpeed())*10);
+		}, (110-game.getGhost(gt).getSpeed())*15);
 	}
 
 
