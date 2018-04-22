@@ -99,18 +99,6 @@ public class Board extends JPanel implements KeyListener {
 			{
 				game.getGhost(gt).init();
 			}
-			else if(gt != GhostType.PINK)
-			{
-			game.getGhost(gt).init();
-			}
-			else if(gt != GhostType.CYAN)
-			{
-				game.getGhost(gt).init();
-			}
-			else if(gt != GhostType.ORANGE)
-			{
-				game.getGhost(gt).init();
-			}
 		t.scheduleAtFixedRate(new TimerTask() {	
 			@Override
 			public void run() {
