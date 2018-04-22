@@ -27,7 +27,7 @@ public class Board extends JPanel implements KeyListener {
 
 	Timer t = new Timer();
 
-	
+
 
 	JLabel jPacman;
 
@@ -52,9 +52,9 @@ public class Board extends JPanel implements KeyListener {
 	ImageIcon pacRight = new ImageIcon(new ImageIcon("res/imageright.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon pacUp = new ImageIcon(new ImageIcon("res/imageup.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon pacDown = new ImageIcon(new ImageIcon("res/imageDown.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
-//
+	//
 	BottomBar scoreBar;
-//
+	//
 	Direction dir;
 
 	Direction previousDir;
@@ -91,24 +91,21 @@ public class Board extends JPanel implements KeyListener {
 		this.setFocusable(true);
 		this.dir = Direction.LEFT;
 		this.previousDir = Direction.LEFT;
-		
+
 		toRepeat();
 
-		for(GhostType gt : GhostType.values())
+		for(GhostType gt : GhostType.values()) {
 			if(gt != GhostType.RED)
 			{
 				game.getGhost(gt).init();
 			}
-		t.scheduleAtFixedRate(new TimerTask() {	
-			@Override
-			public void run() {
-				move();
-			}
-		}, 0, 300);
+			this.move(gt);
+		}
+		this.movePlayer();
 	}
 
 
-	
+
 
 
 
@@ -227,22 +224,17 @@ public class Board extends JPanel implements KeyListener {
 	}
 
 
-
 	/**
-	 * Moves the pacman and the ghosts.
+	 * Moves Pacman
 	 */
-	private void move() 
-	{
+	private void movePlayer() {
 		if (game.getPlayer().canMove(this.dir) && (this.dir != Direction.opposite(this.previousDir) || !game.getPlayer().canMove(this.previousDir))) {
 			game.getPlayer().move(this.dir);
 			this.previousDir = this.dir;
 		}
-		
 		else if(game.getPlayer().canMove(this.previousDir))
 			game.getPlayer().move(this.previousDir);
-		for(GhostType gt : GhostType.values())
-			game.getGhost(gt).move();
-		
+
 		toRepeat();
 		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())
@@ -261,14 +253,39 @@ public class Board extends JPanel implements KeyListener {
 				System.exit(0);
 			}
 			System.out.println("Vous avez gagné");
-		
+
 		}
+		(new Timer()).schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				movePlayer();
+			}
+		}, (120-game.getPlayer().getSpeed())*10);
+	}
+
+	/**
+	 * Moves a ghost.
+	 * @param gt ghost type
+	 */
+	private void move(GhostType gt) 
+	{
+		game.getGhost(gt).move();
+		toRepeat();
+		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
+		(new Timer()).schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				move(gt);
+			}
+		}, (120-game.getGhost(gt).getSpeed())*10);
 	}
 
 
 
-	public void keyReleased(KeyEvent arg0) {}
+		public void keyReleased(KeyEvent arg0) {}
 
-	public void keyTyped(KeyEvent arg0) {}
+		public void keyTyped(KeyEvent arg0) {}
 
-}
+	}
