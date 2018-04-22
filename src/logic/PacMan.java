@@ -23,8 +23,9 @@ public class PacMan implements IPacMan{
 	private int baseSpeed;
 	private int speed;
 	private Timer t = new Timer();
-	private boolean taskScheduled = false;
+	//private boolean taskScheduled = false;
 	private int liveUpScore = 10000;
+	private Direction dir;
 
 	/**
 	 * Construct an instance of PacMan
@@ -93,6 +94,7 @@ public class PacMan implements IPacMan{
 	 */
 	@Override
 	public void move(Direction dir) {
+		this.dir = dir;
 		Entity[][] board = Game.INSTANCE.getBoard();
 		int x = this.position[0];
 		int y = this.position[1];
@@ -268,9 +270,12 @@ public class PacMan implements IPacMan{
 					speed = baseSpeed + 10;
 				else
 					speed = baseSpeed;
-				taskScheduled = false;
+				//taskScheduled = false;
 			}
 		}, duration);
 	}
-
+	
+	public Direction getDirection() {
+		return this.dir;
+	}
 }

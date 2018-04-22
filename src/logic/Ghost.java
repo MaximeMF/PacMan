@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
@@ -28,6 +29,8 @@ public class Ghost implements IGhost{
 	private int state = 1;
 	private int speed;
 	private int baseSpeed;
+	private Dijkstra dijkstra;
+	private int mode = 1; //1:chase ; 2:scatter; 3:frightened
 
 	/**
 	 * Constructs an instance of Ghost
@@ -50,6 +53,7 @@ public class Ghost implements IGhost{
 		}
 		this.speed = speed;
 		this.baseSpeed = speed;
+		this.dijkstra = new Dijkstra();
 	}
 
 	/**
@@ -65,10 +69,12 @@ public class Ghost implements IGhost{
 	 * @param dir the direction the ghost should move towards
 	 * @return true if the ghost can move in the given direction, false otherwise
 	 */
-	
+
 	public boolean canMove(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		if(this.movable) {
+			if(this.currentDirection != null && Direction.opposite(dir) == this.currentDirection)
+				return false;
 			int x = this.position[0];
 			int y = this.position[1];
 			switch(dir) {
@@ -101,27 +107,21 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGhost#move()
-	 */
-	@Override
-	public void move() {
-		if(this.isMovable()) {
-			int max = Direction.values().length;
-			Direction dir;
-			Direction[] val = Direction.values();
-			Random rd = new Random();
-			do {
-				int rd_int = rd.nextInt(max);
-				dir = val[rd_int];
-				Direction temp = val[max-1];
-				val[max-1] = dir;
-				val[rd_int] = temp;
-				max--;
-			} while(Direction.opposite(dir) == this.currentDirection || !this.canMove(dir));
-			this.move(dir);
-			this.currentDirection = dir;
-		}
+	public void randomMove() {
+		int max = Direction.values().length;
+		Direction dir;
+		Direction[] val = Direction.values();
+		Random rd = new Random();
+		do {
+			int rd_int = rd.nextInt(max);
+			dir = val[rd_int];
+			Direction temp = val[max-1];
+			val[max-1] = dir;
+			val[rd_int] = temp;
+			max--;
+		} while(!this.canMove(dir));
+		this.move(dir);
+		this.currentDirection = dir;
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class Ghost implements IGhost{
 		if(board[this.position[1]][this.position[0]] == Entity.TUNNEL) {
 			this.speed -= 35;
 			(new Timer()).schedule(new TimerTask() {
-				
+
 				@Override
 				public void run() {
 					speed = baseSpeed;
@@ -201,7 +201,7 @@ public class Ghost implements IGhost{
 	 * Gets the Type of ghost
 	 * @return the Ghost Type
 	 */
-	
+
 	public GhostType getType() {
 		return this.type;
 	}
@@ -223,7 +223,7 @@ public class Ghost implements IGhost{
 			this.state = 2;
 			this.speed = this.baseSpeed - 25;
 			(new Timer()).schedule(new TimerTask() {
-				
+
 				@Override
 				public void run() {
 					if(state == 2)
@@ -236,7 +236,7 @@ public class Ghost implements IGhost{
 			this.speed = this.baseSpeed;
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see logic.IGhost#getState()
 	 */
@@ -250,6 +250,7 @@ public class Ghost implements IGhost{
 	 * @param isDead
 	 */
 	public void respawn(boolean isDead) {
+		this.currentDirection = null;
 		this.canBeEaten = false;
 		this.state = 1;
 		if(isDead)
@@ -258,7 +259,7 @@ public class Ghost implements IGhost{
 		this.movable = false;
 		Timer release = new Timer();
 		release.schedule(new TimerTask() {
-			
+
 			@Override
 			public void run() {
 				movable = true;
@@ -266,7 +267,7 @@ public class Ghost implements IGhost{
 			}
 		}, this.respawnTime);;
 	}
-	
+
 	public void init() {
 		this.respawn(false);
 	}
@@ -276,4 +277,190 @@ public class Ghost implements IGhost{
 		return this.speed;
 	}
 
+
+	private Direction dijkstra(int from, int to) {
+		int[][] matrix = Game.INSTANCE.getBoardMatrix();
+		int x = this.position[0];
+		int y = this.position[1];
+		//int height = Game.INSTANCE.getBoardHeight();
+		int width = Game.INSTANCE.getBoardWidth();
+		if(this.currentDirection != null)
+			switch(this.currentDirection) {
+			case UP:
+				matrix[y*width+x][(y+1)*width+x] = 100;
+				break;
+			case DOWN:
+				matrix[y*width+x][(y-1)*width+x] = 100;
+				break;
+			case LEFT:
+				matrix[y*width+x][y*width+(x+1)] = 100;
+				break;
+			case RIGHT:
+				matrix[y*width+x][y*width+(x-1)] = 100;
+				break;
+			}
+
+		/*this.dijkstra.createGraph(matrix);
+		int nextPos = this.dijkstra.launch(from, to);
+		System.out.println(nextPos);*/
+		ArrayList<Integer> chemin = this.dijkstra.dijkstra(matrix, from, to);
+		System.out.println(chemin);
+		int nextPos = chemin.get(1);
+		if(nextPos == y*width+x - 1 || nextPos == y*width+x - width + 1) {
+			return Direction.LEFT;
+		}
+		else if(nextPos ==  y*width+x + 1 || nextPos ==  y*width+x + width - 1) {
+			return Direction.RIGHT;
+		}
+		else if(nextPos == y*width+x + width || nextPos == x) {
+			return Direction.DOWN;
+		}
+		else {
+			return Direction.UP;
+		}
+	}
+
+
+
+	@Override
+	public void move() {
+		if (this.movable) {
+			int target;
+			int width = Game.INSTANCE.getBoardWidth();
+			int height = Game.INSTANCE.getBoardHeight();
+			int from = this.position[0] + width*this.position[1];
+			Direction newDir;
+			switch(this.mode) {
+			case 1: //chase
+				int[] pos = Game.INSTANCE.player.getPosition();
+				int pPos = pos[0] + pos[1]*width;
+				switch(this.type) {
+				case CYAN:
+				case ORANGE:
+				case PINK:
+					target = specialTarget(from, pPos, width, height);
+					break;
+				case RED:
+					target = pPos;
+					break;
+				default:
+					target = 0;
+				}
+				newDir = this.dijkstra(from, target);
+				if(this.canMove(newDir)) {
+					this.move(newDir);
+					this.currentDirection = newDir;
+				}
+				else
+					if(this.currentDirection != null && this.canMove(this.currentDirection))
+						this.move(currentDirection);
+					else
+						this.randomMove();
+				break;
+			case 2: //scatter
+				switch(this.type) {
+				case CYAN:
+					target = height * width - 1;
+					break;
+				case ORANGE:
+					target = (height-1) * width;
+					break;
+				case PINK:
+					target = 0;
+					break;
+				case RED:
+					target = width - 1;
+					break;
+				default:
+					target = 0;
+				}
+				newDir = this.dijkstra(from, target);
+				this.move(newDir);
+				if(this.canMove(newDir)) {
+					this.move(newDir);
+					this.currentDirection = newDir;
+				}
+				else
+					if(this.currentDirection != null && this.canMove(this.currentDirection))
+						this.move(currentDirection);
+					else
+						this.randomMove();
+				break;
+			case 3: //frightened
+				this.randomMove();
+				break;
+			}
+		}
+	}
+
+	private int specialTarget(int gPos, int pPos, int width, int height) {
+		int target = 0;
+		int[] targetPos = {0,0};
+		PacMan pac = Game.INSTANCE.player;
+		//int add = 0;
+		switch(this.type) {
+		case CYAN:
+			switch(pac.getDirection()) {
+			case UP:
+				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1] - 2};
+				//add = (pPos + (-4)*width - 4) > 0 ? ((-4)*width - 4) : 0;
+				break;
+			case DOWN:
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 2};
+				//add = (pPos + 4*width) < (height*width) ? 4*width : 0;
+				break;
+			case LEFT:
+				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1]};
+				//add = (pPos%width) > 3 ? -4 : 0;
+				break;
+			case RIGHT:
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 2};
+				//add = (pPos%width) < width-4 ? 4 : 0;
+				break;
+			}
+			/*int dx = (pPos+add)%width - this.position[0];
+			int dy = (pPos+add)/width - this.position[1];
+			add = (pPos+add+dx < 0 || pPos+add+dx >= width*height) ? add : add+dx;
+			add =  (pPos+add+dy*width < 0 || pPos+add+dx*width >= width*height) ? add : add+dy*width;
+			target = pPos + add;*/
+			targetPos[0] += targetPos[0] - this.position[0];
+			targetPos[1] += targetPos[1] - this.position[1];
+			targetPos[0] = (targetPos[0] < 0 || targetPos[0] >= width) ? pac.getPosition()[0] : targetPos[0];
+			targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
+			target = targetPos[1]*width + targetPos[0];
+			break;
+		case ORANGE:
+			int[] pacPos = Game.INSTANCE.player.getPosition();
+			int dist = (int)Math.sqrt(Math.pow(this.position[0]-pacPos[0],2) + Math.pow(this.position[1]-pacPos[1],2));
+			System.out.println(dist);
+			target = dist < 4 ? (height-1)*width : pPos;
+			break;
+		case PINK:
+			switch(pac.getDirection()) {
+			case UP:
+				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1] - 2};
+				//add = (pPos + (-4)*width - 4) > 0 ? ((-4)*width - 4) : 0;
+				break;
+			case DOWN:
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 2};
+				//add = (pPos + 4*width) < (height*width) ? 4*width : 0;
+				break;
+			case LEFT:
+				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1]};
+				//add = (pPos%width) > 3 ? -4 : 0;
+				break;
+			case RIGHT:
+				targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
+				//add = (pPos%width) < width-4 ? 4 : 0;
+				break;
+			}
+			//target = pPos + add;
+			targetPos[0] = (targetPos[0] < 0 || targetPos[0] >= width) ? pac.getPosition()[0] : targetPos[0];
+			targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
+			target = targetPos[1]*width + targetPos[0];
+		default:
+			break;
+		}
+		return target;
+	}
 }

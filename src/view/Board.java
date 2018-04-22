@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -205,14 +204,14 @@ public class Board extends JPanel implements KeyListener {
 	 * Moves the pacman and the ghosts.
 	 */
 	private void move() {
+		for(GhostType gt : GhostType.values())
+			game.getGhost(gt).move();
 		if (game.getPlayer().canMove(this.dir) && (this.dir != Direction.opposite(this.previousDir) || !game.getPlayer().canMove(this.previousDir))) {
 			game.getPlayer().move(this.dir);
 			this.previousDir = this.dir;
 		}
 		else if(game.getPlayer().canMove(this.previousDir))
 			game.getPlayer().move(this.previousDir);
-		for(GhostType gt : GhostType.values())
-			game.getGhost(gt).move();
 		toRepeat();
 		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())

@@ -25,6 +25,7 @@ public class Game implements IGame{
 	private Timer powerTimer = new Timer();
 	private boolean won = false;
 	private boolean lost = false;
+	private int[][] boardMatrix;
 
 	/**
 	 * Construct an instance of Game using singleton pattern
@@ -34,6 +35,7 @@ public class Game implements IGame{
 		this.board = loader.getBoard();
 		this.speed = loader.getSpeed();
 		this.gommes = loader.getGommes();
+		this.boardMatrix = this.initBoardMatrix();
 		this.player = new PacMan(loader.getPacmanPosition(), loader.getLives(), loader.getSpeed());
 		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed()-5);
 		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed()-5);
@@ -41,8 +43,8 @@ public class Game implements IGame{
 		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed()-5);
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
-	
-	
+
+
 	static Game INSTANCE = new Game();
 
 	/**
@@ -138,7 +140,7 @@ public class Game implements IGame{
 	public boolean hasLost() {
 		return this.lost;
 	}
-	
+
 	/**
 	 * Has the PacMan won
 	 */
@@ -148,7 +150,7 @@ public class Game implements IGame{
 			this.setBestScore(this.player.getScore());
 		}
 	}
-	
+
 	/**
 	 * Has the PacMan lost
 	 */
@@ -183,7 +185,7 @@ public class Game implements IGame{
 	public IPacMan getPlayer() {
 		return this.player;
 	}
-	
+
 	/**
 	 * Reset the Ghost status to the initial one
 	 */
@@ -194,7 +196,7 @@ public class Game implements IGame{
 		}
 		this.player.unpower();
 	}
-	
+
 	/**
 	 * Start Power timer
 	 */
@@ -214,7 +216,7 @@ public class Game implements IGame{
 	public int getGommes() {
 		return this.gommes;
 	}
-	
+
 	/**
 	 * The Pacman start the next level
 	 */
@@ -238,12 +240,63 @@ public class Game implements IGame{
 	public int getLevels() {
 		return this.loader.getLevels();
 	}
-	
+
 	/**
 	 * Get the Power Time
 	 * @return the Power time
 	 */
 	public int getPowerTime() {
 		return this.loader.getPowerTime()*1000;
+	}
+
+
+	private int[][] initBoardMatrix() {
+		int height = this.getBoardHeight();
+		int width = this.getBoardWidth();
+		int[][] matrix = new int[height*width][height*width];
+		for(int i = 0; i < height*width; i++)
+			for(int j = 0; j < height*width; j++)
+				matrix[i][j] = 100; //équivalent à inf
+		for(int y = 0; y < height - 0; y++) {
+			for(int x = 0; x < width - 0; x++) {
+				if(this.board[y][x] == Entity.TUNNEL) {
+					if(x==0)
+						matrix[y*width+x][y*width+(width-1)] = 1;
+					else if(x==width-1)
+						matrix[y*width+x][y*width] = 1;
+					else if(y==0)
+						matrix[y*width+x][(height-1)*width+x] = 1;
+					else if(y==height-1)
+						matrix[y*width+x][x] = 1;
+				}
+				else if(this.board[y][x] != Entity.MUR) {
+					if(this.board[y-1][x] != Entity.MUR) {
+						matrix[y*width+x][(y-1)*width+x] = 1;
+						matrix[(y-1)*width+x][y*width+x] = 1;
+					}
+					if(this.board[y+1][x] != Entity.MUR) {
+						matrix[y*width+x][(y+1)*width+x] = 1;
+						matrix[(y+1)*width+x][y*width+x] = 1;
+					}
+					if(this.board[y][x-1] != Entity.MUR) {
+						matrix[y*width+x][y*width+(x-1)] = 1;
+						matrix[y*width+(x-1)][y*width+x] = 1;
+					}
+					if(this.board[y][x+1] != Entity.MUR) {
+						matrix[y*width+x][y*width+(x+1)] = 1;
+						matrix[y*width+(x+1)][y*width+x] = 1;
+					}
+				}
+			}
+		}
+		return matrix;
+	}
+	
+	public int[][] getBoardMatrix() {
+		int[][] clone = new int[this.boardMatrix.length][];
+	    for (int r = 0; r < this.boardMatrix.length; r++) {
+	    	clone[r] = this.boardMatrix[r].clone();
+	    }
+		return clone;
 	}
 }
