@@ -118,10 +118,12 @@ public class Board extends JPanel implements KeyListener {
 	private void toRepeat() {
 		Entity[][] board = this.game.getBoard();
 		if(board.length != this.jCells.length || board[0].length != this.jCells[0].length) {
-			GridLayout layout = new GridLayout(game.getBoardHeight(),game.getBoardWidth());
+			this.removeAll();
+			jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
+			GridLayout layout = new GridLayout(board.length, board[0].length);
 			layout.setHgap(0);
 			layout.setVgap(0);
-			this.setLayout(layout); 
+			this.setLayout(layout);
 			jCells = new JLabel[game.getBoardHeight()][game.getBoardWidth()];
 			for(int i = 0; i < game.getBoardHeight() ; i++) {
 				for(int j = 0; j < game.getBoardWidth() ; j++) {
