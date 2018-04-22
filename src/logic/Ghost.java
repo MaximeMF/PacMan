@@ -508,7 +508,6 @@ public class Ghost implements IGhost{
 			if(this.mode != GhostMode.FRIGHTEN)
 				this.mode = GhostMode.CHASE;
 		}
-		System.out.println(this.mode);
 		t.schedule(new TimerTask() {
 			
 			@Override
