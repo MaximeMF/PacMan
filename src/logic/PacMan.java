@@ -148,7 +148,8 @@ public class PacMan implements IPacMan{
 			Game.INSTANCE.decreaseGommes();
 			this.powered = true;
 			for(Ghost ghost : Game.INSTANCE.ghosts) { //ghosts can be eaten
-				ghost.changeState();
+				if (ghost.getState() == 1)
+					ghost.changeState();
 			}
 			Game.INSTANCE.startPowerTimer();
 			if(this.level > 1)
