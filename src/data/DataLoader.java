@@ -67,6 +67,18 @@ public class DataLoader implements IDataLoader {
 		return Math.toIntExact(value);
 	}
 	
+	/**
+	 * Parses a level object.
+	 * @param lvl the level sought
+	 * @return the object associated to the level
+	 * @pre gameData.containsKey(key) == true
+	 */
+	private JSONObject parseLevel(int lvl) {
+		assert this.gameData.containsKey("lvl"+lvl) : "precondition violated : no lvl"+lvl+" key in json configuration file";
+		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		return level;
+	}
+	
 	
 
     /**
@@ -74,7 +86,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getBoardHeight(int lvl) {
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		int boardHeight = parseInt(level, "boardHeight");
 		assert boardHeight >= 5 : "postcondition violated : specified boardHeight in json configuration file doesn't meet the specifications";
 		return boardHeight;
@@ -85,7 +97,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getBoardWidth(int lvl) {
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		int boardWidth = parseInt(level, "boardWidth");
 		assert boardWidth >= 5 : "postcondition violated : specified boardWidth in json configuration file doesn't meet the specifications";
 		return boardWidth;
@@ -98,7 +110,7 @@ public class DataLoader implements IDataLoader {
 	public Entity[][] getBoard(int lvl) {
 		int boardHeight = getBoardHeight(lvl);
 		int boardWidth = getBoardWidth(lvl);
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		JSONArray board = (JSONArray) level.get("board");
 		Entity[][] boardMatrix = new Entity[boardHeight][boardWidth];
 		for(int i=0; i<boardHeight; i++) {
@@ -116,7 +128,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int[] getPacmanPosition(int lvl) {
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		JSONArray position = (JSONArray) level.get("posPacman");
 		int[] posArray = new int[position.size()];
         for(int i=0; i<position.size(); i++) {
@@ -131,7 +143,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int[] getExitPosition(int lvl) {
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		JSONArray position = (JSONArray) level.get("exitPosition");
 		int[] posArray = new int[position.size()];
 		for(int i=0; i<position.size(); i++) {
@@ -147,7 +159,7 @@ public class DataLoader implements IDataLoader {
 	@Override
 	public EnumMap<GhostType, int[]> getGhostsPosition(int lvl) {
 		EnumMap<GhostType, int[]> posMap = new EnumMap<>(GhostType.class);
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		JSONObject posGhosts = (JSONObject) level.get("posGhosts");
 		for(GhostType type : GhostType.values()) {
 			JSONArray pos = (JSONArray) posGhosts.get(type.name().toLowerCase());
@@ -223,7 +235,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getGommes(int lvl) {
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		int nbGommes = parseInt(level, "nbGommes");
 		assert nbGommes >= 1 && nbGommes <= getBoardWidth(lvl)*getBoardHeight(lvl) :  "postcondition violated : specified nbGommes in json configuration file doesn't meet the specifications";
 		return nbGommes;
@@ -244,7 +256,7 @@ public class DataLoader implements IDataLoader {
      */
 	@Override
 	public int getSpeed(int lvl) {
-		JSONObject level = (JSONObject) this.gameData.get("lvl"+lvl);
+		JSONObject level = parseLevel(lvl);
 		int speed = parseInt(level, "speedPercent");
 		assert speed >= 50 && speed <= 200 :  "postcondition violated : specified speedPercent in json configuration file doesn't meet the specifications";
 		return speed;
