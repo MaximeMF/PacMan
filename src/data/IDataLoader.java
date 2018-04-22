@@ -116,5 +116,12 @@ public interface IDataLoader {
 	 * @post {@code powerTime >= 0}
 	 */
 	public int getPowerTime();
+	
+	/**
+	 * Gets the duration of each ghost mode.
+	 * @return the mode duration
+	 * @post {@code exitPosition[i] > 0}
+	 */
+	public int[] getModeTime();
 
 }

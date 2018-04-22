@@ -2,6 +2,7 @@
 	"bestScore":"config/main_bestscore",
 	"nbLives":3,
 	"powerTime":10,
+	"modeTime":[5,20,5,20,5,20,5],
 	"points":{
 		"gomme":10,
 		"supergomme":50,

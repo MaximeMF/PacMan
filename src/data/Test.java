@@ -27,6 +27,7 @@ public class Test {
 		int speed = dataLoader.getSpeed(lvl);
 		int[] pacmanPosition = dataLoader.getPacmanPosition(lvl);
 		int[] exitPosition = dataLoader.getExitPosition(lvl);
+		int[] modeTime = dataLoader.getModeTime();
 		Entity[][] board = dataLoader.getBoard(lvl);
 		EnumMap<GhostType, int[]> ghostsPosition = dataLoader.getGhostsPosition(lvl);
 		EnumMap<Entity, Integer> points = dataLoader.getEntityPoints();
@@ -45,6 +46,9 @@ public class Test {
 		}
 		for(int i=0; i<exitPosition.length; i++) {
 			System.out.println("ExitPosition["+i+"] : "+exitPosition[i]);
+		}
+		for(int i=0; i<modeTime.length; i++) {
+			System.out.println("ModeTime["+i+"] : "+modeTime[i]);
 		}
 		for(int i=0; i<board.length; i++) {
 			for(int j=0; j<board[0].length; j++) {

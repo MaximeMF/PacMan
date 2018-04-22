@@ -259,5 +259,19 @@ public class DataLoader implements IDataLoader {
 		assert powerTime >= 0 :  "postcondition violated : specified powerTime in json configuration file doesn't meet the specifications";
 		return powerTime;
 	}
+	
+	/**
+	 * {@inheritDoc }
+	 */
+	@Override
+	public int[] getModeTime() {
+		JSONArray mode = (JSONArray) this.gameData.get("modeTime");
+		int[] posArray = new int[mode.size()];
+        for(int i=0; i<mode.size(); i++) {
+        	posArray[i] = Math.toIntExact((long)mode.get(i));
+        	assert posArray[i] > 0 : "postcondition violated : specified modeTime in json configuration file doesn't meet the specifications";
+        }
+        return posArray;
+	}
 
 }
