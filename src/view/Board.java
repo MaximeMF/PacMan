@@ -52,7 +52,7 @@ public class Board extends JPanel implements KeyListener {
 	ImageIcon pacRight = new ImageIcon(new ImageIcon("res/imageright.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon pacUp = new ImageIcon(new ImageIcon("res/imageup.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon pacDown = new ImageIcon(new ImageIcon("res/imageDown.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
-
+//
 	BottomBar scoreBar;
 
 	Direction dir;
