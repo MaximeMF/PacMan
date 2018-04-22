@@ -28,7 +28,7 @@ public class Window extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//this.setSize(new Dimension(600,600));
-	    this.setBounds(20, 20, 490,700);
+	    this.setBounds(20, 20, Board.CELLSIZE * Game.getInstance().getBoardWidth()  ,Board.CELLSIZE * Game.getInstance().getBoardHeight() + 200);
 	    
 	    JLabel logo = new JLabel(new ImageIcon("res/logo.png"));
 	    
@@ -42,7 +42,7 @@ public class Window extends JFrame {
 
 	    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	    this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-	    this.setResizable(false);
+	    //this.setResizable(false);
 	
 		this.setVisible(true);
 

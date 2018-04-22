@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -28,7 +29,7 @@ public class Board extends JPanel implements KeyListener {
 
 	Timer t = new Timer();
 
-	public static final int CELLSIZE = 12;
+	public static final int CELLSIZE = 16;
 
 	JLabel jPacman;
 
@@ -68,8 +69,11 @@ public class Board extends JPanel implements KeyListener {
 		this.scoreBar = bottomBar;
 		this.setBackground(Color.BLACK);
 		position = game.getPlayer().getPosition();
-		this.setLayout(new GridLayout(game.getBoardHeight(),game.getBoardWidth())); 
-		this.setPreferredSize(new Dimension(CELLSIZE*game.getBoardWidth(), CELLSIZE*game.getBoardHeight()));
+		GridLayout layout = new GridLayout(game.getBoardHeight(),game.getBoardWidth());
+		layout.setHgap(0);
+		layout.setVgap(0);
+		this.setLayout(layout); 
+		//this.setPreferredSize(new Dimension(CELLSIZE*game.getBoardWidth(), CELLSIZE*game.getBoardHeight()));
 		jPacman = new JLabel();
 		jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		jCells = new JLabel[game.getBoardHeight()][game.getBoardWidth()];
@@ -227,7 +231,7 @@ public class Board extends JPanel implements KeyListener {
 		}else if(game.hasWon())
 		{
 			ImageIcon img = new ImageIcon(new ImageIcon("res/youwin.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT));
-			JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagné", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
+			JOptionPane.showMessageDialog(null, "Bravo !! Vous avez gagnï¿½", "Information", JOptionPane.OK_CANCEL_OPTION, img); 
 		}
 	}
 
