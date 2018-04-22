@@ -58,31 +58,32 @@ public class Game implements IGame{
 		return INSTANCE;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#newGame()
+	/**
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void newGame() {
 		INSTANCE = new Game();
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getBoard()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Entity[][] getBoard() {
 		return this.board;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getBoardHeight()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBoardHeight() {
 		return this.loader.getBoardHeight();
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getBoardWidth()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBoardWidth() {
@@ -98,16 +99,16 @@ public class Game implements IGame{
 		return this.loader.getEntityPoints().get(entity);
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getSpeed()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getSpeed() {
 		return this.speed;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getBestScore()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getBestScore() {
@@ -115,7 +116,7 @@ public class Game implements IGame{
 	}
 
 	/**
-	 * Decraeses Number the gums eaten by the PacMan
+	 * Decreases Number the gums eaten by the PacMan
 	 */
 	public void decreaseGommes() {
 		this.gommes--;
@@ -125,16 +126,16 @@ public class Game implements IGame{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#hasWon()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasWon() {
 		return this.won ;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#hasLost()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean hasLost() {
@@ -165,9 +166,10 @@ public class Game implements IGame{
 		this.loader.setBestScore(score);
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getGhost(data.GhostType)
+	/**
+	 * {@inheritDoc}
 	 */
+	@Override
 	public IGhost getGhost(GhostType type) {
 		int i = 0;
 		Ghost ghost;
@@ -178,8 +180,8 @@ public class Game implements IGame{
 		return ghost;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGame#getPlayer()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public IPacMan getPlayer() {
@@ -300,6 +302,10 @@ public class Game implements IGame{
 		return matrix;
 	}
 	
+	/**
+	 * Gets the adjacency matrix of the board.
+	 * @return the adjacency matrix
+	 */
 	public int[][] getBoardMatrix() {
 		int[][] clone = new int[this.boardMatrix.length][];
 	    for (int r = 0; r < this.boardMatrix.length; r++) {

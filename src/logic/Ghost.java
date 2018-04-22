@@ -107,6 +107,9 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
+	/**
+	 * Moves the ghost in a random direction.
+	 */
 	public void randomMove() {
 		int max = Direction.values().length;
 		Direction dir;
@@ -125,7 +128,7 @@ public class Ghost implements IGhost{
 	}
 
 	/**
-	 * Move the Pacman according to Direction giving in paramaters
+	 * Moves the Pacman according to Direction given in parameters
 	 * @param dir
 	 */
 	private void move(Direction dir) {
@@ -189,8 +192,8 @@ public class Ghost implements IGhost{
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGhost#getPosition()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int[] getPosition() {
@@ -201,13 +204,12 @@ public class Ghost implements IGhost{
 	 * Gets the Type of ghost
 	 * @return the Ghost Type
 	 */
-
 	public GhostType getType() {
 		return this.type;
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGhost#canBeEaten()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean canBeEaten() {
@@ -215,7 +217,7 @@ public class Ghost implements IGhost{
 	}
 
 	/**
-	 * Change the state of an Ghost either be eaten or not
+	 * Change the state of the ghost: can be eaten or not
 	 */
 	public void changeState() {
 		this.canBeEaten = !this.canBeEaten;
@@ -237,8 +239,8 @@ public class Ghost implements IGhost{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see logic.IGhost#getState()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getState() {
@@ -268,16 +270,28 @@ public class Ghost implements IGhost{
 		}, this.respawnTime);;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void init() {
 		this.respawn(false);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getSpeed() {
 		return this.speed;
 	}
 
-
+	/**
+	 * Gets the shortest path between the source and the destination using the Dijkstra's algorithm
+	 * @param from the source of the path
+	 * @param to the destination of the path
+	 * @return
+	 */
 	private Direction dijkstra(int from, int to) {
 		int[][] matrix = Game.INSTANCE.getBoardMatrix();
 		int x = this.position[0];
@@ -321,7 +335,9 @@ public class Ghost implements IGhost{
 	}
 
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void move() {
 		if (this.movable) {
@@ -344,7 +360,7 @@ public class Ghost implements IGhost{
 					target = pPos;
 					break;
 				default:
-					
+
 				}
 				newDir = this.dijkstra(from, target);
 				if(this.canMove(newDir)) {
@@ -372,7 +388,7 @@ public class Ghost implements IGhost{
 					target = 2*width - 2;
 					break;
 				default:
-					
+
 				}
 				newDir = this.dijkstra(from, target);
 				this.move(newDir);
@@ -380,11 +396,11 @@ public class Ghost implements IGhost{
 					this.move(newDir);
 					this.currentDirection = newDir;
 				}
-				/*else
+				else
 					if(this.currentDirection != null && this.canMove(this.currentDirection))
 						this.move(currentDirection);
 					else
-						this.randomMove();*/
+						this.randomMove(); //should not happen
 				break;
 			case 3: //frightened
 				this.randomMove();
@@ -393,6 +409,14 @@ public class Ghost implements IGhost{
 		}
 	}
 
+	/**
+	 * Calculates the target cell of the ghost to use as a destination for the algorithm.
+	 * @param gPos position of the ghost
+	 * @param pPos position of pacman
+	 * @param width width of the board
+	 * @param height height of the board
+	 * @return the target cell of the ghost
+	 */
 	private int specialTarget(int gPos, int pPos, int width, int height) {
 		int target = 0;
 		int[] targetPos = {0,0};
@@ -421,7 +445,7 @@ public class Ghost implements IGhost{
 			target = (Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.MUR) &&
 					(Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.VOID) ? targetPos[1]*width + targetPos[0]: pPos;
 					//more time efficient than considering every nodes connected
-			break;
+					break;
 		case ORANGE:
 			int[] pacPos = Game.INSTANCE.player.getPosition();
 			int dist = (int)Math.sqrt(Math.pow(this.position[0]-pacPos[0],2) + Math.pow(this.position[1]-pacPos[1],2));
