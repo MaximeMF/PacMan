@@ -1,12 +1,13 @@
 Version finale du PacMan.
 
-L'organisation de départ était celle-ci :
+L'organisation indicative de départ était celle-ci :
 Data : Maxime Mathis--Fumel
 Logic : Robin Algier
 View : Yassin Ourkia
+Mais chacun a évidemment participé à l'ensemble du développement selon la quantité de travail et les compétences qu'il avait.
 
 Il peut subsister quelques problèmes, des changements de dernière minute ayant été effectués, mais normalement tout fonctionne correctement.
-Il nous faudrait un peu plus de temps pour améliorer encore un peu le projet.
+Il nous faudrait un peu plus de temps pour perfectionner le projet.
 Il manque notamment la gestion de la vitesse dans la partie view.
 
 Pour lancer le jeu, exécuter le .jar ou utiliser la commande suivante :
