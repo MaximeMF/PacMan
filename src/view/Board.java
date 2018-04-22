@@ -43,6 +43,9 @@ public class Board extends JPanel implements KeyListener {
 	ImageIcon fruitIcon = new ImageIcon(new ImageIcon("res/fruit_cherry.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon tunnelIcon = new ImageIcon(new ImageIcon("res/wall2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghostIcon = new ImageIcon(new ImageIcon("res/ghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon pink = new ImageIcon(new ImageIcon("res/pinkghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon orange = new ImageIcon(new ImageIcon("res/orangeghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
+	ImageIcon cyan = new ImageIcon(new ImageIcon("res/cyanghost.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghost2Icon = new ImageIcon(new ImageIcon("res/ghost2.png").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon ghost3Icon = new ImageIcon(new ImageIcon("res/ghost3.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
 	ImageIcon pacLeft = new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT));
@@ -93,8 +96,9 @@ public class Board extends JPanel implements KeyListener {
 
 		for(GhostType gt : GhostType.values())
 			if(gt != GhostType.RED)
+			{
 				game.getGhost(gt).init();
-
+			}
 		t.scheduleAtFixedRate(new TimerTask() {	
 			@Override
 			public void run() {
@@ -144,7 +148,10 @@ public class Board extends JPanel implements KeyListener {
 			IGhost ghost = game.getGhost(gt);
 			int[] gtPos = ghost.getPosition();
 			if(ghost.getState() == 1)
+			{
 				jCells[gtPos[1]][gtPos[0]].setIcon(ghostIcon);
+				
+			}
 			else if(ghost.getState() == 2)
 				jCells[gtPos[1]][gtPos[0]].setIcon(ghost2Icon);
 			else
