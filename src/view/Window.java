@@ -18,8 +18,8 @@ import logic.IGame;
 public class Window extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	public static final int WINDOW_HEIGHT = 600;
-	public static final int WINDOW_WIDTH = 450;
+	public static final int WINDOW_HEIGHT = 800;
+	public static final int WINDOW_WIDTH = 600;
 	/**
 	 * Constructs an instance of Window.
 	 */
