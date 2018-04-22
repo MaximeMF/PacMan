@@ -99,6 +99,18 @@ public class Board extends JPanel implements KeyListener {
 			{
 				game.getGhost(gt).init();
 			}
+			else if(gt != GhostType.PINK)
+			{
+			game.getGhost(gt).init();
+			}
+			else if(gt != GhostType.CYAN)
+			{
+				game.getGhost(gt).init();
+			}
+			else if(gt != GhostType.ORANGE)
+			{
+				game.getGhost(gt).init();
+			}
 		t.scheduleAtFixedRate(new TimerTask() {	
 			@Override
 			public void run() {
@@ -166,7 +178,24 @@ public class Board extends JPanel implements KeyListener {
 			int[] gtPos = ghost.getPosition();
 			if(ghost.getState() == 1)
 			{
-				jCells[gtPos[1]][gtPos[0]].setIcon(ghostIcon);
+				if(gt != GhostType.RED)
+				{
+					jCells[gtPos[1]][gtPos[0]].setIcon(ghostIcon);
+				}
+				else if(gt != GhostType.PINK)
+				{
+					jCells[gtPos[1]][gtPos[0]].setIcon(pink);
+				}
+				else if(gt != GhostType.CYAN)
+				{
+					jCells[gtPos[1]][gtPos[0]].setIcon(cyan);
+				}
+				else if(gt != GhostType.ORANGE)
+				{
+					jCells[gtPos[1]][gtPos[0]].setIcon(orange);
+				}
+					
+				
 				
 			}
 			else if(ghost.getState() == 2)
