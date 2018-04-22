@@ -117,6 +117,19 @@ public class Board extends JPanel implements KeyListener {
 	 */
 	private void toRepeat() {
 		Entity[][] board = this.game.getBoard();
+		if(board.length != this.jCells.length || board[0].length != this.jCells[0].length) {
+			this.removeAll();
+			jCells = new JLabel[game.getBoardHeight()][game.getBoardWidth()];
+			for(int i = 0; i < game.getBoardHeight() ; i++) {
+				for(int j = 0; j < game.getBoardWidth() ; j++) {
+					jCells[i][j] = new JLabel();
+					jCells[i][j].setHorizontalAlignment(JLabel.CENTER);
+					jCells[i][j].setVerticalAlignment(JLabel.CENTER);
+					this.add(jCells[i][j]);
+				}
+			}
+			this.revalidate();
+		}
 		for(int i=0; i<board.length; i++) {
 			for(int j=0; j<board[0].length; j++) {
 				switch(board[i][j]) {
