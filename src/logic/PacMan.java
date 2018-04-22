@@ -236,7 +236,7 @@ public class PacMan implements IPacMan{
 	 * @param isDead
 	 */
 	public void respawn(boolean isDead) {
-		if(this.lives == 0)
+		if(this.lives == 0 && isDead)
 			Game.INSTANCE.lost();
 		else {
 			if(isDead) {
