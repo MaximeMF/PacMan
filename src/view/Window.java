@@ -17,7 +17,8 @@ import logic.Game;
 public class Window extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	
+	public static final int WINDOW_HEIGHT = 650;
+	public static final int WINDOW_WIDTH = 450;
 	/**
 	 * Constructs an instance of Window.
 	 */
@@ -28,7 +29,7 @@ public class Window extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//this.setSize(new Dimension(600,600));
-	    this.setBounds(20, 20, Board.CELLSIZE * Game.getInstance().getBoardWidth()  ,Board.CELLSIZE * Game.getInstance().getBoardHeight() + 200);
+	    this.setBounds(20, 20, WINDOW_WIDTH  ,WINDOW_HEIGHT);
 	    
 	    JLabel logo = new JLabel(new ImageIcon("res/logo.png"));
 	    
