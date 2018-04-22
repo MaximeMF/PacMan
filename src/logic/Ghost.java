@@ -285,7 +285,7 @@ public class Ghost implements IGhost{
 		//int height = Game.INSTANCE.getBoardHeight();
 		int width = Game.INSTANCE.getBoardWidth();
 		if(this.currentDirection != null)
-			switch(this.currentDirection) {
+			switch(this.currentDirection) { //a ghost cannot go back
 			case UP:
 				matrix[y*width+x][(y+1)*width+x] = 100;
 				break;
@@ -300,11 +300,7 @@ public class Ghost implements IGhost{
 				break;
 			}
 
-		/*this.dijkstra.createGraph(matrix);
-		int nextPos = this.dijkstra.launch(from, to);
-		System.out.println(nextPos);*/
 		ArrayList<Integer> chemin = this.dijkstra.dijkstra(matrix, from, to);
-		//System.out.println(chemin);
 		int nextPos;
 		if(chemin.size() > 1)
 			nextPos = chemin.get(1);
@@ -359,7 +355,7 @@ public class Ghost implements IGhost{
 					if(this.currentDirection != null && this.canMove(this.currentDirection))
 						this.move(currentDirection);
 					else
-						this.randomMove();
+						this.randomMove(); //should not happen
 				break;
 			case 2: //scatter
 				switch(this.type) {
@@ -384,11 +380,11 @@ public class Ghost implements IGhost{
 					this.move(newDir);
 					this.currentDirection = newDir;
 				}
-				else
+				/*else
 					if(this.currentDirection != null && this.canMove(this.currentDirection))
 						this.move(currentDirection);
 					else
-						this.randomMove();
+						this.randomMove();*/
 				break;
 			case 3: //frightened
 				this.randomMove();
@@ -406,33 +402,25 @@ public class Ghost implements IGhost{
 		case CYAN:
 			switch(pac.getDirection()) {
 			case UP:
-				targetPos = new int[] {pac.getPosition()[0]/* - 2*/,pac.getPosition()[1] - 4};
-				//add = (pPos + (-4)*width - 4) > 0 ? ((-4)*width - 4) : 0;
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] - 4}; //not pac.getPosition()[0]-4 because it's almost always a wall 
 				break;
 			case DOWN:
 				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 4};
-				//add = (pPos + 4*width) < (height*width) ? 4*width : 0;
 				break;
 			case LEFT:
 				targetPos = new int[] {pac.getPosition()[0]- 4,pac.getPosition()[1]};
-				//add = (pPos%width) > 3 ? -4 : 0;
 				break;
 			case RIGHT:
 				targetPos = new int[] {pac.getPosition()[0] + 4,pac.getPosition()[1]};
-				//add = (pPos%width) < width-4 ? 4 : 0;
 				break;
 			}
-			/*int dx = (pPos+add)%width - this.position[0];
-			int dy = (pPos+add)/width - this.position[1];
-			add = (pPos+add+dx < 0 || pPos+add+dx >= width*height) ? add : add+dx;
-			add =  (pPos+add+dy*width < 0 || pPos+add+dx*width >= width*height) ? add : add+dy*width;
-			target = pPos + add;*/
 			targetPos[0] += targetPos[0] - this.position[0];
 			targetPos[1] += targetPos[1] - this.position[1];
 			targetPos[0] = (targetPos[0] < 0 || targetPos[0] >= width) ? pac.getPosition()[0] : targetPos[0];
 			targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
 			target = (Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.MUR) &&
 					(Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.VOID) ? targetPos[1]*width + targetPos[0]: pPos;
+					//more time efficient than considering every nodes connected
 			break;
 		case ORANGE:
 			int[] pacPos = Game.INSTANCE.player.getPosition();
@@ -442,27 +430,23 @@ public class Ghost implements IGhost{
 		case PINK:
 			switch(pac.getDirection()) {
 			case UP:
-				targetPos = new int[] {pac.getPosition()[0]/* - 2*/,pac.getPosition()[1] - 4};
-				//add = (pPos + (-4)*width - 4) > 0 ? ((-4)*width - 4) : 0;
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] - 4}; //not pac.getPosition()[0]-4 because it's almost always a wall
 				break;
 			case DOWN:
 				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 4};
-				//add = (pPos + 4*width) < (height*width) ? 4*width : 0;
 				break;
 			case LEFT:
 				targetPos = new int[] {pac.getPosition()[0] - 4,pac.getPosition()[1]};
-				//add = (pPos%width) > 3 ? -4 : 0;
 				break;
 			case RIGHT:
 				targetPos = new int[] {pac.getPosition()[0] + 4,pac.getPosition()[1]};
-				//add = (pPos%width) < width-4 ? 4 : 0;
 				break;
 			}
-			//target = pPos + add;
 			targetPos[0] = (targetPos[0] < 0 || targetPos[0] >= width) ? pac.getPosition()[0] : targetPos[0];
 			targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
 			target = (Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.MUR) &&
 					(Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.VOID) ? targetPos[1]*width + targetPos[0]: pPos;
+					//more time efficient than considering every nodes connected
 		default:
 			break;
 		}

@@ -18,15 +18,11 @@ public class Lanceur {
 		printBoard(game.getBoard(), game);
 		int i = 0;
 		while(true) {
-			//System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			//System.out.println("\f");
 			try {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			for(GhostType gt : GhostType.values())
@@ -35,7 +31,6 @@ public class Lanceur {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			System.out.println(i);

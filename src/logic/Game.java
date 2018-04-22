@@ -37,10 +37,10 @@ public class Game implements IGame{
 		this.gommes = loader.getGommes();
 		this.boardMatrix = this.initBoardMatrix();
 		this.player = new PacMan(loader.getPacmanPosition(), loader.getLives(), loader.getSpeed());
-		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed()-5);
-		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed()-5);
-		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition(), loader.getSpeed()-5);
-		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed()-5);
+		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed());
+		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed());
+		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition(), loader.getSpeed());
+		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
 
@@ -220,18 +220,19 @@ public class Game implements IGame{
 	/**
 	 * The Pacman start the next level
 	 */
-	public void nextLevel() {
+	public void nextLevel() { //reset the board and the ghosts
 		this.board = loader.getBoard();
 		this.gommes = loader.getGommes();
 		this.speed = loader.getSpeed();
-		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed()-5);
-		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed()-5);
-		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition(), loader.getSpeed()-5);
-		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed()-5);
+		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed());
+		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed());
+		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition(), loader.getSpeed());
+		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 		cyan.init();
 		pink.init();
 		orange.init();
+		//red is already out
 	}
 
 	/**
@@ -249,18 +250,20 @@ public class Game implements IGame{
 		return this.loader.getPowerTime()*1000;
 	}
 
-
+	/**
+	 * Create the adjacency matrix of the board
+	 * @return matrice[width*height][width*height]
+	 */
 	private int[][] initBoardMatrix() {
 		int height = this.getBoardHeight();
 		int width = this.getBoardWidth();
-		int[][] matrix = new int[height*width][height*width];
+		int[][] matrix = new int[height*width][height*width]; //the value of the edge from pos1 to pos2 will be matrix[pos1][pos2]
 		for(int i = 0; i < height*width; i++)
 			for(int j = 0; j < height*width; j++)
-				matrix[i][j] = 100; //équivalent à inf
+				matrix[i][j] = 100; //edges with value 100 will be ignored by dijkstra's algorithm
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				if(this.board[y][x] == Entity.TUNNEL) {
-					System.out.println(x + " " + y);
+				if(this.board[y][x] == Entity.TUNNEL) { 
 					if(x==0) {
 						matrix[y*width+x][y*width+(width-1)] = 1;
 						matrix[y*width+x][y*width+x+1] = 1;
