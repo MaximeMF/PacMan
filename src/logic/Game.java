@@ -237,6 +237,8 @@ public class Game implements IGame{
 		cyan.init();
 		pink.init();
 		orange.init();
+		this.player.setRespawnPosition(this.loader.getPacmanPosition(this.player.getLevel()));
+		this.player.respawn(false);
 		//red is already out
 	}
 

@@ -172,7 +172,6 @@ public class PacMan implements IPacMan{
 				Game.INSTANCE.won();
 			else {
 				this.level++;
-				this.respawn(false);
 				Game.INSTANCE.nextLevel();
 			}
 		}
@@ -292,5 +291,9 @@ public class PacMan implements IPacMan{
 	 */
 	public Direction getDirection() {
 		return this.dir;
+	}
+
+	public void setRespawnPosition(int[] pacmanPosition) {
+		this.respawnPosition = pacmanPosition.clone();
 	}
 }
