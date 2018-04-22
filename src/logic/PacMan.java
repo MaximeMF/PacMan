@@ -131,7 +131,10 @@ public class PacMan implements IPacMan{
 			this.addScore(Game.INSTANCE.getEntityPoints(Entity.GOMME));
 			Game.INSTANCE.decreaseGommes();
 			if(!this.powered)
-				this.newSpeed(this.baseSpeed - 9, 500);
+				if(this.level > 1)
+					this.newSpeed(this.baseSpeed - 9, 500);
+				else
+					this.newSpeed(this.baseSpeed - 11, 500);
 			break;
 		case FRUIT:
 			board[y][x] = Entity.CHEMIN;
@@ -148,6 +151,10 @@ public class PacMan implements IPacMan{
 				ghost.changeState();
 			}
 			Game.INSTANCE.startPowerTimer();
+			if(this.level > 1)
+				this.newSpeed(this.baseSpeed + 5, Game.INSTANCE.getPowerTime()*1000);
+			else
+				this.newSpeed(this.baseSpeed + 10, Game.INSTANCE.getPowerTime()*1000);
 			break;
 		default:
 			break;

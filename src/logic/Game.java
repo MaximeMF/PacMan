@@ -32,15 +32,15 @@ public class Game implements IGame{
 	 */
 	private Game() {
 		this.loader = new DataLoader();
-		this.board = loader.getBoard();
-		this.speed = loader.getSpeed();
-		this.gommes = loader.getGommes();
+		this.board = this.loader.getBoard(1);
+		this.speed = this.loader.getSpeed(1);
+		this.gommes = this.loader.getGommes(1);
 		this.boardMatrix = this.initBoardMatrix();
-		this.player = new PacMan(loader.getPacmanPosition(), loader.getLives(), loader.getSpeed());
-		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed());
-		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed());
-		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition(), loader.getSpeed());
-		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed());
+		this.player = new PacMan(this.loader.getPacmanPosition(1), this.loader.getLives(), this.loader.getSpeed(1));
+		Ghost red =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.RED), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
+		Ghost cyan =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.CYAN), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
+		Ghost pink =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.PINK), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
+		Ghost orange =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.ORANGE), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 	}
 
@@ -79,7 +79,7 @@ public class Game implements IGame{
 	 */
 	@Override
 	public int getBoardHeight() {
-		return this.loader.getBoardHeight();
+		return this.loader.getBoardHeight(this.player.getLevel());
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class Game implements IGame{
 	 */
 	@Override
 	public int getBoardWidth() {
-		return this.loader.getBoardWidth();
+		return this.loader.getBoardWidth(this.player.getLevel());
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class Game implements IGame{
 	 */
 	@Override
 	public int getBestScore() {
-		return loader.getBestScore();
+		return this.loader.getBestScore();
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Game implements IGame{
 		this.gommes--;
 		if(this.hasWon()) {
 			this.player.respawn(false);
-			this.board = this.loader.getBoard();
+			this.board = this.loader.getBoard(this.player.getLevel());
 		}
 	}
 
@@ -225,13 +225,13 @@ public class Game implements IGame{
 	 * The Pacman start the next level
 	 */
 	public void nextLevel() { //reset the board and the ghosts
-		this.board = loader.getBoard();
-		this.gommes = loader.getGommes();
-		this.speed = loader.getSpeed();
-		Ghost red =  new Ghost(loader.getGhostsPosition().get(GhostType.RED), loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, loader.getExitPosition(), loader.getSpeed());
-		Ghost cyan =  new Ghost(loader.getGhostsPosition().get(GhostType.CYAN), loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, loader.getExitPosition(), loader.getSpeed());
-		Ghost pink =  new Ghost(loader.getGhostsPosition().get(GhostType.PINK), loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, loader.getExitPosition(), loader.getSpeed());
-		Ghost orange =  new Ghost(loader.getGhostsPosition().get(GhostType.ORANGE), loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, loader.getExitPosition(), loader.getSpeed());
+		this.board = this.loader.getBoard(this.player.getLevel());
+		this.gommes = this.loader.getGommes(this.player.getLevel());
+		this.speed = this.loader.getSpeed(this.player.getLevel());
+		Ghost red =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.RED), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
+		Ghost cyan =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.CYAN), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
+		Ghost pink =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.PINK), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
+		Ghost orange =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.ORANGE), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.ORANGE, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
 		this.ghosts = new Ghost[] {red, cyan, pink, orange};
 		cyan.init();
 		pink.init();
