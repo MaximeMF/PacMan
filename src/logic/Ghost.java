@@ -120,7 +120,6 @@ public class Ghost implements IGhost{
 	 */
 	public void randomMove() {
 		int max = Direction.values().length;
-		System.out.println(max);
 		Direction dir;
 		ArrayList<Direction> val = new ArrayList<>();
 		for(Direction d : Direction.values())
@@ -410,7 +409,6 @@ public class Ghost implements IGhost{
 
 				}
 				newDir = this.dijkstra(from, target);
-				this.move(newDir);
 				if(this.canMove(newDir)) {
 					this.move(newDir);
 					this.currentDirection = newDir;
