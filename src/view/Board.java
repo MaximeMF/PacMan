@@ -72,7 +72,6 @@ public class Board extends JPanel implements KeyListener {
 		layout.setHgap(0);
 		layout.setVgap(0);
 		this.setLayout(layout); 
-		//this.setPreferredSize(new Dimension(CELLSIZE*game.getBoardWidth(), CELLSIZE*game.getBoardHeight()));
 		jPacman = new JLabel();
 		jPacman.setIcon(new ImageIcon(new ImageIcon("res/imageleft.gif").getImage().getScaledInstance(CELLSIZE, CELLSIZE, Image.SCALE_DEFAULT)));
 		jCells = new JLabel[game.getBoardHeight()][game.getBoardWidth()];
@@ -88,8 +87,8 @@ public class Board extends JPanel implements KeyListener {
 
 		this.addKeyListener(this);
 		this.setFocusable(true);
-		this.dir = Direction.RIGHT;
-		this.previousDir = Direction.DOWN;
+		this.dir = Direction.LEFT;
+		this.previousDir = Direction.LEFT;
 		
 		toRepeat();
 
@@ -107,9 +106,11 @@ public class Board extends JPanel implements KeyListener {
 
 
 	// PLACER TOUT CE QUI SERT A INITIALISER L'AFFICHAGE DU BOARD AU DEBUT ICI
-	public void initialise() {
+	/*
+	 public void initialise() {
 		game.getPlayer().move(Direction.RIGHT);
 	}
+	*/
 
 
 
