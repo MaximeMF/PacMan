@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 import enums.Direction;
 import enums.Entity;
+import enums.GhostMode;
 import enums.GhostType;
 
 /**
@@ -30,8 +31,8 @@ public class Ghost implements IGhost{
 	private int speed;
 	private int baseSpeed;
 	private Dijkstra dijkstra;
-	private int mode = 2; //1:chase ; 2:scatter; 3:frightened
-	private int currentMode = 1;
+	private GhostMode mode = GhostMode.SCATTER; //1:chase ; 2:scatter; 3:frightened
+	private GhostMode currentMode = GhostMode.CHASE;
 	private int[] timings;
 	private int cursor = 0;
 	private boolean scatterSwitch = false; //true for the first move after switching to scatter mode to allow ghosts to turn around
@@ -234,7 +235,7 @@ public class Ghost implements IGhost{
 	public void changeState() {
 		this.canBeEaten = !this.canBeEaten;
 		if(this.canBeEaten) {
-			this.mode = 3;
+			this.mode = GhostMode.FRIGHTEN;
 			this.state = 2;
 			if(Game.INSTANCE.getPlayer().getLevel() > 1)
 				this.speed = this.baseSpeed - 25;
@@ -365,7 +366,7 @@ public class Ghost implements IGhost{
 			int from = this.position[0] + width*this.position[1];
 			Direction newDir;
 			switch(this.mode) {
-			case 1: //chase
+			case CHASE:
 				int[] pos = Game.INSTANCE.player.getPosition();
 				int pPos = pos[0] + pos[1]*width;
 				switch(this.type) {
@@ -391,7 +392,7 @@ public class Ghost implements IGhost{
 					else
 						this.randomMove();
 				break;
-			case 2: //scatter
+			case SCATTER:
 				switch(this.type) {
 				case CYAN:
 					target = (height-2) * width+1;
@@ -419,7 +420,7 @@ public class Ghost implements IGhost{
 					else
 						this.randomMove();
 				break;
-			case 3: //frightened
+			case FRIGHTEN:
 				this.randomMove();
 				break;
 			}
@@ -495,17 +496,17 @@ public class Ghost implements IGhost{
 	}
 	
 	private void nextMode() {
-		if(currentMode == 1) {
-			this.currentMode = 2;
-			if(this.mode != 3) {
-				this.mode = 2;
+		if(currentMode == GhostMode.CHASE) {
+			this.currentMode = GhostMode.SCATTER;
+			if(this.mode != GhostMode.FRIGHTEN) {
+				this.mode = GhostMode.SCATTER;
 				scatterSwitch = true;
 			}
 		}
 		else {
-			this.currentMode = 1;
-			if(this.mode != 3)
-				this.mode = 1;
+			this.currentMode = GhostMode.CHASE;
+			if(this.mode != GhostMode.FRIGHTEN)
+				this.mode = GhostMode.CHASE;
 		}
 		System.out.println(this.mode);
 		t.schedule(new TimerTask() {
