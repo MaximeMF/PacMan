@@ -178,19 +178,19 @@ public class Board extends JPanel implements KeyListener {
 			int[] gtPos = ghost.getPosition();
 			if(ghost.getState() == 1)
 			{
-				if(gt != GhostType.RED)
+				if(gt == GhostType.RED)
 				{
 					jCells[gtPos[1]][gtPos[0]].setIcon(ghostIcon);
 				}
-				 if(gt != GhostType.PINK)
+				 if(gt == GhostType.PINK)
 				{
 					jCells[gtPos[1]][gtPos[0]].setIcon(pink);
 				}
-				 if(gt != GhostType.CYAN)
+				 if(gt == GhostType.CYAN)
 				{
 					jCells[gtPos[1]][gtPos[0]].setIcon(cyan);
 				}
-				 if(gt != GhostType.ORANGE)
+				 if(gt == GhostType.ORANGE)
 				{
 					jCells[gtPos[1]][gtPos[0]].setIcon(orange);
 				}
