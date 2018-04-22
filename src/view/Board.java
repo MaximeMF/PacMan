@@ -134,6 +134,7 @@ public class Board extends JPanel implements KeyListener {
 				case SUPERGOMME :
 					this.jCells[i][j].setIcon(supergumIcon);
 					break;
+				case VOID:
 				case CHEMIN :
 					this.jCells[i][j].setIcon(null);
 					break;

@@ -257,34 +257,39 @@ public class Game implements IGame{
 		for(int i = 0; i < height*width; i++)
 			for(int j = 0; j < height*width; j++)
 				matrix[i][j] = 100; //équivalent à inf
-		for(int y = 0; y < height - 0; y++) {
-			for(int x = 0; x < width - 0; x++) {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
 				if(this.board[y][x] == Entity.TUNNEL) {
-					if(x==0)
+					System.out.println(x + " " + y);
+					if(x==0) {
 						matrix[y*width+x][y*width+(width-1)] = 1;
-					else if(x==width-1)
+						matrix[y*width+x][y*width+x+1] = 1;
+					}
+					else if(x==width-1) {
 						matrix[y*width+x][y*width] = 1;
-					else if(y==0)
+						matrix[y*width+x][y*width+x-1] = 1;
+					}
+					else if(y==0) {
 						matrix[y*width+x][(height-1)*width+x] = 1;
-					else if(y==height-1)
-						matrix[y*width+x][x] = 1;
-				}
-				else if(this.board[y][x] != Entity.MUR) {
-					if(this.board[y-1][x] != Entity.MUR) {
-						matrix[y*width+x][(y-1)*width+x] = 1;
-						matrix[(y-1)*width+x][y*width+x] = 1;
-					}
-					if(this.board[y+1][x] != Entity.MUR) {
 						matrix[y*width+x][(y+1)*width+x] = 1;
-						matrix[(y+1)*width+x][y*width+x] = 1;
 					}
-					if(this.board[y][x-1] != Entity.MUR) {
+					else if(y==height-1) {
+						matrix[y*width+x][x] = 1;
+						matrix[y*width+x][(y-1)*width+x] = 1;
+					}
+				}
+				else if(this.board[y][x] != Entity.MUR && this.board[y][x] != Entity.VOID) {
+					if(this.board[y-1][x] != Entity.MUR && this.board[y-1][x] != Entity.VOID) {
+						matrix[y*width+x][(y-1)*width+x] = 1;
+					}
+					if(this.board[y+1][x] != Entity.MUR && this.board[y+1][x] != Entity.VOID) {
+						matrix[y*width+x][(y+1)*width+x] = 1;
+					}
+					if(this.board[y][x-1] != Entity.MUR && this.board[y][x-1] != Entity.VOID) {
 						matrix[y*width+x][y*width+(x-1)] = 1;
-						matrix[y*width+(x-1)][y*width+x] = 1;
 					}
-					if(this.board[y][x+1] != Entity.MUR) {
+					if(this.board[y][x+1] != Entity.MUR && this.board[y][x+1] != Entity.VOID) {
 						matrix[y*width+x][y*width+(x+1)] = 1;
-						matrix[y*width+(x+1)][y*width+x] = 1;
 					}
 				}
 			}

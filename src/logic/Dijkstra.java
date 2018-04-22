@@ -45,7 +45,7 @@ public class Dijkstra {
 				enleve(entraitement, k);
 				traite.add(k);
 				for(int q=0; q<n; q++) {
-					if(/*g[k][q]!=100 && */!traite.contains(q)) {
+					if(g[k][q]!=100 && !traite.contains(q)) {
 						if(!entraitement.contains(q))
 							entraitement.add(q);
 						if(t[k] + g[k][q] < t[q]) {

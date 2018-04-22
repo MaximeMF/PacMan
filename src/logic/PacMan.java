@@ -257,11 +257,12 @@ public class PacMan implements IPacMan{
 	}
 
 	private void newSpeed(int spd, int duration) {
-		/*if(this.taskScheduled) {
-			t.cancel();
-			this.taskScheduled = false;
-		}
-		this.taskScheduled = true;*/
+		//if(this.taskScheduled) {
+		t.cancel();
+		t = new Timer();
+		//	this.taskScheduled = false;
+		//}
+		//this.taskScheduled = true;
 		this.speed = spd;
 		t.schedule(new TimerTask() {
 			@Override
@@ -274,7 +275,7 @@ public class PacMan implements IPacMan{
 			}
 		}, duration);
 	}
-	
+
 	public Direction getDirection() {
 		return this.dir;
 	}

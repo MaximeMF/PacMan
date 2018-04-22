@@ -304,8 +304,12 @@ public class Ghost implements IGhost{
 		int nextPos = this.dijkstra.launch(from, to);
 		System.out.println(nextPos);*/
 		ArrayList<Integer> chemin = this.dijkstra.dijkstra(matrix, from, to);
-		System.out.println(chemin);
-		int nextPos = chemin.get(1);
+		//System.out.println(chemin);
+		int nextPos;
+		if(chemin.size() > 1)
+			nextPos = chemin.get(1);
+		else
+			return this.currentDirection;
 		if(nextPos == y*width+x - 1 || nextPos == y*width+x - width + 1) {
 			return Direction.LEFT;
 		}
@@ -325,7 +329,7 @@ public class Ghost implements IGhost{
 	@Override
 	public void move() {
 		if (this.movable) {
-			int target;
+			int target = 0;
 			int width = Game.INSTANCE.getBoardWidth();
 			int height = Game.INSTANCE.getBoardHeight();
 			int from = this.position[0] + width*this.position[1];
@@ -344,7 +348,7 @@ public class Ghost implements IGhost{
 					target = pPos;
 					break;
 				default:
-					target = 0;
+					
 				}
 				newDir = this.dijkstra(from, target);
 				if(this.canMove(newDir)) {
@@ -360,19 +364,19 @@ public class Ghost implements IGhost{
 			case 2: //scatter
 				switch(this.type) {
 				case CYAN:
-					target = height * width - 1;
+					target = (height-2) * width+1;
 					break;
 				case ORANGE:
-					target = (height-1) * width;
+					target = (height-1) * width-2;
 					break;
 				case PINK:
-					target = 0;
+					target = width+1;
 					break;
 				case RED:
-					target = width - 1;
+					target = 2*width - 2;
 					break;
 				default:
-					target = 0;
+					
 				}
 				newDir = this.dijkstra(from, target);
 				this.move(newDir);
@@ -402,19 +406,19 @@ public class Ghost implements IGhost{
 		case CYAN:
 			switch(pac.getDirection()) {
 			case UP:
-				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1] - 2};
+				targetPos = new int[] {pac.getPosition()[0]/* - 2*/,pac.getPosition()[1] - 4};
 				//add = (pPos + (-4)*width - 4) > 0 ? ((-4)*width - 4) : 0;
 				break;
 			case DOWN:
-				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 2};
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 4};
 				//add = (pPos + 4*width) < (height*width) ? 4*width : 0;
 				break;
 			case LEFT:
-				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1]};
+				targetPos = new int[] {pac.getPosition()[0]- 4,pac.getPosition()[1]};
 				//add = (pPos%width) > 3 ? -4 : 0;
 				break;
 			case RIGHT:
-				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 2};
+				targetPos = new int[] {pac.getPosition()[0] + 4,pac.getPosition()[1]};
 				//add = (pPos%width) < width-4 ? 4 : 0;
 				break;
 			}
@@ -427,37 +431,38 @@ public class Ghost implements IGhost{
 			targetPos[1] += targetPos[1] - this.position[1];
 			targetPos[0] = (targetPos[0] < 0 || targetPos[0] >= width) ? pac.getPosition()[0] : targetPos[0];
 			targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
-			target = targetPos[1]*width + targetPos[0];
+			target = (Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.MUR) &&
+					(Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.VOID) ? targetPos[1]*width + targetPos[0]: pPos;
 			break;
 		case ORANGE:
 			int[] pacPos = Game.INSTANCE.player.getPosition();
 			int dist = (int)Math.sqrt(Math.pow(this.position[0]-pacPos[0],2) + Math.pow(this.position[1]-pacPos[1],2));
-			System.out.println(dist);
-			target = dist < 4 ? (height-1)*width : pPos;
+			target = dist < 6 ? (height-1) * width-2 : pPos;
 			break;
 		case PINK:
 			switch(pac.getDirection()) {
 			case UP:
-				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1] - 2};
+				targetPos = new int[] {pac.getPosition()[0]/* - 2*/,pac.getPosition()[1] - 4};
 				//add = (pPos + (-4)*width - 4) > 0 ? ((-4)*width - 4) : 0;
 				break;
 			case DOWN:
-				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 2};
+				targetPos = new int[] {pac.getPosition()[0],pac.getPosition()[1] + 4};
 				//add = (pPos + 4*width) < (height*width) ? 4*width : 0;
 				break;
 			case LEFT:
-				targetPos = new int[] {pac.getPosition()[0] - 2,pac.getPosition()[1]};
+				targetPos = new int[] {pac.getPosition()[0] - 4,pac.getPosition()[1]};
 				//add = (pPos%width) > 3 ? -4 : 0;
 				break;
 			case RIGHT:
-				targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
+				targetPos = new int[] {pac.getPosition()[0] + 4,pac.getPosition()[1]};
 				//add = (pPos%width) < width-4 ? 4 : 0;
 				break;
 			}
 			//target = pPos + add;
 			targetPos[0] = (targetPos[0] < 0 || targetPos[0] >= width) ? pac.getPosition()[0] : targetPos[0];
 			targetPos[1] = (targetPos[1] < 0 || targetPos[1] >= height) ? pac.getPosition()[1] : targetPos[1];
-			target = targetPos[1]*width + targetPos[0];
+			target = (Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.MUR) &&
+					(Game.INSTANCE.getBoard()[targetPos[1]][targetPos[0]] != Entity.VOID) ? targetPos[1]*width + targetPos[0]: pPos;
 		default:
 			break;
 		}

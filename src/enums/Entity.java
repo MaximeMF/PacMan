@@ -13,7 +13,8 @@ public enum Entity {
 	TUNNEL(4,false),
 	FRUIT(5,true),
 	PACMAN(6,false),
-	GHOST(7,true);
+	GHOST(7,true),
+	VOID(8,false);
 	
 	private int id;
 	private boolean givePoints;
