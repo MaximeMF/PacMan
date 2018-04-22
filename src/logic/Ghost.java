@@ -30,11 +30,12 @@ public class Ghost implements IGhost{
 	private int speed;
 	private int baseSpeed;
 	private Dijkstra dijkstra;
-	private int mode = 1; //1:chase ; 2:scatter; 3:frightened
+	private int mode = 2; //1:chase ; 2:scatter; 3:frightened
 	private int currentMode = 1;
 	private int[] timings;
 	private int cursor = 0;
 	private boolean scatterSwitch = false; //true for the first move after switching to scatter mode to allow ghosts to turn around
+	private Timer t;
 
 	/**
 	 * Constructs an instance of Ghost
@@ -55,31 +56,12 @@ public class Ghost implements IGhost{
 		this.baseSpeed = speed;
 		this.dijkstra = new Dijkstra();
 		this.timings = timings;
-		TimerTask tt = new TimerTask() {
-			@Override
-			public void run() {
-				cursor += 1;
-				if(currentMode == 1) {
-					currentMode = 2;
-					if(mode != 3) {
-						mode = 2;
-						scatterSwitch = true;
-					}
-				}
-				else {
-					currentMode = 1;
-					if(mode != 3)
-						mode = 1;
-				}
-				(new Timer()).schedule(this, timings[cursor]);
-			}
-		};
+		this.t= new Timer();
 		if(type == GhostType.RED) {
 			this.movable = true;
 			this.position = exitPosition.clone();
-			(new Timer()).schedule(tt, this.timings[this.cursor]);
 		}
-
+		this.nextMode();
 	}
 
 	/**
@@ -99,7 +81,7 @@ public class Ghost implements IGhost{
 	public boolean canMove(Direction dir) {
 		Entity[][] board = Game.INSTANCE.getBoard();
 		if(this.movable) {
-			if(this.currentDirection != null && (Direction.opposite(dir) == this.currentDirection || this.scatterSwitch))
+			if(this.currentDirection != null && Direction.opposite(dir) == this.currentDirection && !this.scatterSwitch)
 				return false;
 			int x = this.position[0];
 			int y = this.position[1];
@@ -125,7 +107,7 @@ public class Ghost implements IGhost{
 			case DOWN:
 				if(y == Game.INSTANCE.getBoardHeight()-1 && board[y][x] == Entity.TUNNEL)
 					return true;
-				else if(x < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
+				else if(y < Game.INSTANCE.getBoardHeight()-1 && board[y+1][x] != Entity.MUR)
 					return true;
 				break;
 			}
@@ -138,15 +120,16 @@ public class Ghost implements IGhost{
 	 */
 	public void randomMove() {
 		int max = Direction.values().length;
+		System.out.println(max);
 		Direction dir;
-		Direction[] val = Direction.values();
+		ArrayList<Direction> val = new ArrayList<>();
+		for(Direction d : Direction.values())
+			val.add(d);
 		Random rd = new Random();
 		do {
 			int rd_int = rd.nextInt(max);
-			dir = val[rd_int];
-			Direction temp = val[max-1];
-			val[max-1] = dir;
-			val[rd_int] = temp;
+			dir = val.get(rd_int);
+			val.remove(rd_int);
 			max--;
 		} while(!this.canMove(dir));
 		this.move(dir);
@@ -407,7 +390,7 @@ public class Ghost implements IGhost{
 					if(this.currentDirection != null && this.canMove(this.currentDirection))
 						this.move(currentDirection);
 					else
-						this.randomMove(); //should not happen
+						this.randomMove();
 				break;
 			case 2: //scatter
 				switch(this.type) {
@@ -436,7 +419,7 @@ public class Ghost implements IGhost{
 					if(this.currentDirection != null && this.canMove(this.currentDirection))
 						this.move(currentDirection);
 					else
-						this.randomMove(); //should not happen
+						this.randomMove();
 				break;
 			case 3: //frightened
 				this.randomMove();
@@ -511,5 +494,29 @@ public class Ghost implements IGhost{
 			break;
 		}
 		return target;
+	}
+	
+	private void nextMode() {
+		if(currentMode == 1) {
+			this.currentMode = 2;
+			if(this.mode != 3) {
+				this.mode = 2;
+				scatterSwitch = true;
+			}
+		}
+		else {
+			this.currentMode = 1;
+			if(this.mode != 3)
+				this.mode = 1;
+		}
+		System.out.println(this.mode);
+		t.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				nextMode();
+			}
+		}, this.timings[this.cursor]*1000);
+		this.cursor = this.cursor == this.timings.length-1 ? this.cursor : this.cursor+1;
 	}
 }

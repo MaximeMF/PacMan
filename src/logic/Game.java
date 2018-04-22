@@ -35,8 +35,8 @@ public class Game implements IGame{
 		this.board = this.loader.getBoard(1);
 		this.speed = this.loader.getSpeed(1);
 		this.gommes = this.loader.getGommes(1);
-		this.boardMatrix = this.initBoardMatrix();
 		this.player = new PacMan(this.loader.getPacmanPosition(1), this.loader.getLives(), this.loader.getSpeed(1));
+		this.boardMatrix = this.initBoardMatrix();
 		Ghost red =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.RED), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
 		Ghost cyan =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.CYAN), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
 		Ghost pink =  new Ghost(this.loader.getGhostsPosition(1).get(GhostType.PINK), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, this.loader.getExitPosition(1), this.loader.getSpeed(1)-5, this.loader.getModeTime());
@@ -228,6 +228,7 @@ public class Game implements IGame{
 		this.board = this.loader.getBoard(this.player.getLevel());
 		this.gommes = this.loader.getGommes(this.player.getLevel());
 		this.speed = this.loader.getSpeed(this.player.getLevel());
+		this.boardMatrix = this.initBoardMatrix();
 		Ghost red =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.RED), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.RED, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
 		Ghost cyan =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.CYAN), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.CYAN, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
 		Ghost pink =  new Ghost(this.loader.getGhostsPosition(this.player.getLevel()).get(GhostType.PINK), this.loader.getEntityPoints().get(Entity.GHOST),GhostType.PINK, 5000, this.loader.getExitPosition(this.player.getLevel()), this.loader.getSpeed(this.player.getLevel())-5, this.loader.getModeTime());
