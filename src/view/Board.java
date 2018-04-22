@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import enums.*;
 import logic.Game;
@@ -81,6 +82,8 @@ public class Board extends JPanel implements KeyListener {
 		for(int i = 0; i < game.getBoardHeight() ; i++) {
 			for(int j = 0; j < game.getBoardWidth() ; j++) {
 				jCells[i][j] = new JLabel();
+				jCells[i][j].setHorizontalAlignment(JLabel.CENTER);
+				jCells[i][j].setVerticalAlignment(JLabel.CENTER);
 				this.add(jCells[i][j]);
 			}
 		}
@@ -88,18 +91,9 @@ public class Board extends JPanel implements KeyListener {
 
 		this.addKeyListener(this);
 		this.setFocusable(true);
-
-		//jPacman.setPreferredSize(new Dimension(CELLSIZE, CELLSIZE));
-
-
-		//int x2 = position[0]*CELLSIZE;
-		//int y2 = position[1]*CELLSIZE;
-		//jPacman.setLocation(x2,y2);
-		//this.add(jPacman).setBounds(x2, y2, CELLSIZE, CELLSIZE);;
-		//this.add(jPacman);
-		//jPacman.setFocusable(true);
-		this.dir = Direction.LEFT;
-		this.previousDir = Direction.LEFT;
+		this.dir = Direction.RIGHT;
+		this.previousDir = Direction.DOWN;
+		
 		toRepeat();
 
 		for(GhostType gt : GhostType.values())
@@ -117,7 +111,7 @@ public class Board extends JPanel implements KeyListener {
 
 	// PLACER TOUT CE QUI SERT A INITIALISER L'AFFICHAGE DU BOARD AU DEBUT ICI
 	public void initialise() {
-
+		game.getPlayer().move(Direction.RIGHT);
 	}
 
 
@@ -209,15 +203,18 @@ public class Board extends JPanel implements KeyListener {
 	/**
 	 * Moves the pacman and the ghosts.
 	 */
-	private void move() {
-		for(GhostType gt : GhostType.values())
-			game.getGhost(gt).move();
+	private void move() 
+	{
 		if (game.getPlayer().canMove(this.dir) && (this.dir != Direction.opposite(this.previousDir) || !game.getPlayer().canMove(this.previousDir))) {
 			game.getPlayer().move(this.dir);
 			this.previousDir = this.dir;
 		}
+		
 		else if(game.getPlayer().canMove(this.previousDir))
 			game.getPlayer().move(this.previousDir);
+		for(GhostType gt : GhostType.values())
+			game.getGhost(gt).move();
+		
 		toRepeat();
 		scoreBar.update(game.getPlayer().getScore(), game.getPlayer().getLives(), game.getPlayer().getLevel());
 		if(game.hasLost())
