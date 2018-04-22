@@ -7,7 +7,7 @@ View : Yassin Ourkia
 Mais chacun a évidemment participé à l'ensemble du développement selon la quantité de travail et les compétences dont il disposait.
 
 Il peut subsister quelques problèmes, des changements de dernière minute ayant été effectués, mais normalement tout fonctionne correctement.
-Il nous faudrait un peu plus de temps pour perfectionner le projet, il manque principalement la gestion de la vitesse dans la partie view.
+Il nous faudrait un peu plus de temps si nous voulions vraiment perfectionner le projet.
 
 Pour lancer le jeu, exécuter le .jar ou utiliser la commande suivante :
 java -cp src;lib/json-simple-1.1.1.jar;bin Launcher
