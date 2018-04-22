@@ -1,22 +1,16 @@
 package data;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.EnumMap;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 import enums.Entity;
 import enums.GhostType;
 
 /**
- * Class loading game data from a gameData config file.
+ * Class loading game data from a json config file.
  * @author Robin Algier - Maxime Mathis--Fumel - Yassin Ourkia
  */
 public class DataLoader implements IDataLoader {
