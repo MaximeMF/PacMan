@@ -23,11 +23,11 @@ public class BottomBar extends JPanel {
 	 * @param lives the number of lives to display
 	 * @param level the level to display
 	 */
-	public BottomBar(int score, int lives, int level) {
+	public BottomBar(int score, int bestScore, int lives, int level) {
 		
 		this.setLayout(new BorderLayout());
 		
-		this.jScore.setText("Score : "+score);
+		this.jScore.setText("Score : "+score+" ("+bestScore+")");
 		this.jScore.setFont(new Font("Helvetica", Font.BOLD, 20));
 		this.add(jScore, BorderLayout.WEST);
 		
@@ -47,8 +47,8 @@ public class BottomBar extends JPanel {
 	 * @param lives the new number of lives to display
 	 * @param level the level to display
 	 */
-	public void update(int score, int lives, int level) {
-		this.jScore.setText("Score : "+score);
+	public void update(int score, int bestScore, int lives, int level) {
+		this.jScore.setText("Score : "+score+" ("+bestScore+")");
 		this.jLevel.setText("Level : "+level);
 		this.jLives.setText("Lives : "+lives);
 	}
